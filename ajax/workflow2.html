@@ -1,0 +1,51 @@
+{  
+   "workflow":[  
+      {  "iId": "inode1",
+         "iType":"node",
+         "iClass":"icon icon glyphicon glyphicon-print",
+         "iCaption":"  print it  ",
+		 "iToolTip" :"tool tip text",
+         "iTop":150,
+         "iLeft":50
+      },
+      {  "iId": "inode2",
+         "iType":"node",
+         "iClass":"icon icon glyphicon glyphicon-duplicate",
+         "iCaption":"  duplicate it  ",
+		 "iToolTip" :"tool tip text",
+         "iTop":149,
+         "iLeft":224
+      },
+      {  "iId": "inode3",
+         "iType":"node",
+         "iClass":"icon icon glyphicon glyphicon-duplicate",
+         "iCaption":"  duplicate  ",
+		 "iToolTip" :"tool tip text",
+         "iTop":145,
+         "iLeft":578
+      },
+      {  "iId": "inode4",
+         "iType":"node",
+         "iClass":"icon icon glyphicon glyphicon-envelope",
+         "iCaption":"  post  ",
+		 "iToolTip" :"tool tip text",
+         "iTop":333,
+         "iLeft":397
+      },
+      {  
+         "iType":"connector",
+         "id1":"inode1",
+		 "id2":"inode2"
+      },
+      {  
+         "iType":"connector",
+         "id1":"inode2",
+		 "id2":"inode3"
+      },
+      {  
+         "iType":"connector",
+         "id1":"inode3",
+		 "id2":"inode4"
+      }
+   ]
+}

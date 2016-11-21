@@ -1,0 +1,305 @@
+.node{
+  width: 100px;
+  height: 100px;
+  position:absolute;
+  background-color: #2E9D9D;
+  color: white;
+  text-align:center;
+  border-radius: 0.75em;
+  padding: 10px;
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+}
+.node .icon{font-size:30px;}
+
+.node .text{min-height:20px;}
+
+
+.node .connector{opacity:0;}
+.active-node {box-shadow:0 0 10px #000;}
+.active-node .connector{opacity:0.5;}
+.active-connector{opacity:1 !important;}
+
+.connector{
+  min-width: 30px;
+  min-height:30px;
+  position:absolute;
+  background-color: #2E9D9D;
+  color: white;
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+}
+
+
+.connector.right:after {
+	left: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(34, 153, 238, 0);
+	border-left-color: #2E9D9D;
+	border-width: 30px;
+	margin-top: -30px;
+}
+.connector.left:after {
+	right: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(34, 153, 238, 0);
+	border-right-color: #2E9D9D;
+	border-width: 30px;
+	margin-top: -30px;
+}
+
+.connector.up:after {
+	bottom: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(34, 153, 238, 0);
+	border-bottom-color: #2E9D9D;
+	border-width: 30px;
+	margin-left: -30px;
+}
+
+.connector.down:after {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(34, 153, 238, 0);
+	border-top-color: #2E9D9D;
+	border-width: 30px;
+	margin-left: -30px;
+}
+
+#drag-me::before {
+  content: "#" attr(id);
+  font-weight: bold;
+}
+#controls{float:right;  background: #666; width: 275px;  padding: 20px; color:#fff;}
+#controls .icat{width: 100% !important;}
+
+/* make menu horzontal - above grid*/
+@media screen and (max-width: 1000px) {
+	#controls{width: 100%;}
+	#controls .ipanel{float: left; width: 180px;}
+	#controls hr {clear: both;}
+}
+
+#controls h1,  #controls h2, #controls h3,  #controls h4 ,  #controls h5, #controls h6{color:#fff;}
+#controls .ipanel-toggle{margin:0;  cursor:pointer; display:inline-block;}
+#controls .ipanel{margin-bottom:10px;  }
+#controls .ipanel-content{display:none;}
+#controls .ipanel-close{float:right; color: #333; cursor: pointer; font-size:24px;}
+#controls hr{border-top: 1px solid #333; border-bottom: 1px solid #999;}
+
+#controls .icat{display:none;}
+#workAreaWrapper{overflow: hidden; position:relative;  height:600px;}
+@media screen and (max-width: 1000px) {
+	#workAreaWrapper{width:100%;}
+}
+
+
+#workArea{position:relative; width:100%; height:100%; overflow:auto;}
+
+
+#workArea::-webkit-scrollbar-track {
+    background: whiteSmoke;
+    -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
+}
+
+#workArea::-webkit-scrollbar-thumb {
+    background: #c5c5c5;
+    border-radius: 10px;
+    border: whiteSmoke solid 3px;
+}
+
+
+#workArea::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+
+
+
+
+
+
+ #toggle-draw{position:absolute; top: 10px; left:10px; z-index:4;}
+
+#dragArea{
+	position:absolute;
+	width:1600px;
+	height:1200px;
+	z-index:2;
+	background: #fff;
+	background-image: url("../images/grid.png");
+	background-position: calc(100% - 10px) calc(100% - 10px); 
+}
+
+
+@media screen and (max-width: 1050px) {
+    #dragArea{ 
+		background-image: url("../images/gridlg.png");
+		background-position: calc(100% - 20px) calc(100% - 20px); 
+	}
+}
+
+#drawArea{
+	z-index:3;
+	position:absolute; 
+	width:1600px;
+	height:1200px;
+	
+}
+#drawArea canvas{
+	width:1600px;
+	height:1200px;
+}
+
+
+
+#saved-image{display:none;}
+
+#drawControls{ position:absolute; left: 36px; top: 9px; z-index:4; background-color: #2E9D9D;}
+#drawControls .pencil{font-size: 12;}
+.color-picker, .brush-picker, .eraser-picker, .clear-sketch{
+	text-align:center;
+	float:left;
+	border-radius: 2px;
+	height: 20px;
+	width: 20px;
+	margin: 2px;
+	color: #333;
+}
+
+.color-picker:hover, .brush-picker:hover, .eraser-picker:hover, .clear-sketch:hover{
+    -webkit-box-shadow: 0 0 10px #333;
+    -moz-box-shadow: 0 0 10px #333;
+    box-shadow: 0 0 10px #333;
+	color: #333;
+}
+
+.color-picker.active, .brush-picker.active, .eraser-picker.active{
+    -webkit-box-shadow: 0 0 10px #fff;
+    -moz-box-shadow: 0 0 10px #fff;
+    box-shadow: 0 0 10px #fff;
+	color:#fff;
+}
+
+.brush-picker{border: 1px solid #ccc;}
+.eraser-picker{border: 1px solid #ccc; color:#ccc; margin-right:20px;}
+.clear-sketch{border: 1px solid #ccc; color:#ccc; margin-left:20px;}	
+
+.brush-s{font-size:10px; padding-top:4px;}
+.brush-m{font-size:12px;padding-top:3px;}
+.brush-l{font-size:14px;padding-top:1px;}
+.brush-xl{font-size:16px;}
+
+#controls .add{
+	display: inline-block;
+	height: 40px;
+	width:40px;
+	padding-top:2px;
+	border-radius: 2px;
+	background-color: #2E9D9D;
+	color:#fff;
+	font-size:25px;
+	text-align:center;
+	margin:5px;
+}
+
+#controls .add-connector{
+	display: inline-block;
+	background-color: transparent;
+	height:auto;
+	width:auto;
+	margin:0;
+	color:#2E9D9D;
+	font-size:40px;
+}
+
+#controls a{color:#fff;}
+
+#workAreaWrapper .trash{
+	position: absolute;
+	z-index:4;
+	top: 0; 
+	right: 20px;
+	margin-right:20px;
+	text-align:center;
+	width:100px;
+	height:100px; 
+	font-size:50px;
+	color:#ccc;
+}
+
+
+.dropzone {
+ 
+  border: dashed 4px transparent;
+  border-radius: 4px;
+  margin: 10px auto 30px;
+  padding: 10px;
+  transition: background-color 0.3s;
+}
+
+.drop-active {
+  border-color: #ccc;
+}
+
+.drop-target {
+  opacity:0.5;
+   border-radius: 4px;
+  background-color: #666;
+   color: #000;
+  border-color: #666;
+  border-style: solid;
+}
+
+.drag-drop {
+  display: inline-block;
+  min-width: 40px;
+  padding: 2em 0.5em;
+
+  color: #fff;
+  background-color: #2E9D9D;
+  border: solid 2px #fff;
+
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+
+  transition: background-color 0.3s;
+}
+
+.drag-drop.can-drop {
+  color: #000;
+  background-color: #4e4;
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,172 @@
+@import url(https://fonts.googleapis.com/css?family=News+Cycle:400,700);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
+
+
+
+body{
+	background-color: #f5f5f5;
+}
+
+
+h1,  h2,  h3,  h4,  h5, h6 {
+  margin: 0 0 20px 0;
+  color: #3E3E3E;
+  font-family: 'Montserrat', Impact, sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.link-btn{    
+	display: inline-block; 
+	color: #fff;
+    background-color: #2E9D9D;
+    padding: 10px;
+    width: 120px;
+    border-radius: 5px;
+    margin: 5px;
+	text-decoration:none;
+}
+.link-btn:hover{text-decoration:none;}
+.header{
+	background-color: #fff;
+	min-height:84px;
+}
+
+.header-contents{ padding:0 ;margin: 0 auto;  max-width: 1170px;}
+
+
+
+.header .logo{
+	float:left;
+	margin-top: 17px;
+    margin-right: 0px;
+    margin-bottom: 8px;
+    margin-left: 0px;
+}
+
+.header .portalName{
+	text-transform: uppercase;
+	color: #000;
+    font-weight: 700;
+    letter-spacing: -1px;
+    padding-top: 19px;
+	float:right;
+	line-height:50px;
+}
+.header  .langSelect{
+    max-width: 330px;
+    margin-top: 20px;
+    float: right;
+    margin-right: 19px;
+	width: 100%;
+    font-family: 'Montserrat';
+    border: 1px solid #2D9897 ;
+    color: #000;
+    padding: 10px;
+    font-size: 19px;
+}
+
+@media screen and (max-width: 800px) {
+	.header  .langSelect{
+		font-size: 12px;
+		width: auto;
+	}
+	
+}
+
+.content{position: relative; padding:0; margin: 0 auto;  max-width: 1170px;}
+.menu-horiz{width:100%;}
+.menu-horiz ul{padding:0; margin:0;}
+.menu-horiz li{float: left;}
+
+.menu-sm{background: #1f1f1f;}
+
+.menu-sm li{
+	padding:12px 20px 0 20px;
+	line-height: 0.9;
+	list-style: none; 
+	background: #1f1f1f; 
+	height:48px; 
+	
+	color:#2E9D9D;
+}
+.menu-sm li a{ 
+	font-family: "Montserrat",sans-serif; 
+	text-decoration:none; 
+	color:#2E9D9D;
+	font-weight: 100;
+    font-size: 12px;
+	text-transform:uppercase;
+}
+.menu-sm li  b{ 
+	font-weight: 700;
+	font-size: 17px;
+	color:#fff; 
+}
+.menu-sm li.active{ 
+	background: #2E9D9D; 
+	color:#1F1F1F;
+}
+.menu-sm li.active a{ 
+	color:#1F1F1F;
+}
+.menu-sm li.active  b{ 
+	color:#fff; 
+}
+.menu-lg ul {
+	margin:5px 0;
+}
+
+.menu-lg li{
+	float: left;
+	display: inline-block;
+	list-style:none;
+	position: relative;
+	height:150px;
+	width: 25%;
+	padding:20px;
+	cursor:pointer;
+}
+
+.menu-lg li.green{background: #2E9D9D; color: #fff;}
+.menu-lg li.white{background: #fff; color: #2E9D9D;}
+.menu-lg li.grey{background: #333; color: #fff;}
+.menu-lg li.black{background: #666; color: #fff;}
+.menu-lg li.green h2{color: #fff;}
+.menu-lg li.white h2{color: #2E9D9D;}
+.menu-lg li.grey h2{color: #fff;}
+.menu-lg li.black h2{color: #fff;}
+.menu-lg li a{text-decoration: none;}
+
+@media screen and (max-width: 800px) {
+	.menu-lg li {height:100px;}
+	.menu-lg  h2{
+		font-size: 20px;
+		
+	}
+	
+}
+
+
+/* bootstrap override*/
+.btn-primary {background-color: #2E9D9D !important;}
