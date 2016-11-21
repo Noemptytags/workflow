@@ -148,6 +148,32 @@ h1,  h2,  h3,  h4,  h5, h6 {
 	cursor:pointer;
 }
 
+.menu-lg li.double {
+	width: 50%;
+}
+
+.menu-lg li.double form fieldset {}
+
+.menu-lg li.double form label {
+	width:20%;
+}
+
+.menu-lg li.double form input {
+	font-size:0.8em;
+	display:inline-block;
+	margin-right:10px;
+	border-radius:3px;
+	width:27%;
+	color:#333;
+}
+
+.menu-lg li.double form input[type="submit"] {
+	float:right;
+	width:auto;
+	background:white;
+	color:#333;
+}
+
 .menu-lg li.green{background: #2E9D9D; color: #fff;}
 .menu-lg li.white{background: #fff; color: #2E9D9D;}
 .menu-lg li.grey{background: #333; color: #fff;}
@@ -157,6 +183,8 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .menu-lg li.grey h2{color: #fff;}
 .menu-lg li.black h2{color: #fff;}
 .menu-lg li a{text-decoration: none;}
+
+.menu-lg li.white h4{color: #2E9D9D; float:right;}
 
 @media screen and (max-width: 800px) {
 	.menu-lg li {height:100px;}

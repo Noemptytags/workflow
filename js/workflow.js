@@ -994,6 +994,26 @@ interact('.draggable')
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
   });
+
+// SAVE TO PDF
+function savetopdf() {
+
+	var pdfhandler = 'http://192.168.3.26/EvoHtmlToPdfHandler/asehandler.ashx?';
+	var pdfsource = 'bbc.co.uk';
+	var pdfdelay = '3';
+	var pdffilename = 'workflow';
+	var pdfuserid = '35499';
+
+	handlerURL = pdfhandler + 'evosource=url&evourl=' + pdfsource + '&evodelay=' + pdfdelay + '&evofilename=' + pdffilename + '_DATE_TIME.pdf&evouserid=' + pdfuserid;
+	
+	window.location.href = handlerURL
+	
+}
+
+$('#savetopdf').click(function() {
+	savetopdf();
+	return false;
+});
   
 // CODE FOR SKETCH PAD
  var sketch

@@ -80,6 +80,10 @@
 			  <div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-picture" data-caption="image" data-tooltip="tool tip text"><span class="glyphicon glyphicon-picture"></span></div>
 		
 		</div>
+	  </div> 
+
+	  <div class="ipanel">
+		  <h5 class="ipanel-toggle"><a href="addicon.asp">Add Custom Nodes</a></h5>
 	  </div>  
 	  
 	  
