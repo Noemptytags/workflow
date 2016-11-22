@@ -1,7 +1,28 @@
 $( document ).ready(function() {
+	
+	
+function getParameterByName(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}	
+	
+	
+	
 ///initialise graphit	
 initPageObjects();
 // incrementa node ID
+
+if (workflow = getParameterByName("workflow")){
+	alert(workflow)
+}
+
 var nodeCount=0;
 	
 ///toggle panels
@@ -185,6 +206,21 @@ $(".save-workflow").click(function(e) {
 	
 	
 	e.preventDefault();
+	saveWorkflow();
+	
+	//to do save to db or local storage
+	var c = document.getElementById("colors_sketch");
+    savedSketch = c.toDataURL();
+	//console.log(savedSketch);
+	
+	// to do add to list of saved workflows
+	$("#load-saved").show();
+	
+	
+});
+
+function saveWorkflow(){
+	
 	var workflow=[];
 	//get nodes from dom
 	$("#dragArea .node").each(function( index, value ) {
@@ -220,41 +256,9 @@ $(".save-workflow").click(function(e) {
 		workflow.push(item);
 	};
 	
-	/*
-	$("#dragArea .connector").each(function( index, value ) {
-		var item={}
-		var left=parseInt($(value).attr("data-x"), 10) || 0;
-		var top=parseInt($(value).attr("data-y"), 10) || 0;
-		left +=(parseInt($(value).css('left'), 10) || 0);
-		top +=(parseInt($(value).css('top'), 10) || 0);
-		
-		item["iType"]="connector";
-		item["iDirection"]= $(value).attr("data-direction");
-		item["iWidth"]= parseInt($(value).css("width"), 10);
-		item["iHeight"]= parseInt($(value).css("height"), 10);
-		item["iTop"]= top;
-		item["iLeft"]= left;
-		
-		workflow.push(item)
-	})
-	*/
-	console.log(workflow)
-	//to do save to db or local storage
 	savedWorkflow=workflow;
 	
-	
-	//to do save to db or local storage
-	var c = document.getElementById("colors_sketch");
-    savedSketch = c.toDataURL();
-	//console.log(savedSketch);
-	
-	// to do add to list of saved workflows
-	$("#load-saved").show();
-	
-	
-});
-
-
+}
 
  //add a node or connector to top of canvas on click
 $('.add').click(function(){
@@ -1007,6 +1011,8 @@ interact('.draggable')
 
 // SAVE TO PDF
 function savetopdf() {
+	
+	
 
 	var pdfhandler = 'http://192.168.3.26/EvoHtmlToPdfHandler/asehandler.ashx?';
 	var pdfsource = 'bbc.co.uk';
