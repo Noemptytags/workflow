@@ -20,8 +20,7 @@ initPageObjects();
 // incrementa node ID
 
 if (workflow = getParameterByName("workflow")){
-	var wf = JSON.parse(workflow)
-	
+	var wf = JSON.parse(workflow);
 	loadWorkflow(wf);
 }
 
@@ -220,7 +219,6 @@ function loadWorkflow(workflow){
 	
 $(".save-workflow").click(function(e) {
 	
-	
 	e.preventDefault();
 	savedWorkflow=extractWorkflow();
 	
@@ -228,10 +226,8 @@ $(".save-workflow").click(function(e) {
 	var c = document.getElementById("colors_sketch");
     savedSketch = c.toDataURL();
 	
-	
 	// to do add to list of saved workflows
 	$("#load-saved").show();
-	
 	
 });
 
@@ -1036,6 +1032,8 @@ function savetopdf() {
 	var pdfuserid = '35499';
 
 	handlerURL = pdfhandler + 'evosource=url&evourl=' + pdfsource + '&evodelay=' + pdfdelay + '&evofilename=' + pdffilename + '_DATE_TIME.pdf&evouserid=' + pdfuserid;
+	
+	
 	
 	window.location.href = handlerURL
 	//window.location.href = pdfsource

@@ -102,7 +102,7 @@
 
 <!-- #Include file="includes/sendModal.asp" -->
 
-
+<div class="ajaxModal"><h1>Loading...</h1></div>
 
 </body>
 </html>
