@@ -22,8 +22,6 @@ initPageObjects();
 if (workflow = getParameterByName("workflow")){
 	var wf = JSON.parse(workflow)
 	
-	console.log(wf)
-	
 	loadWorkflow(wf);
 }
 
@@ -128,9 +126,8 @@ function deleteNodeAndConnectors(nodeId) {
 	// previously: if(nodeId = $(".active-node").attr("id")) {
 	// if is node rather than connector
 	if(nodeId) {
-		console.log(nodeId);
+		
 		$("."+nodeId).each(function( index ) {
-			//console.log( $(this).attr("class"));
 			var connectorId = $(this).attr("class");
 			deleteConnector(connectorId);
 		})
@@ -148,7 +145,6 @@ function deleteNodeAndConnectors(nodeId) {
 		elsToDelete = '.' + splitted[1] + '.' + splitted[2];
 
 		$(elsToDelete).each(function( index ) {
-			//console.log( $(this).attr("class"));
 			$(this).removeClass("selected-connector");
 			deleteConnector($(this).attr("class"));
 		});
@@ -178,12 +174,12 @@ function deleteNode(id){
 
 function deleteConnector(id){
 	var cssSelector=id.replace(/\s+/g, '.');
-	//console.log(cssSelector);
+	
 	$("."+cssSelector).remove();
 	var canvas = findCanvas('dragArea');
-	//console.log(id);
+	
 	for(i=0; i<canvas.connectors.length; i++){
-		//console.log(canvas.connectors[i].id);
+		
 		if (canvas.connectors[i].id==id){
 			canvas.connectors.splice(i,1);
 		}
@@ -231,7 +227,7 @@ $(".save-workflow").click(function(e) {
 	//to do save to db or local storage
 	var c = document.getElementById("colors_sketch");
     savedSketch = c.toDataURL();
-	//console.log(savedSketch);
+	
 	
 	// to do add to list of saved workflows
 	$("#load-saved").show();
@@ -337,7 +333,7 @@ $('.add').click(function(){
 			
 			var connector = $(this).attr("data-connector");
 			
-			console.log (direction)
+		
 			
 			if (connector!="none"){
 				ids=connector.split(" ");
@@ -430,7 +426,7 @@ function addGraphitConnector(id1, id2){
 
 	$(newlabel).on('click touchstart', function(){
 		classes = this.dataset.parent
-		//console.log(classes);
+		
 		
 		$('.connector-graphit').each(function() {
 			$(this).removeClass('selected-connector');
@@ -446,7 +442,7 @@ function addGraphitConnector(id1, id2){
 
 $(".destination-label").on('click touchstart', function() {
 	classes = this.dataset.parent
-	//console.log(classes);
+	
 
 	$('.connector-graphit').each(function() {
 		$(this).removeClass('selected-connector');
@@ -502,8 +498,7 @@ function connectToActiveNode(elem){
 		
 			
 		if(!!parentNodeId && !!childNodeId){
-			console.log(childNodeId)
-			console.log(parentNodeId)
+		
 			addGraphitConnector(parentNodeId, childNodeId);
 			$(".node").removeClass("active-node");
 		}
@@ -745,7 +740,7 @@ interact('.draggable')
 }
 
  function updateNode(nodeId){
-	 console.log(nodeId)
+
 		var node=$("#dragArea #" +nodeId)
 		
 		var iCaption=$("#activeData #aCaption").val();

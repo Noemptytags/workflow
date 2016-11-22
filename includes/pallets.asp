@@ -4,15 +4,7 @@
  <span class="ipanel-close glyphicon glyphicon-remove-circle"></span>
  <h4 class="ipanel-toggle">Pallets</h4>
   <div class="ipanel-content">
-	  <div class="ipanel">
-			<h5 class="ipanel-toggle">Decisions</h5>
-			<div class="ipanel-content">
-			   <div class="add add-connector dragIn" draggable="true" data-type="connector" data-direction="right"><span class="icon glyphicon glyphicon-arrow-right"></span></div> 
-			   <div class="add add-connector dragIn" draggable="true"  data-type="connector" data-direction="down"><span class="icon glyphicon glyphicon-arrow-down"></span></div> 
-			   <div class="add add-connector dragIn" draggable="true"  data-type="connector" data-direction="left"><span class="icon glyphicon glyphicon-arrow-left"></span></div> 
-			   <div class="add add-connector dragIn" draggable="true"  data-type="connector" data-direction="up"><span class="icon glyphicon glyphicon-arrow-up"></span></div> 
-		   </div>
-	  </div> 
+	 
 	  
 	  <div class="ipanel">
 		  <h5 class="ipanel-toggle">People</h5>
@@ -62,25 +54,7 @@
 	  </div> 
 	  
 	  
-	   <div class="ipanel">
-		  <h5 class="ipanel-toggle">Connected Nodes</h5>
-		  <div class="ipanel-content">
-			  <div class="add dragIn" draggable="true" data-type="connected-node" data-class="flaticon-user" data-caption="user"  data-tooltip="tool tip text"><span class="icon flaticon-user"></span></div>
-			  <div class="add dragIn" draggable="true" data-type="connected-node" data-class="glyphicon glyphicon-stats" data-caption="stats" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-stats" ></span></div>
-			 <div class="add dragIn" draggable="true" data-type="connected-node" data-class="glyphicon glyphicon-picture" data-caption="image" data-tooltip="tool tip text"><span class="glyphicon glyphicon-picture"></span></div>
-		
-		</div>
-	  </div>  
-	  
-	   <div class="ipanel">
-		  <h5 class="ipanel-toggle">Linkable Nodes</h5>
-		  <div class="ipanel-content">
-			  <div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-user" data-caption="user"  data-tooltip="tool tip text"><span class="icon flaticon-user"></span></div>
-			  <div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-stats" data-caption="stats" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-stats" ></span></div>
-			  <div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-picture" data-caption="image" data-tooltip="tool tip text"><span class="glyphicon glyphicon-picture"></span></div>
-		
-		</div>
-	  </div> 
+	 
 
 	  <div class="ipanel">
 		  <h5 class="ipanel-toggle"><a href="addicon.asp">Add Custom Nodes</a></h5>
