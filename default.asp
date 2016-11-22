@@ -69,7 +69,7 @@
 		  
 		  <a href="#colors_sketch" class="clear-sketch" data-clear="true"><span class=" glyphicon glyphicon-trash"></span></a> 
 		</div>
-		<button type="button" id="toggle-draw" class="btn btn-default btn-xs"><span class="pencil glyphicon glyphicon-pencil"></span></button>
+		<button title="Show / hide drawing tools" type="button" id="toggle-draw" class="btn btn-default btn-xs"><span class="pencil glyphicon glyphicon-pencil"></span></button>
 		
 		<div id="workArea">
 		
