@@ -112,6 +112,7 @@
 #controls hr{border-top: 1px solid #333; border-bottom: 1px solid #999;}
 
 #controls .icat{display:none;}
+#controls #deleteNode{font-size:30px; cursor:pointer;}
 #workAreaWrapper{overflow: hidden; position:relative;  height:600px;}
 @media screen and (max-width: 1000px) {
 	#workAreaWrapper{width:100%;}
