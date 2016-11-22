@@ -1021,15 +1021,15 @@ function savetopdf() {
 	console.log(pdfWorkflow)
 
 	var pdfhandler = 'http://192.168.3.26/EvoHtmlToPdfHandler/asehandler.ashx?';
-	var pdfsource = 'http://192.168.3.26/workflow/default.asp?workflow='+pdfWorkflow;
+	var pdfsource = 'http://192.168.3.26/workflow/pdf.asp?workflow='+pdfWorkflow;
 	var pdfdelay = '3';
 	var pdffilename = 'workflow';
 	var pdfuserid = '35499';
 
 	handlerURL = pdfhandler + 'evosource=url&evourl=' + pdfsource + '&evodelay=' + pdfdelay + '&evofilename=' + pdffilename + '_DATE_TIME.pdf&evouserid=' + pdfuserid;
 	
-	//window.location.href = handlerURL
-	window.location.href = pdfsource
+	window.location.href = handlerURL
+	//window.location.href = pdfsource
 	
 }
 
