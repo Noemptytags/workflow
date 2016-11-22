@@ -20,7 +20,11 @@ initPageObjects();
 // incrementa node ID
 
 if (workflow = getParameterByName("workflow")){
-	alert(workflow)
+	var wf = JSON.parse(workflow)
+	
+	console.log(wf)
+	
+	loadWorkflow(wf);
 }
 
 var nodeCount=0;
@@ -206,7 +210,7 @@ $(".save-workflow").click(function(e) {
 	
 	
 	e.preventDefault();
-	saveWorkflow();
+	savedWorkflow=extractWorkflow();
 	
 	//to do save to db or local storage
 	var c = document.getElementById("colors_sketch");
@@ -219,7 +223,7 @@ $(".save-workflow").click(function(e) {
 	
 });
 
-function saveWorkflow(){
+function extractWorkflow(){
 	
 	var workflow=[];
 	//get nodes from dom
@@ -256,7 +260,7 @@ function saveWorkflow(){
 		workflow.push(item);
 	};
 	
-	savedWorkflow=workflow;
+	return workflow;
 	
 }
 
@@ -1012,21 +1016,25 @@ interact('.draggable')
 // SAVE TO PDF
 function savetopdf() {
 	
-	
+	pdfWorkflow=JSON.stringify(extractWorkflow());
+	console.log("pdfWorkflow")
+	console.log(pdfWorkflow)
 
 	var pdfhandler = 'http://192.168.3.26/EvoHtmlToPdfHandler/asehandler.ashx?';
-	var pdfsource = 'bbc.co.uk';
+	var pdfsource = 'http://192.168.3.26/workflow/default.asp?workflow='+pdfWorkflow;
 	var pdfdelay = '3';
 	var pdffilename = 'workflow';
 	var pdfuserid = '35499';
 
 	handlerURL = pdfhandler + 'evosource=url&evourl=' + pdfsource + '&evodelay=' + pdfdelay + '&evofilename=' + pdffilename + '_DATE_TIME.pdf&evouserid=' + pdfuserid;
 	
-	window.location.href = handlerURL
+	//window.location.href = handlerURL
+	window.location.href = pdfsource
 	
 }
 
 $('#savetopdf').click(function() {
+	
 	savetopdf();
 	return false;
 });
