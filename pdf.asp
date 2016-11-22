@@ -22,8 +22,6 @@
 <div class="content">
 
 	
-	
-
 	<div id="workAreaWrapper">
 		
 		
@@ -33,25 +31,15 @@
 				<img id="saved-image" />
 			</div>
 		
-		
 			<div id="dragArea" class="canvas">
-			
-			 
-			  
 			
 			</div>
 
-			
-
-			
 		</div>
 	</div>
 	
 
 </div>
-
-
-
 
 
 

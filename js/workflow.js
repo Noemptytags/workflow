@@ -1033,9 +1033,7 @@ interact('.draggable')
 function savetopdf() {
 	
 	pdfWorkflow=JSON.stringify(extractWorkflow());
-	console.log("pdfWorkflow")
-	console.log(pdfWorkflow)
-
+	
 	var pdfhandler = 'http://192.168.3.26/EvoHtmlToPdfHandler/asehandler.ashx?';
 	var pdfsource = 'http://192.168.3.26/workflow/pdf.asp?workflow='+pdfWorkflow;
 	var pdfdelay = '3';
