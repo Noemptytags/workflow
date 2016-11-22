@@ -94,7 +94,7 @@ h1,  h2,  h3,  h4,  h5, h6 {
 	
 }
 
-.content{position: relative; padding:0; margin: 0 auto;  max-width: 1170px;}
+.content{position: relative; padding:0; margin: 0 auto 50px;  max-width: 1170px;}
 .menu-horiz{width:100%;}
 .menu-horiz ul{padding:0; margin:0;}
 .menu-horiz li{float: left;}
@@ -193,6 +193,10 @@ h1,  h2,  h3,  h4,  h5, h6 {
 		
 	}
 	
+}
+
+#controls h4 {
+	line-height:1.5;
 }
 
 

@@ -11,7 +11,9 @@ $(".ipanel-toggle").click(function() {
 })
 
 $(".ipanel-close").click(function() {
-	$(this).parent(".ipanel").slideUp("fast");
+	$(this).parent(".ipanel").slideUp("fast", function() {
+		tidyMenu();
+	});
 })
 
 ///toggle categories
@@ -19,6 +21,7 @@ $(".cat-toggle").click(function(e) {
 	e.preventDefault();
 	var id=$(this).attr("data-target");
 	$("#"+id).slideDown("fast");
+	tidyMenu();
 })
 
 ///toggle toolsets based on profile
@@ -37,7 +40,14 @@ $(".load-tools").click(function(e) {
 	if (profile=="samples"){
 		$("#controls #templates").slideDown("fast");
 	}
+	tidyMenu();
 })
+
+// to remove 'end' class on right menu for styling dividers
+function tidyMenu() {
+	$("#controls .ipanel.icat").removeClass('end');
+	$("#controls .ipanel.icat:visible:last").addClass('end');
+}
 
 ///temporary  variables to emulate saving to db
 var savedWorkflow,  savedSketch;
