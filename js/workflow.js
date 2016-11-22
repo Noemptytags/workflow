@@ -116,30 +116,46 @@ function clearWorkflow(){
 	canvas.connectors=[];
 }
 
-$('html').keyup(function(e){
-    if(e.keyCode == 46) {
-	
-    	if(nodeId = $(".active-node").attr("id")) {
-			deleteNodeAndConnectors(nodeId);
-		}
-		else if($(".selected-connector").length) {
-			//if at least one selected connector then find classes belonging to it
-			var connectorId = $(".selected-connector").attr("class");
-			//only need classes relating to node names block_1 etc
-			var splitted = connectorId.split(' ');		
-			
-			elsToDelete = '.' + splitted[1] + '.' + splitted[2];
+// delete on keypress
+$('html').keyup(function(e){ if(e.keyCode == 46) { deleteNodeAndConnectors(); } });
+// delete on main trash button press
+$('.trash').click(function(){ deleteNodeAndConnectors(); });
 
-			$(elsToDelete).each(function( index ) {
-				//console.log( $(this).attr("class"));
-				$(this).removeClass("selected-connector");
-				deleteConnector($(this).attr("class"));
-			});
-		}
-    }
-});
+function deleteNodeAndConnectors(nodeId) {
+	// if nodeId is already known
+	nodeId = (typeof nodeId === 'undefined') ? $(".active-node").attr("id") : nodeId;
 
-function deleteNodeAndConnectors(nodeId){
+	// previously: if(nodeId = $(".active-node").attr("id")) {
+	// if is node rather than connector
+	if(nodeId) {
+		console.log(nodeId);
+		$("."+nodeId).each(function( index ) {
+			//console.log( $(this).attr("class"));
+			var connectorId = $(this).attr("class");
+			deleteConnector(connectorId);
+		})
+		  
+		deleteNode(nodeId);
+		//deleteNodeAndConnectors(nodeId);
+	}
+	// if is only connector
+	else if($(".selected-connector").length) {
+		//if at least one selected connector then find classes belonging to it
+		var connectorId = $(".selected-connector").attr("class");
+		//only need classes relating to node names block_1 etc
+		var splitted = connectorId.split(' ');		
+		
+		elsToDelete = '.' + splitted[1] + '.' + splitted[2];
+
+		$(elsToDelete).each(function( index ) {
+			//console.log( $(this).attr("class"));
+			$(this).removeClass("selected-connector");
+			deleteConnector($(this).attr("class"));
+		});
+	}
+}
+
+/*function deleteNodeAndConnectors(nodeId){
 	 //find all connectors with nodeId in classname
 	  $("."+nodeId).each(function( index ) {
 		 //console.log( $(this).attr("class"));
@@ -148,7 +164,7 @@ function deleteNodeAndConnectors(nodeId){
 	  })
 	  
 	  deleteNode(nodeId);
-}
+}*/
 
 function deleteNode(id){
 	$("#"+id).remove();

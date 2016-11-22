@@ -49,7 +49,7 @@
 	</div>
 
 	<div id="workAreaWrapper">
-		<div id="inner-dropzone" class="trash dropzone"><span class="icon glyphicon glyphicon-trash"></span></div>
+		<div id="inner-dropzone" title="Delete selected item" class="trash dropzone"><span class="icon glyphicon glyphicon-trash"></span></div>
 		
 		<div id="drawControls">
 		  <a href="#colors_sketch" class="color-picker" data-color="#f00" data-tool="marker" style="background: #f00;"></a> 
@@ -67,7 +67,7 @@
 		  <a href="#colors_sketch" class="brush-picker brush-l" data-size="10" ><span class="pencil glyphicon glyphicon-pencil"></span></a> 
 		  <a href="#colors_sketch" class="brush-picker brush-xl" data-size="15" ><span class="pencil glyphicon glyphicon-pencil"></span></a> 
 		  
-		  <a href="#colors_sketch" class="clear-sketch" data-clear="true"><span class=" glyphicon glyphicon-trash"></span></a> 
+		  <a href="#colors_sketch" class="clear-sketch" data-clear="true"><span class="glyphicon glyphicon-trash"></span></a> 
 		</div>
 		<button title="Show / hide drawing tools" type="button" id="toggle-draw" class="btn btn-default btn-xs"><span class="pencil glyphicon glyphicon-pencil"></span></button>
 		

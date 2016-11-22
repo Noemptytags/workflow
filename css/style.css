@@ -243,40 +243,42 @@
 
 #controls a{color:#fff;}
 
-#workAreaWrapper .trash{
+#workAreaWrapper .trash {
 	position: absolute;
 	z-index:4;
 	top: 0; 
 	right: 20px;
-	margin-right:20px;
+	margin-right:5px;
 	text-align:center;
-	width:100px;
-	height:100px; 
-	font-size:50px;
-	color:#ccc;
+	width:40px;
+	height:40px; 
+	font-size:18px;
+	color:#333;
+	border:1px solid #ccc;
+	background:#fff;
+	border-radius: 4px;
+	margin: 10px auto 0px;
+	padding: 10px 0;
+	cursor:pointer;
 }
 
 
 .dropzone {
- 
-  border: dashed 4px transparent;
-  border-radius: 4px;
-  margin: 10px auto 30px;
-  padding: 10px;
-  transition: background-color 0.3s;
+	border: dashed 4px transparent;	
+	transition: background-color 0.3s;
 }
 
 .drop-active {
-  border-color: #ccc;
+ 	border-color: #ccc;
 }
 
 .drop-target {
-  opacity:0.5;
-   border-radius: 4px;
-  background-color: #666;
-   color: #000;
-  border-color: #666;
-  border-style: solid;
+	opacity:0.5;
+	border-radius: 4px;
+	background-color: #666;
+	color: #000;
+	border-color: #666;
+	border-style: solid;
 }
 
 .drag-drop {
