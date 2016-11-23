@@ -419,6 +419,9 @@ function addGraphitConnector(id1, id2){
 	var newConnector = new Connector(newdiv, canvas);
 	newConnector.initConnector();
 	canvas.connectors.push(newConnector);
+	
+
+
 
 	$(newlabel).on('click touchstart', function(){
 		classes = this.dataset.parent

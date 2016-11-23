@@ -31,7 +31,7 @@
 			<li><a href="#" class="cat-toggle" data-target="savedworkflows"><b>My Saved</b><br/>workflows</a></li>
 			<li><a href="#" class="cat-toggle" data-target="templates"><b>Workflow</b><br/>samples</a></li>
 			<li><a href="#" class="cat-toggle" data-target="pallets"><b>Icon</b><br/>pallets</a></li>
-			<li><a href="#"><b>Cost Saving</b><br/>calculator</a></li>
+			<li><a href="#" class="cat-toggle" data-target="calc"><b>Cost Saving</b><br/>calculator</a></li>
 			<li><a href="#" id="savetopdf"><b>Save</b><br/>to pdf</a></li>
 		</ul>
 	</div>
@@ -43,9 +43,13 @@
 		
 		<!-- #Include file="includes/pallets.asp" -->
 	 
+		
 		<!-- #Include file="includes/templates.asp" -->
 	
 		<!-- #Include file="includes/savedworkflows.asp" -->
+		
+		<!-- #Include file="includes/dataCalc.asp" -->
+		
 	</div>
 
 	<div id="workAreaWrapper">
@@ -82,7 +86,7 @@
 		
 			<div id="dragArea" class="canvas">
 			
-			 
+			
 			 
 			  
 			
