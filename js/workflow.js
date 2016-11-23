@@ -418,43 +418,43 @@ function addGraphitNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
 
 function addGraphitConnector(id1, id2){
 																																																						
-	if ($('.connector-graphit.'+id1+'.'+ id2).length==0){
+	if ($('.connector-graphit.'+id1+'.'+ id2).length==0) {
 	
-	var newdiv = document.createElement('div');
-	newdiv.setAttribute('class','connector-graphit '+id1+' '+ id2);
+		var newdiv = document.createElement('div');
+		newdiv.setAttribute('class','connector-graphit '+id1+' '+ id2);
 
-	var newlabel = document.createElement('label');
-	newlabel.setAttribute('class','destination-label ' +id1+' '+ id2);
+		var newlabel = document.createElement('label');
+		newlabel.setAttribute('class','destination-label ' +id1+' '+ id2);
 
-	var newarrow = document.createElement('img');
-	newarrow.setAttribute('class','connector-end ' +id1+' '+ id2);
-	newarrow.setAttribute('src','images/arrow.png');
+		var newarrow = document.createElement('img');
+		newarrow.setAttribute('class','connector-end ' +id1+' '+ id2);
+		newarrow.setAttribute('src','images/arrow.png');
 
-	newdiv.appendChild(newlabel);
-	newdiv.appendChild(newarrow);
-			
-	var ni = document.getElementById('dragArea');
-	ni.appendChild(newdiv);
-	var canvas = findCanvas('dragArea');
-	var newConnector = new Connector(newdiv, canvas);
-	newConnector.initConnector();
-	canvas.connectors.push(newConnector);
-	
+		newdiv.appendChild(newlabel);
+		newdiv.appendChild(newarrow);
+				
+		var ni = document.getElementById('dragArea');
+		ni.appendChild(newdiv);
+		var canvas = findCanvas('dragArea');
+		var newConnector = new Connector(newdiv, canvas);
+		newConnector.initConnector();
+		canvas.connectors.push(newConnector);
 
+		$(newlabel).on('click touchstart', function(){
+			classes = this.dataset.parent;
+				
+			$('.connector-graphit').each(function() {
+				$(this).removeClass('selected-connector');
+				if($(this).hasClass(classes))
+					$(this).addClass('selected-connector');
+				}
+			);
+		});
 
-
-	$(newlabel).on('click touchstart', function(){
-		classes = this.dataset.parent
-		
-		
-		$('.connector-graphit').each(function() {
-			$(this).removeClass('selected-connector');
-			if($(this).hasClass(classes))
-				$(this).addClass('selected-connector');
-			}
-		);
-	})
+		return true;
 	}
+
+	return false;
 }
 
 
@@ -486,61 +486,54 @@ $(".destination-label").on('click touchstart', function() {
 });
 
 // graphit node utility
-$(".node ").on('click touchstart',function() {
-	
+$(".node ").on('click touchstart',function() {	
 	makeActive(event.target);
 	connectToActiveNode(event.target);
 })
 
-
 function makeActive(elem){ 
-	if ($(elem).hasClass("node")){
-		node = $(elem);
-	}
-	else {
-		node = $(event.target).parents(".node");
-	}
+	node = $(elem).hasClass("node") ? $(elem) : $(event.target).parents(".node");
 
-	if ($(node).hasClass("dragged")){
-		
+	if ($(node).hasClass("dragged")){		
 		$(node).removeClass("dragged");
 		$(node).removeClass("active-node");
+		clearNodeData();
 	}
-	else {
-		
+	else {		
 		$(node).addClass("active-node");
-		loadNodeData(node);
-		
 		$("#nodedata").slideDown();
+		loadNodeData(node);		
 	}
 }
 
-
-
-
-
-
 function connectToActiveNode(elem){
-		if ($(elem).hasClass("node")){
-			node = $(elem);
-		}else{
-			node = $(event.target).parents(".node");
-		}
-		childNodeId=node.attr("id")
+	// gets node from direct click or child click
+	node = $(elem).hasClass("node") ? $(elem) : $(event.target).parents(".node");
+	// current node become the end
+	endNodeId=node.attr("id");
 	
-		var parentNodeId;
-		var activeNodes=$(".active-node")
-		for(i=0; i<activeNodes.length; i++){
-			var id= $(activeNodes[i]).attr("id")
-				if(id!=childNodeId){parentNodeId=id}
+	// to find any other selected nodes
+	var beginNodeId;
+	var activeNodes=$(".active-node");
+	for(i=0; i<activeNodes.length; i++){
+		var id= $(activeNodes[i]).attr("id");
+		if(id != endNodeId){
+			// if found, other node becomes beginning
+			beginNodeId=id;
 		}
+	}
 		
-			
-		if(!!parentNodeId && !!childNodeId){
-		
-			addGraphitConnector(parentNodeId, childNodeId);
+	// if there are two different nodes selected...	
+	if(!!beginNodeId && !!endNodeId){
+		// test if already connected and connected
+		if(addGraphitConnector(beginNodeId, endNodeId)){
 			$(".node").removeClass("active-node");
+			clearNodeData();
 		}
+		// deselect previous node if already connected
+		else
+			$('#'+beginNodeId).removeClass("active-node");
+	}
 	
 }
 
