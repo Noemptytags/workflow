@@ -10,9 +10,15 @@
   -webkit-transform: translate(0px, 0px);
           transform: translate(0px, 0px);
 }
-.node .icon{font-size:60px;}
+.node .icon{ font-size:60px; }
 
-.node .text{min-height:20px;}
+.node .text{ min-height:20px; }
+
+.node .time{ position:absolute; right:5px; top:18px; font-size:0.8em; font-family:inherit; display:none; }
+
+.node .time:before { position: absolute; top: -13px; right: 0; font-family: 'Glyphicons Halflings'; }
+
+
 
 
 .node .connector{opacity:0;}
@@ -114,8 +120,20 @@
 #controls .icat{ display:none; margin-bottom:10px; }
 .ipanel.icat { border-bottom:#999 1px solid; }
 .ipanel.icat.end { border-bottom:none;}
-#controls #deleteNode{font-size:30px; cursor:pointer;}
+#controls #deleteNode { font-size:14px; cursor:pointer; float:right; margin-top:5px; }
+
+#node-information { font-weight:bold; }
+#node-information.empty { font-weight:normal; color:#333; text-shadow:-1px 1px 0 #777; }
+
+#activeData label { width:25%; }
+#activeData input[type="text"] { width:73%; display:inline-block; }
+
+#activeData .checkbox { text-align:right; }
+#activeData .checkbox label { width:auto; padding:0; }
+#activeData .checkbox input[type="checkbox"] { position:static; margin:0; vertical-align:middle; }
+
 #workAreaWrapper{overflow: hidden; position:relative;  height:600px;}
+
 @media screen and (max-width: 1000px) {
 	#workAreaWrapper{width:100%;}
 }
@@ -147,7 +165,7 @@
 
 
 
- #toggle-draw{position:absolute; top: 10px; left:10px; z-index:4;}
+#toggle-draw{ position:absolute; top: 10px; left:10px; z-index:4; }
 
 #dragArea{
 	position:absolute;

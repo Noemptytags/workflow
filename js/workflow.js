@@ -82,7 +82,7 @@ if(!savedWorkflow){
 
 
 $(".new-workflow").click(function() {
-		clearWorkflow();
+	clearWorkflow();
 })
 
 $(".load-template").click(function() { 
@@ -215,8 +215,6 @@ function loadWorkflow(workflow){
 	}
 }
 
-
-	
 $(".save-workflow").click(function(e) {
 	
 	e.preventDefault();
@@ -275,12 +273,18 @@ function extractWorkflow(){
  //add a node or connector to top of canvas on click
 $('.add').click(function(){
 
+	var offSet = 10;
+	var numNewElements = $('.node.new').length;
+
+	initLeft = 30 + numNewElements*offSet*3;
+	initTop = 30 + numNewElements*offSet;
+
 	var iType=$(this).attr("data-type");
 	if(iType=="node"){
 		var iClass=$(this).attr("data-class");
 		var iCaption=$(this).attr("data-caption");
 		var iTooltip=$(this).attr("data-tooltip");
-		addNode( iClass, iCaption, iTooltip, 50, 0);
+		addNode( iClass, iCaption, iTooltip, 30, 30);
 	}
 	if(iType=="connector"){
 		var direction = $(this).attr("data-direction");
@@ -291,14 +295,14 @@ $('.add').click(function(){
 		var iClass=$(this).attr("data-class");
 		var iCaption=$(this).attr("data-caption");
 		var iTooltip=$(this).attr("data-tooltip");
-		addConnectedNode( iClass, iCaption, iTooltip, 50, 0);
+		addConnectedNode( iClass, iCaption, iTooltip, 30, 30);
 	}
 	
 	if(iType=="graphit-node"){
 		var iClass=$(this).attr("data-class");
 		var iCaption=$(this).attr("data-caption");
 		var iTooltip=$(this).attr("data-tooltip");
-		addGraphitNode( iClass, iCaption, iTooltip, 50, 0);
+		addGraphitNode(iClass, iCaption, iTooltip, initTop, initLeft );
 	}
 	
 	
@@ -365,9 +369,9 @@ function addGraphitNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
 		nodeCount++;
 		iId =iId || "node"+nodeCount.toString();
 		nodeID=iId;
-		var item = $('<div id="'+nodeID+'" class="node block draggable-graphit '+nodeID+'"><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text"> '+ iCaption +' </p>   </div>');
+		var item = $('<div id="'+nodeID+'" class="node block draggable-graphit new '+nodeID+'"><span title="Time required in minutes" class="glyphicon glyphicon-time time"></span><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text">' + iCaption + '</p>   </div>');
 		
-		 $(item).find('[data-toggle="tooltip"]').tooltip();
+		$(item).find('[data-toggle="tooltip"]').tooltip();
 		$('#dragArea').prepend(item);
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
@@ -459,13 +463,17 @@ $(".node ").on('click touchstart',function() {
 function makeActive(elem){
 	if ($(elem).hasClass("node")){
 		node = $(elem);
-	}else{
+	}
+	else {
 		node = $(event.target).parents(".node");
 	}
+
 	if ($(node).hasClass("dragged")){
+		
 		$(node).removeClass("dragged");
 		$(node).removeClass("active-node");
-	}else{
+	}
+	else {
 		
 		$(node).addClass("active-node");
 		loadNodeData(node);
@@ -728,42 +736,78 @@ interact('.draggable')
 	
    
 });
- function loadNodeData(node){
-	    var aCaption=$(node).find(".text").text();
-		var aId=$(node).attr("id");
-		$("#activeData #aCaption").val(aCaption)
-		$("#activeData ").attr("aId", aId)
+
+function loadNodeData(node){
+	var aId=$(node).attr("id");
+	$("#activeData").attr("aId", aId);
+
+	var aTooltip=$(node).find("span.icon")[0].dataset.originalTitle;
+	$("#nodedata p#node-information").html(aTooltip).removeClass('empty');
+
+	var aCaption=$(node).find(".text").text();
+	$("#activeData #aCaption").val(aCaption);
+
+	var aTimer=$(node).find("span.time").is(':visible');
+	if(aTimer) {
+		$("#activeData #aTimer").prop('checked',true);
+		$("#activeData #aTimeHolder").show();
+	}
+	else {
+		$("#activeData #aTimer").prop('checked',false);
+		$("#activeData #aTimeHolder").hide();
+	}
+
+	var aTime=$(node).find("span.time").text();
+	$("#activeData #aTime").val(aTime);
 }
 
- function updateNode(nodeId){
+function updateNode(nodeId){
+	var node=$("#dragArea #" +nodeId);
 
-		var node=$("#dragArea #" +nodeId)
-		
-		var iCaption=$("#activeData #aCaption").val();
-	    $(node).find(".text").text(iCaption);
-		
+	var iCaption=$("#activeData #aCaption").val();
+	$(node).find(".text").text(iCaption);
+
+	$("#controls #aTimer").is(':checked') ? $(node).find("span.time").show() : $(node).find("span.time").hide();
+
+	var iTime=$("#activeData #aTime").val();
+	$(node)[0].dataset.time = iTime;	
+	$(node).find("span.time").text(iTime);
 }
- function clearNodeData(){
-	    var aCaption="";
-		var aId="";
-		$("#activeData #aCaption").val(aCaption)
-		$("#activeData ").attr("aId", aId)
- }
+
+function clearNodeData(){
+    var aClear="";
+	var aId="";
+	$("#controls p#node-information").html("nothing selected").addClass('empty');
+	$("#activeData #aCaption, #activeData #aTime").val(aClear);
+	$("#activeData #aTimer").attr('checked',false);
+	$("#activeData #aTimeHolder").hide();
+	$("#activeData").attr("aId", aId);
+}
  
- $("#activeData input").change( function(){ 
-	 var aId=$("#activeData ").attr("aId")
-	 if (aId!=""){
+$("#activeData input").change(function(){ 
+	var aId=$("#activeData").attr("aId");
+	if (aId!=""){
 		updateNode(aId)
-	 }
- })
-  $("#activeData #deleteNode").click( function(e){
-	  e.preventDefault();
-	   var aId=$("#activeData ").attr("aId")
-		if (aId!=""){
-			deleteNodeAndConnectors(aId);
-			clearNodeData();
-		}
-})
+	}
+});
+
+$("#controls #deleteNode").click(function(e){
+	e.preventDefault();
+	var aId=$("#activeData").attr("aId");
+	if (aId!=""){
+		deleteNodeAndConnectors(aId);
+		clearNodeData();
+	}
+});
+
+$("#controls #aTimer").change(function() {
+	if ($(this).is(':checked')) {
+		$("#aTimeHolder").show();
+	}
+	else {
+		$("#aTimeHolder").hide();
+	}
+});
  
  
  

@@ -148,6 +148,7 @@ function movemouse(e)
 		
 		if (currentMouseX != mouseStartX || currentMouseY != mouseStartY){
 			$(elementToMove).addClass("dragged");
+			$(elementToMove).removeClass("new");
 		}
 		
 		var i;

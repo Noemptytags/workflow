@@ -9,10 +9,10 @@
 	  <div class="ipanel">
 		  <h5 class="ipanel-toggle">People</h5>
 		  <div class="ipanel-content">
-			  <div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-user" data-caption="user" data-tooltip="tool tip text"><span class="icon flaticon-user"></span></div>
-			  <div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-user-1" data-caption="user" data-tooltip="tool tip text"><span class="icon flaticon-user-1"></span></div>
-			  <div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-users" data-caption="users" data-tooltip="tool tip text"><span class="icon flaticon-users"></span></div>
-			  <div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-users-1" data-caption="users" data-tooltip="tool tip text"><span class="icon flaticon-users-1"></span></div>
+			  <div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-user" data-caption="user" data-tooltip="programmer"><span class="icon flaticon-user"></span></div>
+			  <div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-user-1" data-caption="user" data-tooltip="administrator"><span class="icon flaticon-user-1"></span></div>
+			  <div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-users" data-caption="users" data-tooltip="suppliers"><span class="icon flaticon-users"></span></div>
+			  <div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-users-1" data-caption="users" data-tooltip="exporters"><span class="icon flaticon-users-1"></span></div>
 		</div>
 	  </div>  
 

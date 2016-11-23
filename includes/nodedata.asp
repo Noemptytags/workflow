@@ -1,29 +1,27 @@
 <div id="nodedata" class="ipanel icat"> 
- 
- 
+	<a id="deleteNode" title="Delete selected item"><span class="icon glyphicon glyphicon-trash"></span></a>
+	<h4 class="ipanel-toggle">Selected item details</h4>
+	<div class="ipanel-content">
+		<p id="node-information"></p>
 
- <h4 class="ipanel-toggle">Node Data</h4>
-  <div class="ipanel-content">
-	 <p>Tooltip text. Lorem ipsum dolor sit amet, pede ac rhoncus natoque quam. Pellentesque urna alias ultricies, sem et sit ultricies animi.</p>
-	<form id="activeData">
-		 <div class="form-group">
-			<label for="">Caption</label>
-			<input type="text" class="form-control" id="aCaption" placeholder="">
-		 </div>
-		 <div class="checkbox">
-				<label>
-				  <input type="checkbox" id="aTimer">Add Timer Icon
-				</label>
+		<form id="activeData">
+
+			<div class="form-group">
+				<label for="">Label</label>
+				<input type="text" class="form-control" id="aCaption" placeholder="">
 			</div>
-		 <div class="form-group">
-			<label for="">Time</label>
-			<input type="text" class="form-control"id="aTime" placeholder="">
-		 </div>
-		
-		<a id="deleteNode"><span class="icon glyphicon glyphicon-trash"></span></a>
-		
-	</form>
+
+			<div class="checkbox">
+				<label for="aTimer">Add timer icon</label>
+				<input type="checkbox" id="aTimer">
+			</div>
+
+			<div id="aTimeHolder" class="form-group" style="display:none;">
+				<label for="aTime">Time</label>
+				<input type="text" class="form-control" id="aTime" placeholder="">
+			</div>
+						
+		</form>
 	  
-    </div> 
-<hr/>	
+	</div>	
 </div>
