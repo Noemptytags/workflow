@@ -6,8 +6,12 @@
 	  
 		<form id="calcData">
 			 <div class="form-group">
-				<label for="">Minwage</label>
+				<label for="">Minimum wage</label>
 				<input type="text" class="form-control" id="aMinwage" placeholder="">
+			 </div>
+			  <div class="form-group">
+				<label for="">Minutes saved</label>
+				<input type="text" class="form-control" id="aMins" placeholder="">
 			 </div>
 			 
 		</form>

@@ -116,7 +116,11 @@ function clearWorkflow(){
 // delete on keypress
 $('html').keyup(function(e){ if(e.keyCode == 46) { deleteNodeAndConnectors(); } });
 // delete on main trash button press
-$('.trash').click(function(){ deleteNodeAndConnectors(); });
+$('.trash').click(function(){ 
+deleteNodeAndConnectors(); 
+
+$(".active-calc").remove();
+});
 
 function deleteNodeAndConnectors(nodeId) {
 	// if nodeId is already known
@@ -454,13 +458,10 @@ function addCalc(iMinwage, iMins, iTop, iLeft){
 		nodeCount++;
 		iId ="code"+nodeCount.toString();
 		
-		var item = $('<div id="'+iId+'" class="calc draggable"><p > Calculator </p> min wage:<span class="minwage">' + iMinwage + '</span>  mins saved: <span class="mins">'+ iMins+'</span>  </div>');
+		var item = $('<div id="'+iId+'" class="calc draggable"><p > Calculator </p> <p>min wage:<span class="minwage">' + iMinwage + '</span><p>  <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: <span class="saving"> </span><p></div>');
 		$('#dragArea').append(item);
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
-		
-		
-		
 		
 }
 
@@ -755,11 +756,7 @@ interact('.draggable')
 	
 	$("#calc").slideDown();
 	$(calc).addClass("active-calc");
-	loadCalcData(calc)
-	
-	
-	
-	
+	loadCalcData(calc);
 	
   })
   ;
@@ -814,21 +811,29 @@ interact('.draggable')
  
  function loadCalcData(calc){
 	  var aMinwage=parseFloat($(calc).find(".minwage").text());
+	  var aMins=parseFloat($(calc).find(".mins").text());
 	  var aId=$(calc).attr("id");
 	  $("#calcData #aMinwage").val(aMinwage);
+	  $("#calcData #aMins").val(aMins);
 	  $("#calcData ").attr("aId", aId);
  }
 
  function updateCalc(calcId){
 	var calc=$("#dragArea #" +calcId);
 	var iMinwage=$("#calcData #aMinwage").val();
+	var iMins=$("#calcData #aMins").val();
+	var iSaving="xxxx";
 	$(calc).find(".minwage").text(iMinwage);
+	$(calc).find(".mins").text(iMins);
+	$(calc).find(".saving").text(iSaving);
  }
  
  function clearCalcData(){
 	  var aMinwage="";
+	  var aMins="";
 	  var aId="";
 	  $("#calcData #aMinwage").val(aMinwage);
+	  $("#calcData #aMins").val(aMins);
 	  $("#calcData ").attr("aId", aId);
  }
  
