@@ -449,16 +449,17 @@ function addGraphitConnector(id1, id2){
 }
 
 
-function addCalc(iMinWage, iMins, iTop, iLeft){ 
-		var item = $('<div  class="calc draggable"><p > Calculator </p> <p> minWage:' + iMinWage + '  mins:'+ iMins+'</p>  </div>');
+function addCalc(iMinwage, iMins, iTop, iLeft){ 
+
+		nodeCount++;
+		iId ="code"+nodeCount.toString();
+		
+		var item = $('<div id="'+iId+'" class="calc draggable"><p > Calculator </p> min wage:<span class="minwage">' + iMinwage + '</span>  mins saved: <span class="mins">'+ iMins+'</span>  </div>');
 		$('#dragArea').append(item);
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
 		
-		$(item).on('click touchstart', function(){
 		
-		
-	})
 		
 		
 }
@@ -486,7 +487,7 @@ $(".node ").on('click touchstart',function() {
 })
 
 
-function makeActive(elem){
+function makeActive(elem){ 
 	if ($(elem).hasClass("node")){
 		node = $(elem);
 	}else{
@@ -503,6 +504,8 @@ function makeActive(elem){
 		$("#nodedata").slideDown();
 	}
 }
+
+
 
 
 
@@ -740,16 +743,23 @@ interact('.draggable')
   .on('tap', function (event) {
 	 // event.preventDefault();
 	// event.stopPropagation();
-	var node
-	if ($(event.target).hasClass("node")){
-		node = $(event.target);
-		$(event.target).addClass("active-node")
+	var calc
+	if ($(event.target).hasClass("calc")){
+		calc = $(event.target);
+		$(event.target).addClass("active-calc")
+		
 	}else{
-		node = $(event.target).parents(".node");
+		calc = $(event.target).parents(".calc");
+		
 	}
-	$(node).addClass("active-node");
 	
-	$("#nodedata").slideDown();
+	$("#calc").slideDown();
+	$(calc).addClass("active-calc");
+	loadCalcData(calc)
+	
+	
+	
+	
 	
   })
   ;
@@ -758,9 +768,13 @@ interact('.draggable')
 	//TO DO - too much DOM inspection here on every click - have a think about a more effecient way to deselect a node
 	if($(event.target).parents(".node").length==0 && !$(event.target).hasClass("node")  ){
 		 $(".node").removeClass("active-node")
-		 
 		  clearNodeData();
-		// $("#nodedata").slideUp();
+	}
+	
+	
+	if($(event.target).parents(".calc").length==0 && !$(event.target).hasClass("calc")  ){
+		 $(".calc").removeClass("active-calc")
+		  clearCalcData();
 	}
 
 	if($(event.target).parents(".destination-label").length==0 && !$(event.target).hasClass("destination-label")){
@@ -769,34 +783,64 @@ interact('.draggable')
 	
    
 });
+
  function loadNodeData(node){
 	    var aCaption=$(node).find(".text").text();
 		var aId=$(node).attr("id");
-		$("#activeData #aCaption").val(aCaption)
-		$("#activeData ").attr("aId", aId)
+		$("#activeData #aCaption").val(aCaption);
+		$("#activeData ").attr("aId", aId);
 }
 
  function updateNode(nodeId){
-
-		var node=$("#dragArea #" +nodeId)
-		
+		var node=$("#dragArea #" +nodeId);
 		var iCaption=$("#activeData #aCaption").val();
 	    $(node).find(".text").text(iCaption);
-		
 }
+
  function clearNodeData(){
 	    var aCaption="";
 		var aId="";
-		$("#activeData #aCaption").val(aCaption)
-		$("#activeData ").attr("aId", aId)
+		$("#activeData #aCaption").val(aCaption);
+		$("#activeData ").attr("aId", aId);
  }
  
  $("#activeData input").change( function(){ 
 	 var aId=$("#activeData ").attr("aId")
 	 if (aId!=""){
-		updateNode(aId)
+		updateNode(aId);
 	 }
  })
+ 
+ 
+ function loadCalcData(calc){
+	  var aMinwage=parseFloat($(calc).find(".minwage").text());
+	  var aId=$(calc).attr("id");
+	  $("#calcData #aMinwage").val(aMinwage);
+	  $("#calcData ").attr("aId", aId);
+ }
+
+ function updateCalc(calcId){
+	var calc=$("#dragArea #" +calcId);
+	var iMinwage=$("#calcData #aMinwage").val();
+	$(calc).find(".minwage").text(iMinwage);
+ }
+ 
+ function clearCalcData(){
+	  var aMinwage="";
+	  var aId="";
+	  $("#calcData #aMinwage").val(aMinwage);
+	  $("#calcData ").attr("aId", aId);
+ }
+ 
+ $("#calcData input").change( function(){ 
+	 var aId=$("#calcData ").attr("aId")
+	 if (aId!=""){
+		updateCalc(aId);
+	 }
+ })
+ 
+ 
+ 
   $("#activeData #deleteNode").click( function(e){
 	  e.preventDefault();
 	   var aId=$("#activeData ").attr("aId")
@@ -805,6 +849,9 @@ interact('.draggable')
 			clearNodeData();
 		}
 })
+ 
+ 
+ 
  
  
  

@@ -16,7 +16,7 @@
 
 
 .node .connector{opacity:0;}
-.active-node {box-shadow:0 0 10px #000;}
+.active-node,  .active-calc{box-shadow:0 0 10px #000;}
 .active-node .connector{opacity:0.5;}
 .active-connector{opacity:1 !important;}
 
