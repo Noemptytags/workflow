@@ -287,6 +287,8 @@ $('.add').click(function(){
 		addConnector( direction, 30, 30, 50, 50); 
 	}
 	
+	
+	
 	if(iType=="connected-node"){
 		var iClass=$(this).attr("data-class");
 		var iCaption=$(this).attr("data-caption");
@@ -339,6 +341,12 @@ $('.add').click(function(){
 		}
 	}
 	
+	if(iType=="calc"){
+		var iMinWage=$(this).attr("data-minwage"); 
+		var iMins=$(this).attr("data-mins");
+		addCalc(iMinWage, iMins, 50, 0);
+	}
+	
 })
 
 
@@ -359,6 +367,9 @@ function addNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
 }
+
+
+
 
 function addGraphitNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){ 
 		//iId=iId || "";
@@ -436,6 +447,22 @@ function addGraphitConnector(id1, id2){
 	})
 	}
 }
+
+
+function addCalc(iMinWage, iMins, iTop, iLeft){ 
+		var item = $('<div  class="calc draggable"><p > Calculator </p> <p> minWage:' + iMinWage + '  mins:'+ iMins+'</p>  </div>');
+		$('#dragArea').append(item);
+		item.css( "top", iTop+"px");
+		item.css( "left", iLeft+"px");
+		
+		$(item).on('click touchstart', function(){
+		
+		
+	})
+		
+		
+}
+
 
 // graphit connector utilities
 
@@ -574,7 +601,11 @@ $('.dragIn').on(
 		}
 		//e.originalEvent.dataTransfer.setData("text", e.target.id);
 		
-		
+		if (iType=="calc"){
+			data.iType=iType;
+			data.iMinwage=$(el).attr("data-minwage");
+			data.iMins=$(el).attr("data-mins");
+		}
 		e.originalEvent.dataTransfer.setData("text", JSON.stringify(data));
 		//e.dataTransfer.setData("data", JSON.stringify(data));
     }
@@ -663,6 +694,13 @@ $('#dragArea').on(
 			var xoffset=-50;
 			var yoffset=-50;
 			addConnectedNode(data.iClass, data.iCaption, data.iTooltip, y+yoffset, x+xoffset);
+		}
+		
+		
+		if(data.iType=="calc"){ 
+			var xoffset=-50;
+			var yoffset=-50;
+			addCalc(data.iMinwage, data.iMins, y+yoffset, x+xoffset);
 		}
 		
 })
