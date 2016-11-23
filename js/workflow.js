@@ -116,7 +116,12 @@ function clearWorkflow(){
 // delete on keypress
 $('html').keyup(function(e){ if(e.keyCode == 46) { deleteNodeAndConnectors(); } });
 // delete on main trash button press
-$('.trash').click(function(){ deleteNodeAndConnectors(); });
+$('.trash').click(function(){ 
+	
+	deleteNodeAndConnectors(); 
+	$(".active-calc").remove();
+
+});
 
 function deleteNodeAndConnectors(nodeId) {
 	// if nodeId is already known
@@ -291,6 +296,8 @@ $('.add').click(function(){
 		addConnector( direction, 30, 30, 50, 50); 
 	}
 	
+	
+	
 	if(iType=="connected-node"){
 		var iClass=$(this).attr("data-class");
 		var iCaption=$(this).attr("data-caption");
@@ -343,6 +350,12 @@ $('.add').click(function(){
 		}
 	}
 	
+	if(iType=="calc"){
+		var iMinWage=$(this).attr("data-minwage"); 
+		var iMins=$(this).attr("data-mins");
+		addCalc(iMinWage, iMins, 50, 0);
+	}
+	
 })
 
 
@@ -363,6 +376,9 @@ function addNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
 }
+
+
+
 
 function addGraphitNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){ 
 		//iId=iId || "";
@@ -423,6 +439,9 @@ function addGraphitConnector(id1, id2){
 	var newConnector = new Connector(newdiv, canvas);
 	newConnector.initConnector();
 	canvas.connectors.push(newConnector);
+	
+
+
 
 	$(newlabel).on('click touchstart', function(){
 		classes = this.dataset.parent
@@ -437,6 +456,20 @@ function addGraphitConnector(id1, id2){
 	})
 	}
 }
+
+
+function addCalc(iMinwage, iMins, iTop, iLeft){ 
+
+		nodeCount++;
+		iId ="code"+nodeCount.toString();
+		
+		var item = $('<div id="'+iId+'" class="calc draggable"><p > Calculator </p> <p>min wage:<span class="minwage">' + iMinwage + '</span><p>  <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: <span class="saving"> </span><p></div>');
+		$('#dragArea').append(item);
+		item.css( "top", iTop+"px");
+		item.css( "left", iLeft+"px");
+		
+}
+
 
 // graphit connector utilities
 
@@ -460,7 +493,7 @@ $(".node ").on('click touchstart',function() {
 })
 
 
-function makeActive(elem){
+function makeActive(elem){ 
 	if ($(elem).hasClass("node")){
 		node = $(elem);
 	}
@@ -481,6 +514,8 @@ function makeActive(elem){
 		$("#nodedata").slideDown();
 	}
 }
+
+
 
 
 
@@ -579,7 +614,11 @@ $('.dragIn').on(
 		}
 		//e.originalEvent.dataTransfer.setData("text", e.target.id);
 		
-		
+		if (iType=="calc"){
+			data.iType=iType;
+			data.iMinwage=$(el).attr("data-minwage");
+			data.iMins=$(el).attr("data-mins");
+		}
 		e.originalEvent.dataTransfer.setData("text", JSON.stringify(data));
 		//e.dataTransfer.setData("data", JSON.stringify(data));
     }
@@ -670,6 +709,13 @@ $('#dragArea').on(
 			addConnectedNode(data.iClass, data.iCaption, data.iTooltip, y+yoffset, x+xoffset);
 		}
 		
+		
+		if(data.iType=="calc"){ 
+			var xoffset=-50;
+			var yoffset=-50;
+			addCalc(data.iMinwage, data.iMins, y+yoffset, x+xoffset);
+		}
+		
 })
  
 
@@ -707,16 +753,19 @@ interact('.draggable')
   .on('tap', function (event) {
 	 // event.preventDefault();
 	// event.stopPropagation();
-	var node
-	if ($(event.target).hasClass("node")){
-		node = $(event.target);
-		$(event.target).addClass("active-node")
+	var calc
+	if ($(event.target).hasClass("calc")){
+		calc = $(event.target);
+		$(event.target).addClass("active-calc")
+		
 	}else{
-		node = $(event.target).parents(".node");
+		calc = $(event.target).parents(".calc");
+		
 	}
-	$(node).addClass("active-node");
 	
-	$("#nodedata").slideDown();
+	$("#calc").slideDown();
+	$(calc).addClass("active-calc");
+	loadCalcData(calc);
 	
   })
   ;
@@ -725,9 +774,13 @@ interact('.draggable')
 	//TO DO - too much DOM inspection here on every click - have a think about a more effecient way to deselect a node
 	if($(event.target).parents(".node").length==0 && !$(event.target).hasClass("node")  ){
 		 $(".node").removeClass("active-node")
-		 
 		  clearNodeData();
-		// $("#nodedata").slideUp();
+	}
+	
+	
+	if($(event.target).parents(".calc").length==0 && !$(event.target).hasClass("calc")  ){
+		 $(".calc").removeClass("active-calc")
+		  clearCalcData();
 	}
 
 	if($(event.target).parents(".destination-label").length==0 && !$(event.target).hasClass("destination-label")){
@@ -783,7 +836,7 @@ function clearNodeData(){
 	$("#activeData #aTimeHolder").hide();
 	$("#activeData").attr("aId", aId);
 }
- 
+
 $("#activeData input").change(function(){ 
 	var aId=$("#activeData").attr("aId");
 	if (aId!=""){
@@ -810,6 +863,51 @@ $("#controls #aTimer").change(function() {
 });
  
  
+ function loadCalcData(calc){
+	  var aMinwage=parseFloat($(calc).find(".minwage").text());
+	  var aMins=parseFloat($(calc).find(".mins").text());
+	  var aId=$(calc).attr("id");
+	  $("#calcData #aMinwage").val(aMinwage);
+	  $("#calcData #aMins").val(aMins);
+	  $("#calcData ").attr("aId", aId);
+ }
+
+ function updateCalc(calcId){
+	var calc=$("#dragArea #" +calcId);
+	var iMinwage=$("#calcData #aMinwage").val();
+	var iMins=$("#calcData #aMins").val();
+	var iSaving="xxxx";
+	$(calc).find(".minwage").text(iMinwage);
+	$(calc).find(".mins").text(iMins);
+	$(calc).find(".saving").text(iSaving);
+ }
+ 
+ function clearCalcData(){
+	  var aMinwage="";
+	  var aMins="";
+	  var aId="";
+	  $("#calcData #aMinwage").val(aMinwage);
+	  $("#calcData #aMins").val(aMins);
+	  $("#calcData ").attr("aId", aId);
+ }
+ 
+$("#calcData input").change( function(){ 
+	var aId=$("#calcData ").attr("aId")
+	if (aId!=""){
+		updateCalc(aId);
+	}
+});
+ 
+ 
+ 
+ $("#activeData #deleteNode").click( function(e){
+	e.preventDefault();
+	var aId=$("#activeData ").attr("aId")
+	if (aId!=""){
+		deleteNodeAndConnectors(aId);
+		clearNodeData();
+	}
+});
  
   interact('.draggable .text')
   .on('tap', function (event) {

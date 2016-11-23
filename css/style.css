@@ -22,7 +22,7 @@
 
 
 .node .connector{opacity:0;}
-.active-node {box-shadow:0 0 10px #000;}
+.active-node,  .active-calc{box-shadow:0 0 10px #000;}
 .active-node .connector{opacity:0.5;}
 .active-connector{opacity:1 !important;}
 
@@ -334,7 +334,18 @@
 	text-align:center;
 }
 
-
+.calc{
+  width: 200px;
+  height: 150px;
+  position:absolute;
+  background:#ccc;
+  color: black;
+  text-align:center;
+  border-radius: 0.75em;
+  padding: 10px;
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+}
 
 
 
