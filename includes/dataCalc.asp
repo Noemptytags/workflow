@@ -16,7 +16,7 @@
 			 
 		</form>
 	  
-		<div class="add dragIn" draggable="true" data-type="calc" data-minwage="7.04" data-mins="0" ><span class="icon glyphicon glyphicon-cog"></span><p>add new</p></div>
+		<div class="add dragIn" draggable="true" data-type="calc" data-minwage="7.04" data-mins="0" ><span class="icon glyphicon glyphicon-plus"></span></div>
 			
 
 

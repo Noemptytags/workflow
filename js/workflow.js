@@ -463,7 +463,7 @@ function addCalc(iMinwage, iMins, iTop, iLeft){
 		nodeCount++;
 		iId ="code"+nodeCount.toString();
 		
-		var item = $('<div id="'+iId+'" class="calc draggable"><p > Calculator </p> <p>min wage:<span class="minwage">' + iMinwage + '</span><p>  <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: <span class="saving"> </span><p></div>');
+		var item = $('<div id="'+iId+'" class="calc draggable"><p > Calculator </p> <p>min wage: $<span class="minwage">' + iMinwage + '</span><p>  <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: $<span class="saving">0</span><p></div>');
 		$('#dragArea').append(item);
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
@@ -874,12 +874,12 @@ $("#controls #aTimer").change(function() {
 
  function updateCalc(calcId){
 	var calc=$("#dragArea #" +calcId);
-	var iMinwage=$("#calcData #aMinwage").val();
-	var iMins=$("#calcData #aMins").val();
-	var iSaving="xxxx";
+	var iMinwage=parseFloat($("#calcData #aMinwage").val());
+	var iMins=parseFloat($("#calcData #aMins").val());
+	var iSaving=(iMinwage/60) * iMins * 5 * 5 * 45;
 	$(calc).find(".minwage").text(iMinwage);
 	$(calc).find(".mins").text(iMins);
-	$(calc).find(".saving").text(iSaving);
+	$(calc).find(".saving").text(iSaving.toFixed(2));
  }
  
  function clearCalcData(){
