@@ -1033,9 +1033,15 @@ function ConnectorEnd(htmlElement, connector, side)
 	this.orientation;
 	
 	this.repaint = function()
-	{
+	{ 
 		this.htmlElement.style.position = 'absolute';
-				
+		
+		//this.getOffsetTop();
+		//this.getOffsetLeft();		
+		
+		calculateOffsetTop(this.htmlElement)
+		calculateOffsetLeft(this.htmlElement)
+		
 		var left;
 		var top;
 		var segment;
@@ -1061,8 +1067,10 @@ function ConnectorEnd(htmlElement, connector, side)
 			orientation = segment.orientation;
 		}
 		
+		
+		
 		switch(orientation)
-		{
+		{ 
 			case LEFT:
 				top -= (this.htmlElement.offsetHeight - segment.thickness) / 2;
 				break;
@@ -1078,6 +1086,11 @@ function ConnectorEnd(htmlElement, connector, side)
 				left -= (this.htmlElement.offsetWidth - segment.thickness) / 2;
 				break;
 		}
+		
+		console.log(htmlElement.offsetHeight)
+		console.log(htmlElement.offsetWidth)
+		
+		
 		
 		this.htmlElement.style.left = Math.ceil(left) + "px";
 		this.htmlElement.style.top = Math.ceil(top) + "px";
@@ -1098,7 +1111,7 @@ function ConnectorEnd(htmlElement, connector, side)
 	}
 	
 	this.onMove = function()
-	{
+	{ 
 		this.repaint();
 	}
 }
