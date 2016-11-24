@@ -106,27 +106,16 @@ function BlocksToMoveVisitor()
 var blocksToMoveScanner = new DocumentScanner(new BlocksToMoveVisitor(), true);
 
 function movemouse(e)
-{ 
+{
 	if (isdrag)
 	{
 		var currentMouseX = nn6 ? e.clientX : event.clientX;
 		var currentMouseY = nn6 ? e.clientY : event.clientY;
-		
-		if ( e.targetTouches) {
-		   if (e.targetTouches[0] !== undefined && e.targetTouches[0].pageX!==undefined){
-				currentMouseX = e.targetTouches[0].pageX;
-			}
-			if (e.targetTouches[0] !== undefined && e.targetTouches[0].pageY){
-				currentMouseY = e.targetTouches[0].pageY;
-			}
-		}
-		
 		var newElementX = elementStartX + currentMouseX - mouseStartX;
 		var newElementY = elementStartY + currentMouseY - mouseStartY;
 
 		// check bounds
 		// note: the "-1" and "+1" is to avoid borders overlap
-	
 		if(newElementX < bounds[0])
 			newElementX = bounds[0] + 1;
 		if(newElementX + elementToMove.offsetWidth > bounds[2])
@@ -145,11 +134,6 @@ function movemouse(e)
 	
 		elementToMove.style.right = null;
 		elementToMove.style.bottom = null;
-		
-		if (currentMouseX != mouseStartX || currentMouseY != mouseStartY){
-			$(elementToMove).addClass("dragged");
-			$(elementToMove).removeClass("new");
-		}
 		
 		var i;
 		for(i = 0; i < blocksToMove.length; i++)
@@ -171,16 +155,14 @@ function startDrag(e)
 	if(eventSource.tagName == 'HTML')
 		return;
 
-	while (eventSource != document.body && !hasClass(eventSource, "draggable-graphit"))
+	while (eventSource != document.body && !hasClass(eventSource, "draggable"))
 	{  	
 		eventSource = nn6 ? eventSource.parentNode : eventSource.parentElement;
 	}
 
 	// if a draggable element was found, calculate its actual position
-	if (hasClass(eventSource, "draggable-graphit"))
+	if (hasClass(eventSource, "draggable"))
 	{
-
-		
 		isdrag = true;
 		elementToMove = eventSource;
 
@@ -192,25 +174,11 @@ function startDrag(e)
 		elementStartY = elementToMove.offsetTop;
 		
 		// calculate mouse start point
-		
 		mouseStartX = nn6 ? e.clientX : event.clientX;
 		mouseStartY = nn6 ? e.clientY : event.clientY;
 		
-		if ( e.targetTouches) {
-		   if (e.targetTouches[0] !== undefined && e.targetTouches[0].pageX!==undefined){
-				mouseStartX = e.targetTouches[0].pageX;
-			}
-			if (e.targetTouches[0] !== undefined && e.targetTouches[0].pageY){
-				mouseStartY = e.targetTouches[0].pageY;
-			}
-		}
-		
-		
-		
-		
-		
 		// calculate bounds as left, top, width, height of the parent element
-		if(getStyle(elementToMove.parentNode, "position") == 'absolute' || getStyle(elementToMove.parentNode, "position") == 'relative')
+		if(getStyle(elementToMove.parentNode, "position") == 'absolute')
 		{
 			bounds[0] = 0;
 			bounds[1] = 0;
@@ -220,10 +188,6 @@ function startDrag(e)
 			bounds[0] = calculateOffsetLeft(elementToMove.parentNode);
 			bounds[1] = calculateOffsetTop(elementToMove.parentNode);
 		}
-		
-		
-		
-		
 		bounds[2] = bounds[0] + elementToMove.parentNode.offsetWidth;
 		bounds[3] = bounds[1] + elementToMove.parentNode.offsetHeight;		
 		
@@ -232,7 +196,6 @@ function startDrag(e)
 		
 		blocksToMoveScanner.scan(eventSource);
 		document.onmousemove = movemouse;
-		document.ontouchmove = movemouse;
 		
 		originalZIndex = getStyle(elementToMove, "z-index");
 		elementToMove.style.zIndex = "3";
@@ -251,9 +214,7 @@ function stopDrag(e)
 }
 
 document.onmousedown = startDrag;
-document.ontouchstart = startDrag;
 document.onmouseup = stopDrag;
-document.ontouchend = stopDrag;
 
 
 
@@ -300,6 +261,7 @@ function Canvas(htmlElement)
 	// create the inner div element
 	this.innerDiv = document.createElement("div");
 	
+	
 	this.getOffsetTop = function(){
 		this.offsetTop = calculateOffsetTop(this.innerDiv);
 		return (this.offsetTop);
@@ -311,8 +273,6 @@ function Canvas(htmlElement)
 	
 	this.initCanvas = function()
 	{
-		
-		
 		// setup the inner div
 		var children = this.htmlElement.childNodes;
 		var i;
@@ -459,20 +419,14 @@ function Block(htmlElement, canvas)
 	
 	if(this.id == 'description2_out1')
 		var merda = 0;
-
 	
 	
 	//check if screen has resized
 	this.canvas.getOffsetTop();
 	this.canvas.getOffsetLeft();
-		
+	
 	this.currentTop = calculateOffsetTop(this.htmlElement) - this.canvas.offsetTop;
 	this.currentLeft = calculateOffsetLeft(this.htmlElement) - this.canvas.offsetLeft;
-	
-	
-	
-	
-	
 	
 	this.visit = function(element)
 	{
@@ -502,7 +456,7 @@ function Block(htmlElement, canvas)
 	}
 	
 	this.top = function()
-	{	
+	{
 		return this.currentTop;
 	}
 	
@@ -571,17 +525,9 @@ function Block(htmlElement, canvas)
 	this.onMove = function()
 	{
 		var i;
-		
-		//check if screen has resized
-		this.canvas.getOffsetTop();
-		this.canvas.getOffsetLeft();
-		
 		this.currentLeft = calculateOffsetLeft(this.htmlElement) - this.canvas.offsetLeft;
 		this.currentTop = calculateOffsetTop(this.htmlElement) - this.canvas.offsetTop;
 		// notify listeners
-		
-		
-	
 		for(i = 0; i < this.moveListeners.length; i++)
 		{
 			this.moveListeners[i].onMove();
@@ -1033,15 +979,9 @@ function ConnectorEnd(htmlElement, connector, side)
 	this.orientation;
 	
 	this.repaint = function()
-	{ 
+	{
 		this.htmlElement.style.position = 'absolute';
-		
-		//this.getOffsetTop();
-		//this.getOffsetLeft();		
-		
-		calculateOffsetTop(this.htmlElement)
-		calculateOffsetLeft(this.htmlElement)
-		
+				
 		var left;
 		var top;
 		var segment;
@@ -1067,10 +1007,8 @@ function ConnectorEnd(htmlElement, connector, side)
 			orientation = segment.orientation;
 		}
 		
-		
-		
 		switch(orientation)
-		{ 
+		{
 			case LEFT:
 				top -= (this.htmlElement.offsetHeight - segment.thickness) / 2;
 				break;
@@ -1087,16 +1025,11 @@ function ConnectorEnd(htmlElement, connector, side)
 				break;
 		}
 		
-	
-		
-		
-		
-		
 		this.htmlElement.style.left = Math.ceil(left) + "px";
 		this.htmlElement.style.top = Math.ceil(top) + "px";
 		
 		if(this.htmlElement.tagName.toLowerCase() == "img" && this.orientation != orientation)
-		{ 
+		{
 			var orientationSuffix;
 			switch(orientation)
 			{
@@ -1108,16 +1041,10 @@ function ConnectorEnd(htmlElement, connector, side)
 			this.htmlElement.src = this.src + "_" + orientationSuffix + this.srcExtension;
 		}
 		this.orientation = orientation;
-		
-		
-		//console.log(this.htmlElement.offsetHeight)
-		//console.log(this.htmlElement.offsetWidth)
-		//console.log(this.htmlElement)
-		
 	}
 	
 	this.onMove = function()
-	{ 
+	{
 		this.repaint();
 	}
 }
@@ -1156,36 +1083,18 @@ function SideConnectorLabel(connector, htmlElement, side)
 			segment = this.connector.getEndSegment();
 			left = segment.getEndX();
 			top = segment.getEndY();
-			/*if(segment.orientation == RIGHT)
+			if(segment.orientation == RIGHT)
 				left -= this.htmlElement.offsetWidth;
 			if(segment.orientation == DOWN)
 				top -= this.htmlElement.offsetHeight;
 			if((segment.orientation & HORIZONTAL) != 0 && top < this.connector.getStartSegment().startY)
 				top -= this.htmlElement.offsetHeight;
 			if((segment.orientation & VERTICAL) != 0 && left < this.connector.getStartSegment().startX)
-				left -= this.htmlElement.offsetWidth;*/
-
-			if(segment.orientation == RIGHT) {
 				left -= this.htmlElement.offsetWidth;
-				top -= this.htmlElement.offsetHeight/2;
-			}
-			if(segment.orientation == DOWN) {
-				top -= this.htmlElement.offsetHeight;
-				left -= this.htmlElement.offsetWidth/2;
-			}
-			if((segment.orientation & VERTICAL) != 0 && top < this.connector.getStartSegment().startY) {
-				left -= this.htmlElement.offsetWidth/2;
-			}
-			if((segment.orientation & HORIZONTAL) != 0 && left < this.connector.getStartSegment().startX) {
-				top -= this.htmlElement.offsetHeight/2;
-			}
 		}
 		
 		this.htmlElement.style.left = Math.ceil(left) + "px";
 		this.htmlElement.style.top = Math.ceil(top) + "px";
-
-		var splitted = this.connector.htmlElement.className.split(' ');		
-		this.htmlElement.dataset.parent = splitted[1] + ' ' + splitted[2];
 	}
 	
 	this.onMove = function()
@@ -1306,8 +1215,6 @@ var canvases = new Array();
  */
 function initPageObjects()
 {
-	
-	
 	if(isCanvas(document.body))
 	{
 		var newCanvas = new Canvas(document.body);
@@ -1321,7 +1228,6 @@ function initPageObjects()
 		for(i = 0; i < divs.length; i++)
 		{
 			if(isCanvas(divs[i]) && !findCanvas(divs[i].id))
-			
 			{
 				var newCanvas = new Canvas(divs[i]);
 				newCanvas.initCanvas();
@@ -1379,7 +1285,7 @@ function isCanvas(htmlElement)
  */
 function isConnector(htmlElement)
 {
-	return htmlElement.className && htmlElement.className.match(new RegExp('connector-graphit .*'));
+	return htmlElement.className && htmlElement.className.match(new RegExp('connector .*'));
 }
 
 /*
