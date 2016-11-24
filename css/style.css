@@ -10,7 +10,7 @@
   -webkit-transform: translate(0px, 0px);
           transform: translate(0px, 0px);
 }
-.node .icon{ font-size:60px; }
+.node .icon{ font-size:60px; vertical-align:top; }
 
 .node .text{ min-height:20px; }
 
@@ -240,15 +240,16 @@
 
 #controls .add{
 	display: inline-block;
+	vertical-align:top;
 	height: 40px;
-	width:40px;
-	padding-top:2px;
-	border-radius: 2px;
+	width: 40px;
+	border-radius: 3px;
 	background-color: #2E9D9D;
 	color:#fff;
 	font-size:25px;
 	text-align:center;
-	margin:5px;
+	margin:0 10px 10px 0;
+	cursor:pointer;
 }
 
 #controls .add-connector{

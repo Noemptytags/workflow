@@ -202,3 +202,110 @@ h1,  h2,  h3,  h4,  h5, h6 {
 
 /* bootstrap override*/
 .btn-primary {background-color: #2E9D9D !important;}
+
+
+/*------------------------------------------*/
+/*          ICON GRAPHICS                   */
+/*------------------------------------------*/
+
+.node { color:#333; }
+
+#controls .add {
+	background:#fff;
+	color:#333;
+}
+
+.icon.flaticon-user:before,
+.icon.glyphicon-duplicate:before,
+.icon.glyphicon-envelope:before,
+.icon.flaticon-smartphone-1:before,
+.icon.glyphicon-download-alt:before,
+.icon.flaticon-database-1:before,
+.icon.glyphicon-camera:before,
+.icon.glyphicon-hdd:before,
+.icon.glyphicon-phone:before,
+.icon.glyphicon-print:before,
+.icon.glyphicon-leaf:before,
+.icon.glyphicon-usd:before,
+.icon.flaticon-archive:before,
+.icon.glyphicon-picture:before,
+.icon.glyphicon-stats:before,
+.icon.glyphicon-barcode:before,
+.icon.glyphicon-time:before,
+.icon.glyphicon-phone-alt:before,
+.icon.glyphicon-trash:before  { 
+	background: url(../icons/xer_male_black.png) center center no-repeat; 
+	content: " "; 
+	height: 40px;
+    width: 40px;
+	display: inline-block;
+	background-size: 40px auto;
+}
+
+.node .icon.flaticon-user:before,
+.node .icon.glyphicon-duplicate:before,
+.node .icon.glyphicon-envelope:before,
+.node .icon.flaticon-smartphone-1:before,
+.node .icon.glyphicon-download-alt:before,
+.node .icon.flaticon-database-1:before,
+.node .icon.glyphicon-camera:before,
+.node .icon.glyphicon-hdd:before,
+.node .icon.glyphicon-phone:before,
+.node .icon.glyphicon-print:before,
+.node .icon.glyphicon-leaf:before,
+.node .icon.glyphicon-usd:before,
+.node .icon.flaticon-archive:before,
+.node .icon.glyphicon-picture:before,
+.node .icon.glyphicon-stats:before,
+.node .icon.glyphicon-barcode:before,
+.node .icon.glyphicon-time:before,
+.node .icon.glyphicon-phone-alt:before,
+.node .icon.glyphicon-trash:before  { 
+    height: 70px;
+    width: 70px;    
+    background-size: 85px auto; 
+}
+
+.node .icon.flaticon-user,
+.node .icon.glyphicon-duplicate,
+.node .icon.glyphicon-envelope,
+.node .icon.flaticon-smartphone-1,
+.node .icon.glyphicon-download-alt,
+.node .icon.flaticon-database-1,
+.node .icon.glyphicon-camera,
+.node .icon.glyphicon-hdd,
+.node .icon.glyphicon-phone,
+.node .icon.glyphicon-print,
+.node .icon.glyphicon-leaf,
+.node .icon.glyphicon-usd,
+.node .icon.flaticon-archive,
+.node .icon.glyphicon-picture,
+.node .icon.glyphicon-stats,
+.node .icon.glyphicon-barcode,
+.node .icon.glyphicon-time,
+.node .icon.glyphicon-phone-alt,
+.node .icon.glyphicon-trash {
+	width: 70px;
+    height: 70px;
+    display: inline-block
+}
+
+.icon.flaticon-user:before { background-image: url(../icons/xer_male_black.png); }
+.icon.glyphicon-duplicate:before { background-image: url(../icons/xer_documents_black.png); }
+.icon.glyphicon-envelope:before { background-image: url(../icons/xer_document_black.png); }
+.icon.flaticon-smartphone-1:before { background-image: url(../icons/xer_smartphone_black.png); }
+.icon.glyphicon-download-alt:before { background-image: url(../icons/xer_document_2pg_black.png); }
+.icon.flaticon-database-1:before { background-image: url(../icons/xer_server_stack_black.png); }
+.icon.glyphicon-camera:before { background-image: url(../icons/xer_camera_black.png); }
+.icon.glyphicon-hdd:before { background-image: url(../icons/xer_laptop_black.png); }
+.icon.glyphicon-phone:before { background-image: url(../icons/xer_tablet_black.png); }
+.icon.glyphicon-print:before { background-image: url(../icons/xer_decision_black.png); }
+.icon.glyphicon-leaf:before { background-image: url(../icons/xer_download_black.png); }
+.icon.glyphicon-usd:before { background-image: url(../icons/xer_presentation_black.png); }
+.icon.flaticon-archive:before { background-image: url(../icons/xer_save_black.png); }*/
+.icon.glyphicon-picture:before { background-image: url(../icons/xer_cross_media_black.png); }
+.icon.glyphicon-stats:before { background-image: url(../icons/xer_data_black.png); }
+.icon.glyphicon-barcode:before { background-image: url(../icons/xer_inventory_black.png); }
+.icon.glyphicon-time:before { background-image: url(../icons/xer_time_black.png); }
+.icon.glyphicon-phone-alt:before { background-image: url(../icons/xer_landline_phone_black.png); }
+.icon.glyphicon-trash:before { background-image: url(../icons/xer_garbage_bin_black.png); }

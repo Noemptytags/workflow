@@ -358,7 +358,6 @@ $('.add').click(function(){
 	
 })
 
-
 //swap node
 function swapNode(iClass, iCaption,  iTooltip, iId){ 
 	var existingNode=$("#dragArea ." +iId)[0];
@@ -368,24 +367,21 @@ function swapNode(iClass, iCaption,  iTooltip, iId){
 
 //add node
 function addNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
-		iId=iId || "";
-		var item = $('<div  class="node draggable '+iId+'"><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text"> '+ iCaption +' </p>   </div>');
-		
-		 $(item).find('[data-toggle="tooltip"]').tooltip();
-		$('#dragArea').append(item);
-		item.css( "top", iTop+"px");
-		item.css( "left", iLeft+"px");
+	iId=iId || "";
+	var item = $('<div  class="node draggable '+iId+'"><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text"> '+ iCaption +' </p>   </div>');
+	
+	 $(item).find('[data-toggle="tooltip"]').tooltip();
+	$('#dragArea').append(item);
+	item.css( "top", iTop+"px");
+	item.css( "left", iLeft+"px");
 }
-
-
-
 
 function addGraphitNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){ 
 		//iId=iId || "";
 		nodeCount++;
 		iId =iId || "node"+nodeCount.toString();
 		nodeID=iId;
-		var item = $('<div id="'+nodeID+'" class="node block draggable-graphit new '+nodeID+'"><span title="Time required in minutes" class="glyphicon glyphicon-time time"></span><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text">' + iCaption + '</p>   </div>');
+		var item = $('<div id="'+nodeID+'" class="node block draggable-graphit new '+nodeID+'"><span title="Time required" class="glyphicon glyphicon-time time"></span><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text">' + iCaption + '</p></div>');
 		
 		$(item).find('[data-toggle="tooltip"]').tooltip();
 		$('#dragArea').prepend(item);
@@ -783,6 +779,10 @@ interact('.draggable')
    
 });
 
+///////////////////////////////////////
+// Tools for loading node data panel //
+///////////////////////////////////////
+
 function loadNodeData(node){
 	var aId=$(node).attr("id");
 	$("#activeData").attr("aId", aId);
@@ -854,21 +854,24 @@ $("#controls #aTimer").change(function() {
 		$("#aTimeHolder").hide();
 	}
 });
- 
- 
- function loadCalcData(calc){
-	 // var aMinwage=parseFloat($(calc).find(".minwage").text());
-	 var aMinwage=parseFloat($(calc).attr("data-minwage"));
-	 
-	  var aMins=parseFloat($(calc).find(".mins").text());
-	  var aId=$(calc).attr("id");
-	  $("#calcData #aMinwage").val(aMinwage);
-	  $("#calcData #aMins").val(aMins);
-	  $("#calcData ").attr("aId", aId);
-	  $("#calcData input").removeAttr('disabled');
- }
 
- function updateCalc(calcId){
+///////////////////////////////////////
+// Tools for loading CS Calculator   //
+///////////////////////////////////////
+
+function loadCalcData(calc){
+	// var aMinwage=parseFloat($(calc).find(".minwage").text());
+	var aMinwage=parseFloat($(calc).attr("data-minwage"));
+
+	var aMins=parseFloat($(calc).find(".mins").text());
+	var aId=$(calc).attr("id");
+	$("#calcData #aMinwage").val(aMinwage);
+	$("#calcData #aMins").val(aMins);
+	$("#calcData ").attr("aId", aId);
+	$("#calcData input").removeAttr('disabled');
+}
+
+function updateCalc(calcId){
 	var calc=$("#dragArea #" +calcId);
 	var iMinwage=parseFloat($("#calcData #aMinwage").val());
 	var iMins=parseFloat($("#calcData #aMins").val());
@@ -877,9 +880,9 @@ $("#controls #aTimer").change(function() {
 	$(calc).attr("data-minwage", iMinwage);
 	$(calc).find(".mins").text(iMins);
 	$(calc).find(".saving").text(iSaving.toFixed(2));
- }
+}
  
- function clearCalcData(){
+function clearCalcData(){
 	  var aMinwage="";
 	  var aMins="";
 	  var aId="";
@@ -887,7 +890,7 @@ $("#controls #aTimer").change(function() {
 	  $("#calcData #aMins").val(aMins);
 	  $("#calcData ").attr("aId", aId);
 	  $("#calcData input").attr('disabled','disabled');
- }
+}
  
 $("#calcData input").change( function(){ 
 	var aId=$("#calcData ").attr("aId")
@@ -896,9 +899,7 @@ $("#calcData input").change( function(){
 	}
 });
  
- 
- 
- $("#activeData #deleteNode").click( function(e){
+$("#activeData #deleteNode").click( function(e){
 	e.preventDefault();
 	var aId=$("#activeData ").attr("aId")
 	if (aId!=""){
@@ -906,6 +907,11 @@ $("#calcData input").change( function(){
 		clearNodeData();
 	}
 });
+
+
+///////////////////////////////////////
+// old interact code                 //
+///////////////////////////////////////
  
   interact('.draggable .text')
   .on('tap', function (event) {
