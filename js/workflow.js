@@ -463,7 +463,7 @@ function addCalc(iMinwage, iMins, iTop, iLeft){
 		nodeCount++;
 		iId ="code"+nodeCount.toString();
 		
-		var item = $('<div id="'+iId+'" class="calc draggable"><p > Calculator </p> <p>min wage: $<span class="minwage">' + iMinwage + '</span><p>  <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: $<span class="saving">0</span><p></div>');
+		var item = $('<div id="'+iId+'" class="calc draggable" data-minwage="'+ iMinwage +'"><p > Benefits </p> <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: $<span class="saving">0</span><p></div>');
 		$('#dragArea').append(item);
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
@@ -857,12 +857,15 @@ $("#controls #aTimer").change(function() {
  
  
  function loadCalcData(calc){
-	  var aMinwage=parseFloat($(calc).find(".minwage").text());
+	 // var aMinwage=parseFloat($(calc).find(".minwage").text());
+	 var aMinwage=parseFloat($(calc).attr("data-minwage"));
+	 
 	  var aMins=parseFloat($(calc).find(".mins").text());
 	  var aId=$(calc).attr("id");
 	  $("#calcData #aMinwage").val(aMinwage);
 	  $("#calcData #aMins").val(aMins);
 	  $("#calcData ").attr("aId", aId);
+	  $("#calcData input").removeAttr('disabled');
  }
 
  function updateCalc(calcId){
@@ -870,7 +873,8 @@ $("#controls #aTimer").change(function() {
 	var iMinwage=parseFloat($("#calcData #aMinwage").val());
 	var iMins=parseFloat($("#calcData #aMins").val());
 	var iSaving=(iMinwage/60) * iMins * 5 * 5 * 45;
-	$(calc).find(".minwage").text(iMinwage);
+	//$(calc).find(".minwage").text(iMinwage);
+	$(calc).attr("data-minwage", iMinwage);
 	$(calc).find(".mins").text(iMins);
 	$(calc).find(".saving").text(iSaving.toFixed(2));
  }
@@ -882,6 +886,7 @@ $("#controls #aTimer").change(function() {
 	  $("#calcData #aMinwage").val(aMinwage);
 	  $("#calcData #aMins").val(aMins);
 	  $("#calcData ").attr("aId", aId);
+	  $("#calcData input").attr('disabled','disabled');
  }
  
 $("#calcData input").change( function(){ 
