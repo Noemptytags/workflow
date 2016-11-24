@@ -1038,11 +1038,10 @@ function ConnectorEnd(htmlElement, connector, side)
 		this.htmlElement.style.position = 'absolute';
 
 		
-		//this.getOffsetTop();
-		//this.getOffsetLeft();		
+			
 		
-		calculateOffsetTop(this.htmlElement)
-		calculateOffsetLeft(this.htmlElement)
+		//calculateOffsetTop(this.htmlElement)
+		//calculateOffsetLeft(this.htmlElement)
 		
 		var left;
 		var top;
