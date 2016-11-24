@@ -37,6 +37,7 @@
 			<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-phone" data-caption="phone" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-phone" ></span></div>
 			<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-hdd" data-caption="harddrive" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-hdd" ></span></div>
 			<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-smartphone-1" data-caption="smart phone" data-tooltip="tool tip text"><span class="icon flaticon-smartphone-1"></span></div>
+			<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-phone-alt" data-caption="phone" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-phone-alt" ></span></div>
 			<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-database-1" data-caption="database" data-tooltip="tool tip text"><span class="icon flaticon-database-1"></span></div>
 		 </div>
 	  </div> 

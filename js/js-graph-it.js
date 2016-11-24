@@ -1035,10 +1035,8 @@ function ConnectorEnd(htmlElement, connector, side)
 	
 	this.repaint = function()
 	{ 
-		this.htmlElement.style.position = 'absolute';
 
-		
-			
+		this.htmlElement.style.position = 'absolute';	
 		
 		//calculateOffsetTop(this.htmlElement)
 		//calculateOffsetLeft(this.htmlElement)
@@ -1067,8 +1065,7 @@ function ConnectorEnd(htmlElement, connector, side)
 			top = segment.getEndY();
 			orientation = segment.orientation;
 		}
-		
-		
+
 		
 		switch(orientation)
 
@@ -1089,11 +1086,6 @@ function ConnectorEnd(htmlElement, connector, side)
 				break;
 		}
 		
-	
-		
-		
-		
-		
 		this.htmlElement.style.left = Math.ceil(left) + "px";
 		this.htmlElement.style.top = Math.ceil(top) + "px";
 		
@@ -1111,7 +1103,6 @@ function ConnectorEnd(htmlElement, connector, side)
 			this.htmlElement.src = this.src + "_" + orientationSuffix + this.srcExtension;
 		}
 		this.orientation = orientation;
-		
 		
 		//console.log(this.htmlElement.offsetHeight)
 		//console.log(this.htmlElement.offsetWidth)

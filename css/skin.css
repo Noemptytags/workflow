@@ -233,7 +233,7 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .icon.glyphicon-barcode:before,
 .icon.glyphicon-time:before,
 .icon.glyphicon-phone-alt:before,
-.icon.glyphicon-trash:before  { 
+#pallets .icon.glyphicon-trash:before  { 
 	background: url(../icons/xer_male_black.png) center center no-repeat; 
 	content: " "; 
 	height: 40px;
@@ -263,7 +263,7 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .node .icon.glyphicon-trash:before  { 
     height: 70px;
     width: 70px;    
-    background-size: 85px auto; 
+    background-size: 115px auto; 
 }
 
 .node .icon.flaticon-user,

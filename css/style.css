@@ -14,9 +14,9 @@
 
 .node .text{ min-height:20px; }
 
-.node .time{ position:absolute; right:5px; top:18px; font-size:0.8em; font-family:inherit; display:none; }
+.node .time{ position:absolute; right:5px; top:5px; font-size:0.8em; font-family:inherit; display:none; }
 
-.node .time:before { position: absolute; top: -13px; right: 0; font-family: 'Glyphicons Halflings'; }
+.node .time:before { position: absolute; top: 15px; right: 0px; font-family: 'Glyphicons Halflings'; }
 
 
 
@@ -279,7 +279,7 @@
 	background:#fff;
 	border-radius: 4px;
 	margin: 10px auto 0px;
-	padding: 10px 0;
+	padding: 9px 0 0;
 	cursor:pointer;
 }
 
