@@ -463,7 +463,7 @@ function addCalc(iMinwage, iMins, iTop, iLeft){
 		nodeCount++;
 		iId ="code"+nodeCount.toString();
 		
-		var item = $('<div id="'+iId+'" class="calc draggable" data-minwage="'+ iMinwage +'"><p > Benefits </p> <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: $<span class="saving">0</span><p></div>');
+		var item = $('<div id="'+iId+'" class="calc draggable" data-minwage="'+ iMinwage +'"><h5> Benefits </h5> <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: $<span class="saving">0</span><p></div>');
 		$('#dragArea').append(item);
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
