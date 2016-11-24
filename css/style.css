@@ -354,5 +354,5 @@
 
 
 /* pdf styles*/
-#pdf #dragArea{background-image:none;}
+.pdf #dragArea{background-image:none;}
 
