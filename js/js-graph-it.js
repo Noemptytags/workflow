@@ -1087,8 +1087,6 @@ function ConnectorEnd(htmlElement, connector, side)
 				break;
 		}
 		
-		console.log(htmlElement.offsetHeight)
-		console.log(htmlElement.offsetWidth)
 		
 		
 		

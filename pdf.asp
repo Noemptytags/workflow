@@ -17,7 +17,7 @@
 	<script src="js/js-graph-it.js"></script>
 	<script src="js/workflow.js"></script>
 </head>
-<body >
+<body class="pdf">
 <!-- #Include file="includes/pdfheader.asp" -->
 <div class="content">
 

@@ -245,9 +245,9 @@ function extractWorkflow(){
 		left +=(parseInt($(value).css('left'), 10) || 0);
 		top +=(parseInt($(value).css('top'), 10) || 0);
 		
-		item["iId"]= $(value).attr("id");;
+		item["iId"]= $(value).attr("id");
 		item["iType"]="node";
-		item["iClass"]= $(value).find("span").attr("class");
+		item["iClass"]= $(value).find("span.icon").attr("class");
 		item["iCaption"]= $(value).find(".text").text();
 		item["iTooltip"]= $(value).find(".tooltip").text();
 		item["iTop"]= top;

@@ -185,6 +185,8 @@
 	}
 }
 
+
+
 #drawArea{
 	z-index:3;
 	position:absolute; 
@@ -348,4 +350,8 @@
 }
 
 .calc h5{margin-bottom:10px;}
+
+
+/* pdf styles*/
+#pdf #dragArea{background-image:none;}
 
