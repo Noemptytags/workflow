@@ -503,6 +503,7 @@ function Block(htmlElement, canvas)
 	
 	this.top = function()
 	{	
+
 		return this.currentTop;
 	}
 	
@@ -1035,6 +1036,7 @@ function ConnectorEnd(htmlElement, connector, side)
 	this.repaint = function()
 	{ 
 		this.htmlElement.style.position = 'absolute';
+
 		
 		//this.getOffsetTop();
 		//this.getOffsetLeft();		
@@ -1070,6 +1072,7 @@ function ConnectorEnd(htmlElement, connector, side)
 		
 		
 		switch(orientation)
+
 		{ 
 			case LEFT:
 				top -= (this.htmlElement.offsetHeight - segment.thickness) / 2;
@@ -1096,6 +1099,7 @@ function ConnectorEnd(htmlElement, connector, side)
 		this.htmlElement.style.top = Math.ceil(top) + "px";
 		
 		if(this.htmlElement.tagName.toLowerCase() == "img" && this.orientation != orientation)
+
 		{ 
 			var orientationSuffix;
 			switch(orientation)
@@ -1529,12 +1533,16 @@ function HorizontalSStrategy(connector)
 		
 		var hLength;
 		
+
+
+
 		this.startSegment.startY = Math.floor(sourceTop + sourceHeight / 2);
 			
 		// deduce which face to use on source and destination blocks
 		if(sourceLeft + sourceWidth / 2 < destinationLeft + destinationWidth / 2)
 		{
 			// use left side of the source block and right side of the destination block
+
 			this.startSegment.startX = sourceLeft + sourceWidth;
 			hLength = destinationLeft - (sourceLeft + sourceWidth);
 		}
