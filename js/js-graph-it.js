@@ -178,9 +178,7 @@ function startDrag(e)
 
 	// if a draggable element was found, calculate its actual position
 	if (hasClass(eventSource, "draggable-graphit"))
-	{
-
-		
+	{	
 		isdrag = true;
 		elementToMove = eventSource;
 
@@ -205,10 +203,6 @@ function startDrag(e)
 			}
 		}
 		
-		
-		
-		
-		
 		// calculate bounds as left, top, width, height of the parent element
 		if(getStyle(elementToMove.parentNode, "position") == 'absolute' || getStyle(elementToMove.parentNode, "position") == 'relative')
 		{
@@ -220,9 +214,6 @@ function startDrag(e)
 			bounds[0] = calculateOffsetLeft(elementToMove.parentNode);
 			bounds[1] = calculateOffsetTop(elementToMove.parentNode);
 		}
-		
-		
-		
 		
 		bounds[2] = bounds[0] + elementToMove.parentNode.offsetWidth;
 		bounds[3] = bounds[1] + elementToMove.parentNode.offsetHeight;		
@@ -1036,7 +1027,7 @@ function ConnectorEnd(htmlElement, connector, side)
 	this.repaint = function()
 	{ 
 
-		this.htmlElement.style.position = 'absolute';	
+		this.htmlElement.style.position = 'absolute';
 		
 		//calculateOffsetTop(this.htmlElement)
 		//calculateOffsetLeft(this.htmlElement)
@@ -1065,7 +1056,6 @@ function ConnectorEnd(htmlElement, connector, side)
 			top = segment.getEndY();
 			orientation = segment.orientation;
 		}
-
 		
 		switch(orientation)
 
@@ -1239,12 +1229,14 @@ function ConnectorEndsInspector()
 		{
 			if(hasClass(children[i], "connector-end"))
 			{
-				var newElement = new ConnectorEnd(children[i], connector, END);
-				newElement.repaint();
+				console.log('end');
+				var newElement = new ConnectorEnd(children[i], connector, END);			
 				connector.moveListeners.push(newElement);
+				newElement.repaint();
 			}
 			else if(hasClass(children[i], "connector-start"))
 			{
+				console.log('start');
 				var newElement = new ConnectorEnd(children[i], connector, START);
 				newElement.repaint();
 				connector.moveListeners.push(newElement);
