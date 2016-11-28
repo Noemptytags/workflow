@@ -1039,6 +1039,7 @@ function ConnectorEnd(htmlElement, connector, side)
 		
 		if(this.side == START)
 		{
+			//console.log('start');
 			segment = connector.getStartSegment();
 			left = segment.startX;
 			top = segment.startY;
@@ -1051,6 +1052,7 @@ function ConnectorEnd(htmlElement, connector, side)
 		}
 		else
 		{
+			//console.log('end');
 			segment = connector.getEndSegment();
 			left = segment.getEndX();
 			top = segment.getEndY();
@@ -1229,14 +1231,12 @@ function ConnectorEndsInspector()
 		{
 			if(hasClass(children[i], "connector-end"))
 			{
-				//console.log('end');
 				var newElement = new ConnectorEnd(children[i], connector, END);			
 				connector.moveListeners.push(newElement);
 				newElement.repaint();
 			}
 			else if(hasClass(children[i], "connector-start"))
 			{
-				//console.log('start');
 				var newElement = new ConnectorEnd(children[i], connector, START);
 				newElement.repaint();
 				connector.moveListeners.push(newElement);

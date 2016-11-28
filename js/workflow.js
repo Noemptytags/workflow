@@ -425,14 +425,11 @@ function addGraphitConnector(id1, id2){
 		var newarrow = document.createElement('img');
 		newarrow.setAttribute('class','connector-end ' +id1+' '+ id2);
 		newarrow.setAttribute('src','images/arrow.png');
-
-		//var newarrow2 = document.createElement('img');
-		//newarrow2.setAttribute('class','connector-start ' +id1+' '+ id2);
-		//newarrow2.setAttribute('src','images/arrow.png');
+		newarrow.setAttribute('width','7');
+		newarrow.setAttribute('height','7');
 
 		newdiv.appendChild(newlabel);
 		newdiv.appendChild(newarrow);
-		//newdiv.appendChild(newarrow2);
 				
 		var ni = document.getElementById('dragArea');
 		ni.appendChild(newdiv);
