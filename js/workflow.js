@@ -384,7 +384,7 @@ function addGraphitNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
 		var item = $('<div id="'+nodeID+'" class="node block draggable-graphit new '+nodeID+'"><span title="Time required" class="glyphicon glyphicon-time time"></span><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text">' + iCaption + '</p></div>');
 		
 		$(item).find('[data-toggle="tooltip"]').tooltip();
-		$('#dragArea').prepend(item);
+		$('#dragArea').append(item);
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
 		

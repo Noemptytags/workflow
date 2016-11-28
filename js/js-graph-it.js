@@ -1229,14 +1229,14 @@ function ConnectorEndsInspector()
 		{
 			if(hasClass(children[i], "connector-end"))
 			{
-				console.log('end');
+				//console.log('end');
 				var newElement = new ConnectorEnd(children[i], connector, END);			
 				connector.moveListeners.push(newElement);
 				newElement.repaint();
 			}
 			else if(hasClass(children[i], "connector-start"))
 			{
-				console.log('start');
+				//console.log('start');
 				var newElement = new ConnectorEnd(children[i], connector, START);
 				newElement.repaint();
 				connector.moveListeners.push(newElement);

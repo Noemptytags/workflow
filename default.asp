@@ -78,42 +78,10 @@
 			<div id="drawArea">
 				<canvas id="colors_sketch" width="1600" height="1200"></canvas>
 				<img id="saved-image" />
-			</div>
-		
+			</div>	
 		
 			<div id="dragArea" class="canvas">
 
-			  <div class="node block draggable-graphit" id="h1_block" style="left: 10px; top:10px;">
-				<span data-toggle="tooltip" data-placement="top" title="" class="icon glyphicon glyphicon-camera" data-original-title="tool tip text"></span>
-				<p class="text"> camera </p>   
-			  </div>
-			  
-			  
-			  <div class="node block draggable-graphit" id="h2_block" style="left: 200px; top:100px;">
-				<span data-toggle="tooltip" data-placement="top" title="" class="icon glyphicon glyphicon-print" data-original-title="tool tip text"></span>
-				<p class="text"> print </p>   
-			  </div>
-			  
-			   <div class="node block draggable-graphit" id="h3_block" style="left: 300px; top:300px;">
-				<span data-toggle="tooltip" data-placement="top" title="" class="icon glyphicon glyphicon-print" data-original-title="tool tip text"></span>
-				<p class="text"> print again </p>   
-			  </div>
-			  
-			  
-			   <div class="node block draggable-graphit" id="h4_block" style="left: 500px; top:100px;">
-				<span data-toggle="tooltip" data-placement="top" title="" class="icon glyphicon glyphicon-print" data-original-title="tool tip text"></span>
-				<p class="text"> print again </p>   
-			  </div>
-			  
-			   <div class="node block draggable-graphit" id="h5_block" style="left: 300px; top:10px;">
-				<span data-toggle="tooltip" data-placement="top" title="" class="icon glyphicon glyphicon-camera" data-original-title="tool tip text"></span>
-				<p class="text"> free </p>   
-			  </div>
-			  
-			  <div class="connector-graphit h1_block h2_block"><label class="destination-label h1_block h2_block"></label><img class="connector-end h1_block h2_block" src="images/arrow.png"></div>
-			  <div class="connector-graphit h2_block h3_block"><label class="destination-label h2_block h3_block"></label><img class="connector-end h2_block h3_block" src="images/arrow.png"></div>
-			  <div class="connector-graphit h2_block h4_block"><label class="destination-label h2_block h4_block"></label><img class="connector-end h2_block h4_block" src="images/arrow.png"></div>
-	 
 			
 			</div>
 			
