@@ -73,14 +73,14 @@
 		</div>
 		<button title="Show / hide drawing tools" type="button" id="toggle-draw" class="btn btn-default btn-xs"><span class="pencil glyphicon glyphicon-pencil"></span></button>
 		
-		<div class="workArea" id="flow1">
+		<div class="workArea active" id="flow1">
 			
 			<div class="drawArea">
 				<canvas id="flow1-sketch" class="colors_sketch" width="1600" height="1200"></canvas>
 				<img id="saved-image" />
 			</div>	
 		
-			<div id="flow1-canvas" class="dragArea" class="canvas">
+			<div id="flow1-canvas" class="dragArea canvas">
 
 				<div class="node block draggable-graphit" id="h1_block" style="left: 50px; top:50px;">
 					<span data-toggle="tooltip" data-placement="top" title="" class="icon glyphicon glyphicon-camera" data-original-title="tool tip text"></span>
@@ -91,7 +91,7 @@
 			
 		</div>
 
-		<div class="workArea active" id="flow2">
+		<div class="workArea" id="flow2">
 			
 			<div class="drawArea">
 				<canvas id="flow2-sketch" class="colors_sketch" width="1600" height="1200"></canvas>
@@ -111,8 +111,8 @@
 
 	</div>
 	<ul id="flowTabs" class="nav nav-tabs">
-		<li><a href="#" data-target="flow1">Flow 1</a></li>
-		<li class="active"><a href="#" data-target="flow2">Flow 2</a></li>
+		<li class="active"><a href="#" data-target="flow1">Flow 1</a></li>
+		<li><a href="#" data-target="flow2">Flow 2</a></li>
 	</ul>
 	
 </div>
