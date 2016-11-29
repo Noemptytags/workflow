@@ -95,12 +95,12 @@ $(".load-template").click(function() {
 
 $("#load-saved").click(function() {
 	if(!!savedWorkflow){
-		loadWorkflow(savedWorkflow)
+		loadWorkflow(savedWorkflow);
 	}
 	if(!!savedSketch){
-		loadSketch(savedSketch)
+		loadSketch(savedSketch);
 	}
-})
+});
 
 
 function clearWorkflow(){
@@ -199,19 +199,21 @@ function loadSketch(sketch){
 }
 
 function loadWorkflow(workflow){
-	
-	clearWorkflow();
+	// clear current dragArea canvas
+	clearActiveWorkflow();
+	// get current work area wrapper for namespacing nodes
+	var currentArea = $('.workArea.active').prop('id');
 	
 	// add nodes and connectors
-	 for (i=0; i<workflow.length; i++){
+	for (i=0; i<workflow.length; i++){
 		var item=workflow[i];
 		if (item.iType=="node"){
 			//addNode(item.iClass, item.iCaption, item.iTooltip, item.iTop, item.iLeft);
-			addGraphitNode(item.iClass, item.iCaption, item.iTooltip, item.iTop, item.iLeft, item.iId);
+			addGraphitNode(item.iClass, item.iCaption, item.iTooltip, item.iTop, item.iLeft, item.iId+currentArea);
 		}
 		if (item.iType=="connector"){
 			//addConnector(item.iDirection, item.iWidth, item.iHeight, item.iTop, item.iLeft);
-			addGraphitConnector(item.id1, item.id2);
+			addGraphitConnector(item.id1+currentArea, item.id2+currentArea);
 		}
 	}
 }
@@ -222,8 +224,9 @@ $(".save-workflow").click(function(e) {
 	savedWorkflow=extractWorkflow();
 	
 	//to do save to db or local storage
-	var c = document.getElementById("colors_sketch");
-    savedSketch = c.toDataURL();
+	var currentSketch = $('#'+$('.workArea.active').prop('id')+'-sketch')[0];
+
+    savedSketch = currentSketch.toDataURL();
 	
 	// to do add to list of saved workflows
 	$("#load-saved").show();
@@ -494,6 +497,7 @@ function makeActive(elem){
 	else {		
 		$(node).addClass("active-node");
 		$("#nodedata").slideDown();
+		tidyMenu();
 		loadNodeData(node);		
 	}
 }
