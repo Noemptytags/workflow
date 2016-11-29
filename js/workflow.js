@@ -95,32 +95,40 @@ $(".load-template").click(function() {
 
 $("#load-saved").click(function() {
 	if(!!savedWorkflow){
-		loadWorkflow(savedWorkflow)
+		loadWorkflow(savedWorkflow);
 	}
 	if(!!savedSketch){
-		loadSketch(savedSketch)
+		loadSketch(savedSketch);
 	}
-})
+});
 
 
 function clearWorkflow(){
-	
-	$(".dragArea .node, .dragArea .connector, .dragArea .connector, .dragArea .connector-graphit, .dragArea .connector-end ,.dragArea .destination-label").remove();
-	//reset graph-it
-	var canvas = findCanvas('dragArea');
+	// select all elements in every dragArea and remove
+	$(".dragArea .node, .dragArea .connector, .dragArea .connector, .dragArea .connector-graphit, .dragArea .connector-end, .dragArea .destination-label").remove();
+	// reset graph-it by emptying canvas object arrays
+	var i;
+	for(i = 0; i < canvases.length; i++) {
+		canvases[i].blocks=[];
+		canvases[i].connectors=[];
+	}
+}
+
+function clearActiveWorkflow(){
+	// get active dragArea canvas
+	currentWorkflow = $('.workArea.active > .dragArea');
+	// select all elements on dragArea and delete
+	currentWorkflow.find('.node, .connector, .connector-graphit, .connector-end, .destination-label').remove();
+	// get id of current dragArea and empty related object array
+	var canvas = findCanvas($('.workArea.active > .dragArea').prop('id'));
 	canvas.blocks=[];
 	canvas.connectors=[];
 }
 
 // delete on keypress
-$('html').keyup(function(e){ if(e.keyCode == 46) { deleteNodeAndConnectors(); } });
+$('html').keyup(function(e){ if(e.keyCode == 46) { deleteNodeAndConnectors(); $(".active-calc").remove(); } });
 // delete on main trash button press
-$('.trash').click(function(){ 
-	
-	deleteNodeAndConnectors(); 
-	$(".active-calc").remove();
-
-});
+$('.trash').click(function(){ deleteNodeAndConnectors(); $(".active-calc").remove(); });
 
 function deleteNodeAndConnectors(nodeId) {
 	// if nodeId is already known
@@ -154,20 +162,9 @@ function deleteNodeAndConnectors(nodeId) {
 	}
 }
 
-/*function deleteNodeAndConnectors(nodeId){
-	 //find all connectors with nodeId in classname
-	  $("."+nodeId).each(function( index ) {
-		 //console.log( $(this).attr("class"));
-		 var connectorId = $(this).attr("class");
-		 deleteConnector(connectorId);
-	  })
-	  
-	  deleteNode(nodeId);
-}*/
-
 function deleteNode(id){
 	$("#"+id).remove();
-	var canvas = findCanvas('dragArea');
+	var canvas = findCanvas($('.workArea.active > .dragArea').prop('id'));
 	for(i=0; i<canvas.blocks.length; i++){
 		if (canvas.blocks[i].id==id){
 			canvas.blocks.splice(i,1);
@@ -179,8 +176,8 @@ function deleteConnector(id){
 	var cssSelector=id.replace(/\s+/g, '.');
 	
 	$("."+cssSelector).remove();
-	var canvas = findCanvas('dragArea');
-	
+	var canvas = findCanvas($('.workArea.active > .dragArea').prop('id'));
+
 	for(i=0; i<canvas.connectors.length; i++){
 		
 		if (canvas.connectors[i].id==id){
@@ -202,19 +199,21 @@ function loadSketch(sketch){
 }
 
 function loadWorkflow(workflow){
-	
-	clearWorkflow();
+	// clear current dragArea canvas
+	clearActiveWorkflow();
+	// get current work area wrapper for namespacing nodes
+	var currentArea = $('.workArea.active').prop('id');
 	
 	// add nodes and connectors
-	 for (i=0; i<workflow.length; i++){
+	for (i=0; i<workflow.length; i++){
 		var item=workflow[i];
 		if (item.iType=="node"){
 			//addNode(item.iClass, item.iCaption, item.iTooltip, item.iTop, item.iLeft);
-			addGraphitNode(item.iClass, item.iCaption, item.iTooltip, item.iTop, item.iLeft, item.iId);
+			addGraphitNode(item.iClass, item.iCaption, item.iTooltip, item.iTop, item.iLeft, item.iId+currentArea);
 		}
 		if (item.iType=="connector"){
 			//addConnector(item.iDirection, item.iWidth, item.iHeight, item.iTop, item.iLeft);
-			addGraphitConnector(item.id1, item.id2);
+			addGraphitConnector(item.id1+currentArea, item.id2+currentArea);
 		}
 	}
 }
@@ -225,8 +224,9 @@ $(".save-workflow").click(function(e) {
 	savedWorkflow=extractWorkflow("flow1-canvas");
 	
 	//to do save to db or local storage
-	var c = document.getElementById("colors_sketch");
-    savedSketch = c.toDataURL();
+	var currentSketch = $('#'+$('.workArea.active').prop('id')+'-sketch')[0];
+
+    savedSketch = currentSketch.toDataURL();
 	
 	// to do add to list of saved workflows
 	$("#load-saved").show();
@@ -257,9 +257,14 @@ function extractWorkflow(canvasId){
 	
 	//get connectors from graph-it
 	
+
 	var canvas = findCanvas(canvasId);
 	console.log( canvasId)
 	console.log(canvas)
+
+	//var canvas = findCanvas($('.workArea.active > .dragArea').prop('id'));
+	
+
 	for (i=0; i<canvas.connectors.length; i++){
 		var item={};
 		var id=canvas.connectors[i].id;
@@ -498,6 +503,7 @@ function makeActive(elem){
 	else {		
 		$(node).addClass("active-node");
 		$("#nodedata").slideDown();
+		tidyMenu();
 		loadNodeData(node);		
 	}
 }
@@ -553,10 +559,6 @@ function addConnectedNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
 		item.css( "left", iLeft+"px");
 }
 
-
-
-
-
 //add connector
 function addConnector(iDirection, iWidth, iHeight, iTop, iLeft, iId){
 	iId=iId || "";
@@ -569,9 +571,7 @@ function addConnector(iDirection, iWidth, iHeight, iTop, iLeft, iId){
 }
 
 // code for '.draggin' elements - eg menu items
-$('.dragIn').on(
-    'dragstart',
-	function(e) { 
+$('.dragIn').on('dragstart', function(e) { 
 	
 	//test=e.originalEvent.offsetX
 	//test=e.targetTouches[0]
@@ -615,20 +615,17 @@ $('.dragIn').on(
 
 
 
-$('.dragArea').on(
-    'dragover',
-    function(e) { 
-        e.preventDefault();
-        e.stopPropagation();
-    }
-)
-$('.dragArea').on(
-    'dragenter',
-    function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-)
+
+$('.dragArea').on('dragover', function(e) { 
+    e.preventDefault();
+    e.stopPropagation();
+});
+
+$('.dragArea').on('dragenter', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+});
+
 
 function objToString (obj) {
     var str = '';
@@ -640,72 +637,65 @@ function objToString (obj) {
     return str;
 }
 
+
 $('.dragArea').on(
     'drop',
     function(e){
 	
-	
 
 	
-		// to do : allow for drop zone offset 
-		// to do : allow for scrolled screen 
-		
-		var offset=$(".workArea.active > .dragArea").offset()
-		var x, y;
-		if(!!e.pageX){
-		//mouse
-			x=e.pageX - offset.left
-			y=e.pageY - offset.top
-		}else{
-		//touch
-			x=e.offsetX - offset.left + $(document).scrollLeft();
-			y=e.offsetY - offset.top + $(document).scrollTop();
-		}
-		
-		
-		
-		var data = JSON.parse(e.originalEvent.dataTransfer.getData("text"));
+	var offset=$(".workArea.active > .dragArea").offset()
+	var x, y;
+	if(!!e.pageX){
+	//mouse
+		x=e.pageX - offset.left
+		y=e.pageY - offset.top
+	}else{
+	//touch
+		x=e.offsetX - offset.left + $(document).scrollLeft();
+		y=e.offsetY - offset.top + $(document).scrollTop();
+	}
+					
+	var data = JSON.parse(e.originalEvent.dataTransfer.getData("text"));
+
+	if(data.iType=="node"){
+		var xoffset=-50;
+		var yoffset=-50;
+		addNode(data.iClass, data.iCaption, data.iTooltip, y+yoffset, x+xoffset);
+	}
 	
-		if(data.iType=="node"){
-			var xoffset=-50;
-			var yoffset=-50;
-			addNode(data.iClass, data.iCaption, data.iTooltip, y+yoffset, x+xoffset);
-		}
-		
-		if(data.iType=="graphit-node"){ 
-			var xoffset=-50;
-			var yoffset=-50;
-			addGraphitNode(data.iClass, data.iCaption, data.iTooltip, y+yoffset, x+xoffset);
-		}
+	if(data.iType=="graphit-node"){ 
+		var xoffset=-50;
+		var yoffset=-50;
+		addGraphitNode(data.iClass, data.iCaption, data.iTooltip, y+yoffset, x+xoffset);
+	}
 		
 		
-		if(data.iType=="connector"){
-			var xoffset=0;
-			var yoffset=0;
-			var iDirection= data.iDirection
-			if(iDirection=="up"){xoffset=-15;yoffset=-30;}
-			if(iDirection=="down"){xoffset=-15}
-			if(iDirection=="left"){yoffset=-15; xoffset=-30}
-			if(iDirection=="right"){yoffset=-15}
-			
+	if(data.iType=="connector"){
+		var xoffset=0;
+		var yoffset=0;
+		var iDirection= data.iDirection
+		if(iDirection=="up"){xoffset=-15;yoffset=-30;}
+		if(iDirection=="down"){xoffset=-15}
+		if(iDirection=="left"){yoffset=-15; xoffset=-30}
+		if(iDirection=="right"){yoffset=-15}
+		addConnector( iDirection, 30, 30, y+yoffset, x+xoffset); 
+	}
+
+	if(data.iType=="connected-node"){
+		var xoffset=-50;
+		var yoffset=-50;
+		addConnectedNode(data.iClass, data.iCaption, data.iTooltip, y+yoffset, x+xoffset);
+	}
+	
+	
+	if(data.iType=="calc"){ 
+		var xoffset=-50;
+		var yoffset=-50;
+		addCalc(data.iMinwage, data.iMins, y+yoffset, x+xoffset);
+	}
 		
-			
-			addConnector( iDirection, 30, 30, y+yoffset, x+xoffset); 
-		}
-		if(data.iType=="connected-node"){
-			var xoffset=-50;
-			var yoffset=-50;
-			addConnectedNode(data.iClass, data.iCaption, data.iTooltip, y+yoffset, x+xoffset);
-		}
-		
-		
-		if(data.iType=="calc"){ 
-			var xoffset=-50;
-			var yoffset=-50;
-			addCalc(data.iMinwage, data.iMins, y+yoffset, x+xoffset);
-		}
-		
-})
+});
  
 
  
@@ -919,7 +909,14 @@ $('#flowTabs li a').click(function(e) {
 	var id=$(this).attr("data-target");
 	$('.workArea').removeClass('active');
 	$('#'+id).addClass('active');
+	switchDrawing();
 });
+
+function switchDrawing() {
+	$(".drawArea").hide();
+	if($('#drawControls').is(':visible'))
+		$(".workArea.active > .drawArea").show();
+}
 
 
 

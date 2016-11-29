@@ -31,7 +31,6 @@ var __slice = Array.prototype.slice;
     function Sketch(el, opts) {
       this.el = el;
       this.canvas = $(el);
-      console.log(this.canvas);
       this.context = el.getContext('2d');
       this.options = $.extend({
         toolLinks: true,
