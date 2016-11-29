@@ -20,7 +20,7 @@ initPageObjects();
 // increments node ID
 if (workflow = getParameterByName("workflow")){
 	var wf = JSON.parse(workflow);
-	loadWorkflow(wf);
+	loadWorkflows(wf);
 }
 
 var nodeCount=0;
@@ -71,9 +71,9 @@ function tidyMenu() {
 }
 
 ///temporary  variables to emulate saving to db
-var savedWorkflow,  savedSketch;
+var savedWorkflows,  savedSketch;
 
-if(!savedWorkflow){
+if(!savedWorkflows){
  $("#load-saved").hide();
 }
 ////
@@ -88,14 +88,20 @@ $(".load-template").click(function() {
 	var url = $(this).attr("data-template");
 	$.get("ajax/"+url, function(data) {
 	  var workflow = JSON.parse(data).workflow;
-		loadWorkflow(workflow)
+	  
+		clearActiveWorkflow();
+		// get current work area wrapper for namespacing nodes
+		var canvasId = $('.workArea.active .canvas').prop('id');
+
+		  
+		loadWorkflow(workflow, canvasId )
 	});
 })
 
 
 $("#load-saved").click(function() {
-	if(!!savedWorkflow){
-		loadWorkflow(savedWorkflow);
+	if(!!savedWorkflows){
+		loadWorkflows(savedWorkflows);
 	}
 	if(!!savedSketch){
 		loadSketch(savedSketch);
@@ -197,23 +203,26 @@ function loadSketch(sketch){
 	}
 	
 }
-
-function loadWorkflow(workflow){
+function loadWorkflows(workflows){
+	alert("to do : load workflows into sheets")
+	 //loadWorkflow(workflow);
+}
+function loadWorkflow(workflow, canvasId){
 	// clear current dragArea canvas
-	clearActiveWorkflow();
+	//clearActiveWorkflow();
 	// get current work area wrapper for namespacing nodes
-	var currentArea = $('.workArea.active').prop('id');
+	//var currentArea = $('.workArea.active').prop('id');
 	
 	// add nodes and connectors
 	for (i=0; i<workflow.length; i++){
 		var item=workflow[i];
 		if (item.iType=="node"){
 			//addNode(item.iClass, item.iCaption, item.iTooltip, item.iTop, item.iLeft);
-			addGraphitNode(item.iClass, item.iCaption, item.iTooltip, item.iTop, item.iLeft, item.iId+currentArea);
+			addGraphitNode(item.iClass, item.iCaption, item.iTooltip, item.iTop, item.iLeft, item.iId+canvasId, canvasId);
 		}
 		if (item.iType=="connector"){
 			//addConnector(item.iDirection, item.iWidth, item.iHeight, item.iTop, item.iLeft);
-			addGraphitConnector(item.id1+currentArea, item.id2+currentArea);
+			addGraphitConnector(item.id1+canvasId, item.id2+canvasId);
 		}
 	}
 }
@@ -221,7 +230,18 @@ function loadWorkflow(workflow){
 $(".save-workflow").click(function(e) {
 	
 	e.preventDefault();
-	savedWorkflow=extractWorkflow("flow1-canvas");
+	
+	savedWorkflows=[];
+	
+	$(".canvas").each(function(){
+	    var wfId=$(this).attr("id");
+		var wf = extractWorkflow(wfId);
+		var wfObj={"workflow": wf};
+		savedWorkflows.push(wfObj);
+	})
+	console.log(savedWorkflows)
+	
+	
 	
 	//to do save to db or local storage
 	var currentSketch = $('#'+$('.workArea.active').prop('id')+'-sketch')[0];
@@ -237,7 +257,7 @@ function extractWorkflow(canvasId){
 	
 	var workflow=[];
 	//get nodes from dom
-	$("#" + canvasId + ".node").each(function( index, value ) {
+	$("#" + canvasId + " .node").each(function( index, value ) {
 		var item={}
 		var left=parseInt($(value).attr("data-x"), 10) || 0;
 		var top=parseInt($(value).attr("data-y"), 10) || 0;
@@ -259,8 +279,7 @@ function extractWorkflow(canvasId){
 	
 
 	var canvas = findCanvas(canvasId);
-	console.log( canvasId)
-	console.log(canvas)
+	
 
 	//var canvas = findCanvas($('.workArea.active > .dragArea').prop('id'));
 	
@@ -311,10 +330,11 @@ $('.add').click(function(){
 	}
 	
 	if(iType=="graphit-node"){
+		var currentArea = $('.workArea.active').prop('id');
 		var iClass=$(this).attr("data-class");
 		var iCaption=$(this).attr("data-caption");
 		var iTooltip=$(this).attr("data-tooltip");
-		addGraphitNode(iClass, iCaption, iTooltip, initTop, initLeft );
+		addGraphitNode(iClass, iCaption, iTooltip, initTop, initLeft, currentArea);
 	}
 	
 	
@@ -381,21 +401,23 @@ function addNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
 	item.css( "left", iLeft+"px");
 }
 
-function addGraphitNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){ 
+function addGraphitNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId, canvasId){ 
 	nodeCount++;
 	iId =iId || "node"+nodeCount.toString();
 	nodeID=iId;
 	// create node item
+
 	var item = $('<div id="'+nodeID+'" class="node block draggable-graphit new '+nodeID+'"><span title="Time required" class="glyphicon glyphicon-time time"></span><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text">' + iCaption + '</p></div>');
 		
 	$(item).find('[data-toggle="tooltip"]').tooltip();
-	$('.workArea.active .dragArea').append(item);
+	$('#'+canvasId).append(item);
 	item.css( "top", iTop+"px");
 	item.css( "left", iLeft+"px");
 			
 	var element = document.getElementById(nodeID);
-	var activeWorkflow = $('.workArea.active > .dragArea').prop('id');
-	var canvas = findCanvas(activeWorkflow); 
+	//var activeWorkflow = $('.workArea.active > .dragArea').prop('id');
+	
+	var canvas = findCanvas(canvasId); 
 	var newBlock = new Block(element, canvas);
 	newBlock.initBlock();
 	canvas.blocks.push(newBlock);
@@ -405,13 +427,7 @@ function addGraphitNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
 		connectToActiveNode(this);
 	});
 
-	// old code for automatically adding new nodes to old ones
-	var previousNodeID='node'+ (nodeCount-1).toString();
-		
-	if($('#dragArea').find('#'+previousNodeID).length>0){
-			
-		//addGraphitConnector(nodeID, previousNodeID)		
-	}
+	
 		
 }
 
