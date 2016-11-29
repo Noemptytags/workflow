@@ -86,7 +86,8 @@ h1,  h2,  h3,  h4,  h5, h6 {
     font-size: 19px;
 }
 
-@media screen and (max-width: 800px) {
+@media only screen 
+  and (max-width: 1024px)  {
 	.header  .langSelect{
 		font-size: 12px;
 		width: auto;
@@ -186,10 +187,17 @@ h1,  h2,  h3,  h4,  h5, h6 {
 
 .menu-lg li.white h4{color: #2E9D9D; float:right;}
 
-@media screen and (max-width: 800px) {
+@media only screen 
+  and (max-width: 1024px)  {
 	.menu-lg li {height:100px;}
 	.menu-lg  h2{
 		font-size: 20px;
+		
+	}
+	
+	.menu-sm li {padding:12px 15px 0 15px;}
+	.menu-sm li  b{
+		font-size: 12px;
 		
 	}
 	
