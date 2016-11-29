@@ -918,7 +918,14 @@ $('#flowTabs li a').click(function(e) {
 	var id=$(this).attr("data-target");
 	$('.workArea').removeClass('active');
 	$('#'+id).addClass('active');
+	switchDrawing();
 });
+
+function switchDrawing() {
+	$(".drawArea").hide();
+	if($('#drawControls').is(':visible'))
+		$(".workArea.active > .drawArea").show();
+}
 
 
 
