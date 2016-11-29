@@ -104,11 +104,25 @@
 #controls .icat{width: 100% !important;}
 
 /* make menu horzontal - above grid*/
-@media screen and (max-width: 1000px) {
+@media only screen 
+  and  (max-device-width: 1024px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 2) {
 	#controls{width: 100%;}
 	#controls .ipanel{float: left; width: 180px;}
 	#controls hr {clear: both;}
 }
+
+/* make menu horzontal - above grid*/
+@media only screen 
+  and  (max-width: 750px) 
+  {
+	#controls{width: 100%;}
+	#controls .ipanel{float: left; width: 180px;}
+	#controls hr {clear: both;}
+}
+
+
 
 #controls h1,  #controls h2, #controls h3,  #controls h4 ,  #controls h5, #controls h6{color:#fff;}
 #controls .ipanel-toggle{margin:0 0 10px; cursor:pointer; display:inline-block;}
@@ -134,10 +148,19 @@
 
 #workAreaWrapper{overflow: hidden; position:relative;  height:600px;}
 
-@media screen and (max-width: 1000px) {
+@media only screen 
+ 
+  and (max-device-width: 1024px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 2) {
 	#workAreaWrapper{width:100%;}
 }
 
+@media only screen 
+  and  (max-width: 750px) 
+  {
+	#workAreaWrapper{width:100%;}
+}
 
 .workArea { position:absolute; width:100%; height:100%; overflow:auto; }
 

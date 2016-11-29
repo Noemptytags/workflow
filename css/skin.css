@@ -86,7 +86,8 @@ h1,  h2,  h3,  h4,  h5, h6 {
     font-size: 19px;
 }
 
-@media screen and (max-width: 800px) {
+@media only screen 
+  and (max-width: 1024px)  {
 	.header  .langSelect{
 		font-size: 12px;
 		width: auto;
@@ -186,10 +187,17 @@ h1,  h2,  h3,  h4,  h5, h6 {
 
 .menu-lg li.white h4{color: #2E9D9D; float:right;}
 
-@media screen and (max-width: 800px) {
+@media only screen 
+  and (max-width: 1024px)  {
 	.menu-lg li {height:100px;}
 	.menu-lg  h2{
 		font-size: 20px;
+		
+	}
+	
+	.menu-sm li {padding:12px 15px 0 15px;}
+	.menu-sm li  b{
+		font-size: 12px;
 		
 	}
 	
@@ -225,7 +233,9 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .icon.glyphicon-hdd:before,
 .icon.glyphicon-phone:before,
 .icon.glyphicon-print:before,
+.icon.flaticon-print:before,
 .icon.glyphicon-leaf:before,
+.icon.glyphicon-share:before,
 .icon.glyphicon-usd:before,
 .icon.flaticon-archive:before,
 .icon.glyphicon-picture:before,
@@ -233,7 +243,8 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .icon.glyphicon-barcode:before,
 .icon.glyphicon-time:before,
 .icon.glyphicon-phone-alt:before,
-#pallets .icon.glyphicon-trash:before  { 
+#pallets .icon.glyphicon-trash:before,
+.icon.glyphicon-plus:before  { 
 	background: url(../icons/xer_male_black.png) center center no-repeat; 
 	content: " "; 
 	height: 40px;
@@ -252,7 +263,9 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .node .icon.glyphicon-hdd:before,
 .node .icon.glyphicon-phone:before,
 .node .icon.glyphicon-print:before,
+.node .icon.flaticon-print:before,
 .node .icon.glyphicon-leaf:before,
+.node .icon.glyphicon-share:before,
 .node .icon.glyphicon-usd:before,
 .node .icon.flaticon-archive:before,
 .node .icon.glyphicon-picture:before,
@@ -260,7 +273,8 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .node .icon.glyphicon-barcode:before,
 .node .icon.glyphicon-time:before,
 .node .icon.glyphicon-phone-alt:before,
-.node .icon.glyphicon-trash:before  { 
+.node .icon.glyphicon-trash:before,
+.node .icon.glyphicon-plus:before  { 
     height: 70px;
     width: 70px;    
     background-size: 115px auto; 
@@ -276,7 +290,9 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .node .icon.glyphicon-hdd,
 .node .icon.glyphicon-phone,
 .node .icon.glyphicon-print,
+.node .icon.flaticon-print,
 .node .icon.glyphicon-leaf,
+.node .icon.glyphicon-share,
 .node .icon.glyphicon-usd,
 .node .icon.flaticon-archive,
 .node .icon.glyphicon-picture,
@@ -284,7 +300,8 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .node .icon.glyphicon-barcode,
 .node .icon.glyphicon-time,
 .node .icon.glyphicon-phone-alt,
-.node .icon.glyphicon-trash {
+.node .icon.glyphicon-trash,
+.node .icon.glyphicon-plus {
 	width: 70px;
     height: 70px;
     display: inline-block
@@ -299,13 +316,16 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .icon.glyphicon-camera:before { background-image: url(../icons/xer_camera_black.png); }
 .icon.glyphicon-hdd:before { background-image: url(../icons/xer_laptop_black.png); }
 .icon.glyphicon-phone:before { background-image: url(../icons/xer_tablet_black.png); }
-.icon.glyphicon-print:before { background-image: url(../icons/xer_decision_black.png); }
+.icon.glyphicon-print:before { background-image: url(../icons/xer_production_printer_black.png); }
+.icon.flaticon-print:before { background-image: url(../icons/xer_versant_180_black.png); }
 .icon.glyphicon-leaf:before { background-image: url(../icons/xer_download_black.png); }
+.icon.glyphicon-share:before { background-image: url(../icons/xer_decision_black.png); }
 .icon.glyphicon-usd:before { background-image: url(../icons/xer_presentation_black.png); }
-.icon.flaticon-archive:before { background-image: url(../icons/xer_save_black.png); }*/
+.icon.flaticon-archive:before { background-image: url(../icons/xer_save_black.png); }
 .icon.glyphicon-picture:before { background-image: url(../icons/xer_cross_media_black.png); }
 .icon.glyphicon-stats:before { background-image: url(../icons/xer_data_black.png); }
 .icon.glyphicon-barcode:before { background-image: url(../icons/xer_inventory_black.png); }
 .icon.glyphicon-time:before { background-image: url(../icons/xer_time_black.png); }
 .icon.glyphicon-phone-alt:before { background-image: url(../icons/xer_landline_phone_black.png); }
 .icon.glyphicon-trash:before { background-image: url(../icons/xer_garbage_bin_black.png); }
+.icon.glyphicon-plus:before { background-image: url(../icons/xer_calculator_black.png); }
