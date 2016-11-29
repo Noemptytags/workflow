@@ -1,5 +1,4 @@
-$( document ).ready(function() {
-	
+$( document ).ready(function() {	
 	
 function getParameterByName(name, url) {
     if (!url) {
@@ -15,10 +14,10 @@ function getParameterByName(name, url) {
 	
 	
 	
-///initialise graphit	
+// initialise graphit	
 initPageObjects();
-// incrementa node ID
 
+// increments node ID
 if (workflow = getParameterByName("workflow")){
 	var wf = JSON.parse(workflow);
 	loadWorkflow(wf);
@@ -106,7 +105,7 @@ $("#load-saved").click(function() {
 
 function clearWorkflow(){
 	
-	$("#dragArea .node, #dragArea .connector, #dragArea .connector, #dragArea .connector-graphit, #dragArea .connector-end ,#dragArea .destination-label").remove();
+	$(".dragArea .node, .dragArea .connector, .dragArea .connector, .dragArea .connector-graphit, .dragArea .connector-end ,.dragArea .destination-label").remove();
 	//reset graph-it
 	var canvas = findCanvas('dragArea');
 	canvas.blocks=[];
@@ -377,38 +376,36 @@ function addNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
 }
 
 function addGraphitNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){ 
-		//iId=iId || "";
-		nodeCount++;
-		iId =iId || "node"+nodeCount.toString();
-		nodeID=iId;
-		var item = $('<div id="'+nodeID+'" class="node block draggable-graphit new '+nodeID+'"><span title="Time required" class="glyphicon glyphicon-time time"></span><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text">' + iCaption + '</p></div>');
+	nodeCount++;
+	iId =iId || "node"+nodeCount.toString();
+	nodeID=iId;
+	// create node item
+	var item = $('<div id="'+nodeID+'" class="node block draggable-graphit new '+nodeID+'"><span title="Time required" class="glyphicon glyphicon-time time"></span><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text">' + iCaption + '</p></div>');
 		
-		$(item).find('[data-toggle="tooltip"]').tooltip();
-		$('#dragArea').append(item);
-		item.css( "top", iTop+"px");
-		item.css( "left", iLeft+"px");
-		
-		
-		var element = document.getElementById(nodeID);
-		var canvas = findCanvas('dragArea');
-		var newBlock = new Block(element, canvas);
-		newBlock.initBlock();
-		canvas.blocks.push(newBlock);
-		
-		var previousNodeID='node'+ (nodeCount-1).toString();
-		
-		
-		$('#'+nodeID).on('click touchstart', function(){
-			makeActive(this);
-			connectToActiveNode(this);
-			})
-		
-		if($('#dragArea').find('#'+previousNodeID).length>0){
+	$(item).find('[data-toggle="tooltip"]').tooltip();
+	$('.workArea.active .dragArea').append(item);
+	item.css( "top", iTop+"px");
+	item.css( "left", iLeft+"px");
 			
-			//addGraphitConnector(nodeID, previousNodeID)
+	var element = document.getElementById(nodeID);
+	var activeWorkflow = $('.workArea.active > .dragArea').prop('id');
+	var canvas = findCanvas(activeWorkflow); 
+	var newBlock = new Block(element, canvas);
+	newBlock.initBlock();
+	canvas.blocks.push(newBlock);
+				
+	$('#'+nodeID).on('click touchstart', function(){
+		makeActive(this);
+		connectToActiveNode(this);
+	});
+
+	// old code for automatically adding new nodes to old ones
+	var previousNodeID='node'+ (nodeCount-1).toString();
+		
+	if($('#dragArea').find('#'+previousNodeID).length>0){
 			
-			
-		}
+		//addGraphitConnector(nodeID, previousNodeID)		
+	}
 		
 }
 
@@ -430,10 +427,10 @@ function addGraphitConnector(id1, id2){
 
 		newdiv.appendChild(newlabel);
 		newdiv.appendChild(newarrow);
-				
-		var ni = document.getElementById('dragArea');
-		ni.appendChild(newdiv);
-		var canvas = findCanvas('dragArea');
+
+		var activeWorkflow = $('.workArea.active > .dragArea')[0];	
+		activeWorkflow.appendChild(newdiv);
+		var canvas = findCanvas(activeWorkflow.id); 
 		var newConnector = new Connector(newdiv, canvas);
 		newConnector.initConnector();
 		canvas.connectors.push(newConnector);
@@ -462,7 +459,7 @@ function addCalc(iMinwage, iMins, iTop, iLeft){
 		iId ="code"+nodeCount.toString();
 		
 		var item = $('<div id="'+iId+'" class="calc draggable" data-minwage="'+ iMinwage +'"><h5> Benefits </h5> <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: $<span class="saving">0</span><p></div>');
-		$('#dragArea').append(item);
+		$('.workArea.active > .dragArea').append(item);
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
 		
@@ -550,7 +547,7 @@ function addConnectedNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
 		$(item).append(leftcon);
 		$(item).find('[data-toggle="tooltip"]').tooltip();
 		
-		$('#dragArea').append(item);
+		$('.workArea.active > .dragArea').append(item);
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
 }
@@ -563,7 +560,7 @@ function addConnectedNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
 function addConnector(iDirection, iWidth, iHeight, iTop, iLeft, iId){
 	iId=iId || "";
 	var item = $('<div data-direction="'+iDirection+'" class="connector resize-drag '+iDirection+' '+iId+'"></div>');
-	$('#dragArea').append(item);
+	$('.workArea.active > .dragArea').append(item);
 	item.css( "width", iWidth+"px");
 	item.css( "height", iHeight+"px");
 	item.css( "top", iTop+"px");
@@ -617,14 +614,14 @@ $('.dragIn').on(
 
 
 
-$('#dragArea').on(
+$('.workArea.active > .dragArea').on(
     'dragover',
     function(e) { 
         e.preventDefault();
         e.stopPropagation();
     }
 )
-$('#dragArea').on(
+$('.workArea.active > .dragArea').on(
     'dragenter',
     function(e) {
         e.preventDefault();
@@ -642,7 +639,7 @@ function objToString (obj) {
     return str;
 }
 
-$('#dragArea').on(
+$('.workArea.active > .dragArea').on(
     'drop',
     function(e){
 	
@@ -652,7 +649,7 @@ $('#dragArea').on(
 		// to do : allow for drop zone offset 
 		// to do : allow for scrolled screen 
 		
-		var offset=$("#dragArea").offset()
+		var offset=$(".workArea.active > .dragArea").offset()
 		var x, y;
 		if(!!e.pageX){
 		//mouse
@@ -761,7 +758,7 @@ interact('.draggable')
   })
   ;
   
-  $("#workArea").click(function (event) {   
+  $(".workArea").click(function (event) {   
 	//TO DO - too much DOM inspection here on every click - have a think about a more effecient way to deselect a node
 	if($(event.target).parents(".node").length==0 && !$(event.target).hasClass("node")  ){
 		 $(".node").removeClass("active-node")
@@ -810,7 +807,7 @@ function loadNodeData(node){
 }
 
 function updateNode(nodeId){
-	var node=$("#dragArea #" +nodeId);
+	var node=$(".dragArea #" +nodeId);
 
 	var iCaption=$("#activeData #aCaption").val();
 	$(node).find(".text").text(iCaption);
@@ -874,7 +871,7 @@ function loadCalcData(calc){
 }
 
 function updateCalc(calcId){
-	var calc=$("#dragArea #" +calcId);
+	var calc=$(".dragArea #" +calcId);
 	var iMinwage=parseFloat($("#calcData #aMinwage").val());
 	var iMins=parseFloat($("#calcData #aMins").val());
 	var iSaving=(iMinwage/60) * iMins * 5 * 5 * 45;
@@ -909,6 +906,20 @@ $("#activeData #deleteNode").click( function(e){
 		clearNodeData();
 	}
 });
+
+///////////////////////////////////////
+// tabbing workflows                 //
+///////////////////////////////////////
+
+$('#flowTabs li a').click(function(e) {
+	e.preventDefault();
+	$('#flowTabs li').removeClass();
+	$(this).parent('li').addClass('active');
+	var id=$(this).attr("data-target");
+	$('.workArea').removeClass('active');
+	$('#'+id).addClass('active');
+});
+
 
 
 ///////////////////////////////////////
@@ -1188,33 +1199,35 @@ function savetopdf() {
 	
 }
 
-$('#savetopdf').click(function() {
-	
-	savetopdf();
-	return false;
-});
+	$('#savetopdf').click(function() {	
+		savetopdf();
+		return false;
+	});
   
-// CODE FOR SKETCH PAD
- var sketch
- $("#drawArea, #drawControls").hide();
- 
- $("#toggle-draw").click(function(){
-	//$("#drawArea").fadeToggle("fast");
-	$("#drawArea, #drawControls").toggle();
- })
- 
-  
-    $('#colors_sketch').sketch();
+	// CODE FOR SKETCH PAD
+	var sketch
 
+	$('.drawArea canvas.colors_sketch').each(function() {
+		var thisSketch = $(this).sketch();
+		//console.log(thisSketch[0].id);
+		//$('.colors_sketch').sketch();
+	});
 
-  
-  $(".color-picker, .eraser-picker").click(function(){
-	 $(".color-picker, .eraser-picker").removeClass("active");
-	$(this).addClass("active");
-  })
-  
-   $(".brush-picker").click(function(){
-	 $(".brush-picker").removeClass("active");
-	$(this).addClass("active");
-  })
+	$(".drawArea, #drawControls").hide();
+	 
+	$("#toggle-draw").click(function(){
+		//$("#drawArea").fadeToggle("fast");
+		$(".workArea.active > .drawArea, #drawControls").toggle();
+	});
+
+	$(".color-picker, .eraser-picker").click(function(){
+		$(".color-picker, .eraser-picker").removeClass("active");
+		$(this).addClass("active");
+	});
+	  
+	$(".brush-picker").click(function(){
+		$(".brush-picker").removeClass("active");
+		$(this).addClass("active");
+	});
+
 });

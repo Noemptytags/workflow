@@ -139,35 +139,31 @@
 }
 
 
-#workArea{position:relative; width:100%; height:100%; overflow:auto;}
+.workArea { position:absolute; width:100%; height:100%; overflow:auto; }
 
+.workArea.active { z-index:1000 !important; }
 
-#workArea::-webkit-scrollbar-track {
+.workArea::-webkit-scrollbar-track {
     background: whiteSmoke;
     -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
 }
 
-#workArea::-webkit-scrollbar-thumb {
+.workArea::-webkit-scrollbar-thumb {
     background: #c5c5c5;
     border-radius: 10px;
     border: whiteSmoke solid 3px;
 }
 
 
-#workArea::-webkit-scrollbar {
+.workArea::-webkit-scrollbar {
     width: 12px;
     height: 12px;
 }
 
 
+#toggle-draw{ position:absolute; top: 10px; left:10px; z-index:1004; }
 
-
-
-
-
-#toggle-draw{ position:absolute; top: 10px; left:10px; z-index:4; }
-
-#dragArea{
+.dragArea{
 	position:absolute;
 	width:1600px;
 	height:1200px;
@@ -179,7 +175,7 @@
 
 
 @media screen and (max-width: 1050px) {
-    #dragArea{ 
+    .dragArea{ 
 		background-image: url("../images/gridlg.png");
 		background-position: calc(100% - 20px) calc(100% - 20px); 
 	}
@@ -187,14 +183,14 @@
 
 
 
-#drawArea{
-	z-index:3;
+.drawArea{
+	z-index:1003;
 	position:absolute; 
 	width:1600px;
 	height:1200px;
 	
 }
-#drawArea canvas{
+.drawArea canvas{
 	width:1600px;
 	height:1200px;
 }
@@ -203,7 +199,7 @@
 
 #saved-image{display:none;}
 
-#drawControls{ position:absolute; left: 36px; top: 9px; z-index:4; background-color: #2E9D9D;}
+#drawControls{ position:absolute; left: 36px; top: 9px; z-index:1004; background-color: #2E9D9D;}
 #drawControls .pencil{font-size: 12;}
 .color-picker, .brush-picker, .eraser-picker, .clear-sketch{
 	text-align:center;
@@ -266,7 +262,7 @@
 
 #workAreaWrapper .trash {
 	position: absolute;
-	z-index:4;
+	z-index:1004;
 	top: 0; 
 	right: 20px;
 	margin-right:5px;
@@ -354,5 +350,28 @@
 
 
 /* pdf styles*/
-.pdf #dragArea{background-image:none;}
+.pdf .dragArea{background-image:none;}
 
+
+/* tabbing workflows */
+.nav-tabs {
+	border-top: 1px solid #ddd;
+	border-bottom: none;
+	max-width:895px;
+}
+.nav-tabs > li {
+	margin-bottom: 0;
+	margin-top: -1px;
+}
+.nav-tabs > li > a:hover {
+	border-color: #ddd #eee #eee;
+}
+.nav-tabs > li > a {
+	border-radius: 0 0 4px 4px;
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+	border: 1px solid #ddd;
+	border-top-color: transparent;
+}

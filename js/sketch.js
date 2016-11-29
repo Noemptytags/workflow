@@ -31,6 +31,7 @@ var __slice = Array.prototype.slice;
     function Sketch(el, opts) {
       this.el = el;
       this.canvas = $(el);
+      console.log(this.canvas);
       this.context = el.getContext('2d');
       this.options = $.extend({
         toolLinks: true,
@@ -46,14 +47,16 @@ var __slice = Array.prototype.slice;
       this.action = [];
       this.canvas.bind('click mousedown mouseup mousemove mouseleave mouseout touchstart touchmove touchend touchcancel', this.onEvent);
       if (this.options.toolLinks) {
-        $('body').delegate("a[href=\"#" + (this.canvas.attr('id')) + "\"]", 'click', function(e) {
+        $('body').delegate("a[href=\"#" + (this.canvas.attr('class')) + "\"]", 'click', function(e) {
           var $canvas, $this, key, sketch, _i, _len, _ref;
           $this = $(this);
-          $canvas = $($this.attr('href'));
+          $canvas = $(el);
           sketch = $canvas.data('sketch');
           _ref = ['color', 'size', 'tool'];
+
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             key = _ref[_i];
+
             if ($this.attr("data-" + key)) {
               sketch.set(key, $(this).attr("data-" + key));
             }
@@ -62,6 +65,7 @@ var __slice = Array.prototype.slice;
             sketch.download($(this).attr('data-download'));
           }
 		  if ($(this).attr('data-clear')) {
+
             sketch.clear();
 		  }
           return false;

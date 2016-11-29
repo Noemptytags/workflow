@@ -73,21 +73,47 @@
 		</div>
 		<button title="Show / hide drawing tools" type="button" id="toggle-draw" class="btn btn-default btn-xs"><span class="pencil glyphicon glyphicon-pencil"></span></button>
 		
-		<div id="workArea">
+		<div class="workArea" id="flow1">
 			
-			<div id="drawArea">
-				<canvas id="colors_sketch" width="1600" height="1200"></canvas>
+			<div class="drawArea">
+				<canvas id="flow1-sketch" class="colors_sketch" width="1600" height="1200"></canvas>
 				<img id="saved-image" />
 			</div>	
 		
-			<div id="dragArea" class="canvas">
+			<div id="flow1-canvas" class="dragArea" class="canvas">
 
+				<div class="node block draggable-graphit" id="h1_block" style="left: 50px; top:50px;">
+					<span data-toggle="tooltip" data-placement="top" title="" class="icon glyphicon glyphicon-camera" data-original-title="tool tip text"></span>
+					<p class="text"> camera </p>   
+				</div>
+			
+			</div>
+			
+		</div>
+
+		<div class="workArea active" id="flow2">
+			
+			<div class="drawArea">
+				<canvas id="flow2-sketch" class="colors_sketch" width="1600" height="1200"></canvas>
+				<img id="saved-image" />
+			</div>	
+		
+			<div id="flow2-canvas" class="dragArea canvas">
+
+				<div class="node block draggable-graphit" id="h2_block" style="left: 100px; top:100px;">
+					<span data-toggle="tooltip" data-placement="top" title="" class="icon glyphicon glyphicon-print" data-original-title="tool tip text"></span>
+					<p class="text">print</p>   
+				</div>
 			
 			</div>
 			
 		</div>
 
 	</div>
+	<ul id="flowTabs" class="nav nav-tabs">
+		<li><a href="#" data-target="flow1">Flow 1</a></li>
+		<li class="active"><a href="#" data-target="flow2">Flow 2</a></li>
+	</ul>
 	
 </div>
 

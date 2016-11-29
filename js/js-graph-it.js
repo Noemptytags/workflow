@@ -1306,8 +1306,7 @@ function initPageObjects()
 		var i;
 		for(i = 0; i < divs.length; i++)
 		{
-			if(isCanvas(divs[i]) && !findCanvas(divs[i].id))
-			
+			if(isCanvas(divs[i]) && !findCanvas(divs[i].id))		
 			{
 				var newCanvas = new Canvas(divs[i]);
 				newCanvas.initCanvas();
