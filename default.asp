@@ -80,7 +80,7 @@
 				<img id="saved-image" />
 			</div>	
 		
-			<div id="flow1-canvas" class="dragArea" class="canvas">
+			<div id="flow1-canvas" class="dragArea canvas">
 
 				<div class="node block draggable-graphit" id="h1_block" style="left: 50px; top:50px;">
 					<span data-toggle="tooltip" data-placement="top" title="" class="icon glyphicon glyphicon-camera" data-original-title="tool tip text"></span>

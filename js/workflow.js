@@ -222,7 +222,7 @@ function loadWorkflow(workflow){
 $(".save-workflow").click(function(e) {
 	
 	e.preventDefault();
-	savedWorkflow=extractWorkflow();
+	savedWorkflow=extractWorkflow("flow1-canvas");
 	
 	//to do save to db or local storage
 	var c = document.getElementById("colors_sketch");
@@ -233,11 +233,11 @@ $(".save-workflow").click(function(e) {
 	
 });
 
-function extractWorkflow(){
+function extractWorkflow(canvasId){
 	
 	var workflow=[];
 	//get nodes from dom
-	$("#dragArea .node").each(function( index, value ) {
+	$("#" + canvasId + ".node").each(function( index, value ) {
 		var item={}
 		var left=parseInt($(value).attr("data-x"), 10) || 0;
 		var top=parseInt($(value).attr("data-y"), 10) || 0;
@@ -257,8 +257,9 @@ function extractWorkflow(){
 	
 	//get connectors from graph-it
 	
-	var canvas = findCanvas('dragArea');
-	
+	var canvas = findCanvas(canvasId);
+	console.log( canvasId)
+	console.log(canvas)
 	for (i=0; i<canvas.connectors.length; i++){
 		var item={};
 		var id=canvas.connectors[i].id;
@@ -614,14 +615,14 @@ $('.dragIn').on(
 
 
 
-$('.workArea.active > .dragArea').on(
+$('.dragArea').on(
     'dragover',
     function(e) { 
         e.preventDefault();
         e.stopPropagation();
     }
 )
-$('.workArea.active > .dragArea').on(
+$('.dragArea').on(
     'dragenter',
     function(e) {
         e.preventDefault();
@@ -639,7 +640,7 @@ function objToString (obj) {
     return str;
 }
 
-$('.workArea.active > .dragArea').on(
+$('.dragArea').on(
     'drop',
     function(e){
 	
