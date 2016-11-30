@@ -1,10 +1,10 @@
 
 <div id="savedworkflows" class="ipanel icat"> 
 	<span class="ipanel-close glyphicon glyphicon-remove-circle"></span>
-	<h4 class="ipanel-toggle">My saved workflows</h4>
+	<h4 class="ipanel-toggle">My saved items</h4>
 	<div class="ipanel-content">
 		 <div class="ipanel">
-			<h5 class="ipanel-toggle"><span class="glyphicon glyphicon-search"></span> Filter</h5>
+			<h6 class="ipanel-toggle"><span class="glyphicon glyphicon-search"></span> Filter</h6>
 			<div class="ipanel-content">
 				 <form>
 					 <div class="form-group">
@@ -23,7 +23,9 @@
 			</div>
 		 </div>
 		 
-	   <a id="load-saved" class="link-btn">Workflow 1</a>
-	 </div>
-	 <hr/>
+		<a id="load-saved-workflow" class="link-btn">Saved Workflow</a>
+
+		<a id="load-saved-project" class="link-btn">Saved Project</a>
+	</div>
+
 </div>

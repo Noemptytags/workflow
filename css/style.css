@@ -126,6 +126,7 @@
 
 #controls h1,  #controls h2, #controls h3,  #controls h4 ,  #controls h5, #controls h6{color:#fff;}
 #controls .ipanel-toggle{margin:0 0 10px; cursor:pointer; display:inline-block;}
+#controls h6.ipanel-toggle{cursor:pointer; display:block; text-align:right;}
 #controls .ipanel{ margin-bottom:0px; }
 #controls .ipanel-content{display:none;}
 #controls .ipanel-close{float:right; color: #333; cursor: pointer; font-size:24px;}
@@ -218,7 +219,7 @@
 	height:1200px;
 }
 
-.saved-image{display:none;}
+.saved-image, #load-saved-workflow, #load-saved-project {display:none;}
 
 #drawControls{ position:absolute; left: 36px; top: 9px; z-index:1004; background-color: #2E9D9D;}
 #drawControls .pencil{font-size: 12;}

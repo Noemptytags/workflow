@@ -21,7 +21,7 @@ if (workflow = getParameterByName("workflow")){
 	loadWorkflows(wf);
 }
 
-var nodeCount=0; workAreaCount=0;
+var nodeCount=0; workAreaCount=$('.workArea').length;
 	
 ///toggle panels
 
@@ -75,23 +75,22 @@ if(!savedWorkflows){
 	$("#load-saved").hide();
 }
 
-
-
 $(".new-workflow").click(function() {
 	clearWorkflow();
 })
 
 
-$(".new-workArea").click(function() {
+$(".new-workArea").click(function(e) {
+	e.preventDefault();
 	addWorkArea();
 })
 
 function addWorkArea(){
 	workAreaCount ++;
-	var workAreaId="newflow"+ workAreaCount
+	var workAreaId="flow"+ workAreaCount;
 		
 	var item = $('<div class="workArea" id="'+workAreaId+'"><div class="drawArea"><canvas id="'+workAreaId+'-sketch" class="colors_sketch" width="1600" height="1200"></canvas><img class="saved-image" /></div><div id="'+workAreaId+'-canvas" class="dragArea canvas"></div></div>');
-	var tab=$('<li><a href="#" data-target="'+workAreaId+'">'+workAreaId+'</a></li>')
+	var tab=$('<li><a href="#" data-target="'+workAreaId+'">Unnamed flow '+workAreaCount+'</a></li>')
 	
 	$('#workAreaWrapper').append(item);
 	$('#flowTabs').append(tab);
@@ -254,7 +253,7 @@ function loadSketch(sketch){
 
 function loadWorkflows(workflows){
 	alert("to do : load workflows into sheets")
-	 //loadWorkflow(workflow);
+	loadWorkflow(workflow);
 }
 
 function loadWorkflow(workflow, canvasId){
@@ -298,7 +297,7 @@ $(".save-workflow").click(function(e) {
 	});
 
 	// to do add to list of saved workflows
-	$("#load-saved").show();
+	$("#load-saved-workflow").show();
 	
 });
 

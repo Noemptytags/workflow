@@ -1,9 +1,9 @@
 <div id="calc" class="ipanel icat"> 
  
-	  <span class="ipanel-close glyphicon glyphicon-remove-circle"></span>
-	  <h4 class="ipanel-toggle">Data Calculator</h4>
-	  <div class="ipanel-content">
-	  
+  	<span class="ipanel-close glyphicon glyphicon-remove-circle"></span>
+  	<h4 class="ipanel-toggle">Data Calculator</h4>
+  	<div class="ipanel-content">
+  
 		<form id="calcData">
 			 <div class="form-group">
 				<label for="">Minimum wage</label>
@@ -15,12 +15,9 @@
 			 </div>
 			 
 		</form>
-	  
+  
 		<div class="add dragIn" draggable="true" data-type="calc" data-minwage="7.00" data-mins="0" title="Add calculator to workflow"><span class="icon glyphicon glyphicon-plus"></span></div>
-			
+		
+   	</div> 
 
-
-			
-	   </div> 
-	 <hr/>	
 </div>
