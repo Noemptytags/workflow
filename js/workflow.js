@@ -99,6 +99,8 @@ function addWorkArea(){
 	$('#workAreaWrapper').append(item);
 	$('#flowTabs').append(tab);
 	
+	makeWorkAreaActive(workAreaId);
+	
 	initPageObjects();
 	
 	$(item).find('.dragArea').on(
@@ -960,15 +962,19 @@ $("#activeData #deleteNode").click( function(e){
 
 //$('#flowTabs li a').click(function(e) {
 $('#flowTabs').on( 'click', 'li a', function(e) {
-	
 	e.preventDefault();
-	$('#flowTabs li').removeClass();
-	$(this).parent('li').addClass('active');
 	var id=$(this).attr("data-target");
-	$('.workArea').removeClass('active');
-	$('#'+id).addClass('active');
-	switchDrawing();
+	makeWorkAreaActive(id)
 });
+
+function makeWorkAreaActive(workAreaId){
+	 var tab = $('#flowTabs li a[data-target="'+workAreaId+'"]');
+	$('#flowTabs li').removeClass();
+	$(tab).parent('li').addClass('active');
+	$('.workArea').removeClass('active');
+	$('#'+workAreaId).addClass('active');
+	switchDrawing();
+}
 
 function switchDrawing() {
 	$(".drawArea").hide();
