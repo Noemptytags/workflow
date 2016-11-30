@@ -99,6 +99,8 @@ function addWorkArea(){
 	$('#workAreaWrapper').append(item);
 	$('#flowTabs').append(tab);
 	
+	initPageObjects();
+	
 	$(item).find('.dragArea').on(
     'drop',
     function(e){
