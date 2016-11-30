@@ -218,9 +218,7 @@
 	height:1200px;
 }
 
-
-
-#saved-image{display:none;}
+.saved-image{display:none;}
 
 #drawControls{ position:absolute; left: 36px; top: 9px; z-index:1004; background-color: #2E9D9D;}
 #drawControls .pencil{font-size: 12;}

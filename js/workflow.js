@@ -232,19 +232,22 @@ function deleteConnector(id){
 
 
 function loadSketch(sketch){
-	var image = document.getElementById("saved-image");    
+	// get current workArea sketch image
+	var image = $('.workArea.active .drawArea .saved-image')[0];
+	// load saved sketch into image
 	image.src = sketch;
 	image.onload = function() {
-	  var can = document.getElementById('colors_sketch');
-	  var ctx = can.getContext('2d');
-	  ctx.drawImage(image,0,0);
-	}
-	
+		var can = $('.workArea.active canvas.colors_sketch')[0];
+		var ctx = can.getContext('2d');
+		ctx.drawImage(image,0,0);
+	}	
 }
+
 function loadWorkflows(workflows){
 	alert("to do : load workflows into sheets")
 	 //loadWorkflow(workflow);
 }
+
 function loadWorkflow(workflow, canvasId){
 	// clear current dragArea canvas
 	//clearActiveWorkflow();
@@ -277,6 +280,7 @@ $(".save-workflow").click(function(e) {
 		var wfObj={"workflow": wf};
 		savedWorkflows.push(wfObj);
 	})
+
 	console.log(savedWorkflows)
 	
 	
@@ -285,6 +289,8 @@ $(".save-workflow").click(function(e) {
 	var currentSketch = $('#'+$('.workArea.active').prop('id')+'-sketch')[0];
 
     savedSketch = currentSketch.toDataURL();
+
+    console.log(savedSketch);
 	
 	// to do add to list of saved workflows
 	$("#load-saved").show();

@@ -78,7 +78,7 @@
 			
 			<div class="drawArea">
 				<canvas id="flow1-sketch" class="colors_sketch" width="1600" height="1200"></canvas>
-				<img id="saved-image" />
+				<img class="saved-image" />
 			</div>	
 		
 			<div id="flow1-canvas" class="dragArea canvas">
@@ -96,7 +96,7 @@
 			
 			<div class="drawArea">
 				<canvas id="flow2-sketch" class="colors_sketch" width="1600" height="1200"></canvas>
-				<img id="saved-image" />
+				<img class="saved-image" />
 			</div>	
 		
 			<div id="flow2-canvas" class="dragArea canvas">
