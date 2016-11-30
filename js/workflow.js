@@ -157,12 +157,20 @@ $("#load-saved").click(function() {
 function clearWorkflow(){
 	// select all elements in every dragArea and remove
 	$(".dragArea .node, .dragArea .connector, .dragArea .connector, .dragArea .connector-graphit, .dragArea .connector-end, .dragArea .destination-label, .dragArea .calc").remove();
+	
+	$(".workArea").each( function(){
+		var workAreaId = $(this).attr("id");
+		removeWorkArea(workAreaId);
+	})
+	
 	// reset graph-it by emptying canvas object arrays
 	var i;
 	for(i = 0; i < canvases.length; i++) {
 		canvases[i].blocks=[];
 		canvases[i].connectors=[];
 	}
+	
+	addWorkArea();
 }
 
 function clearActiveWorkflow(){
