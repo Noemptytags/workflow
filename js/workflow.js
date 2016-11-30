@@ -90,7 +90,7 @@ $(".new-workArea").click(function() {
 })
 
 function addWorkArea(){
-	alert("to do : intialise canvas")
+	workAreaCount ++;
 	var workAreaId="newflow"+ workAreaCount
 	
 	var item = $('<div class="workArea" id="'+workAreaId+'"><div id="'+workAreaId+'-canvas" class="dragArea canvas"></div></div>');
@@ -105,30 +105,17 @@ function addWorkArea(){
     'drop',
     function(e){
 		doDrop(e);
-});
-$(item).find('.dragArea').on('dragover', function(e) { 
-    e.preventDefault();
-    e.stopPropagation();
-});
-
-$(item).find('.dragArea').on('dragenter', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-});
-	
-	
-	$(tab).find('a').click(function(e) {
-		e.preventDefault();
-		$('#flowTabs li').removeClass();
-		$(this).parent('li').addClass('active');
-		var id=$(this).attr("data-target");
-		$('.workArea').removeClass('active');
-		$('#'+id).addClass('active');
-		switchDrawing();
 	});
-		
 	
-	workAreaCount ++;
+	$(item).find('.dragArea').on('dragover', function(e) { 
+		e.preventDefault();
+		e.stopPropagation();
+	});
+
+	$(item).find('.dragArea').on('dragenter', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+	});
 	
 }
 
@@ -819,9 +806,8 @@ interact('.draggable')
   })
   ;
   
-  $(".workArea").click(function (event) {   
-	//TO DO - too much DOM inspection here on every click - have a think about a more effecient way to deselect a node
-	if($(event.target).parents(".node").length==0 && !$(event.target).hasClass("node")  ){
+  $("#workAreaWrapper").on("click", ".workArea", function(event){
+	  if($(event.target).parents(".node").length==0 && !$(event.target).hasClass("node")  ){
 		 $(".node").removeClass("active-node")
 		  clearNodeData();
 	}
@@ -835,9 +821,9 @@ interact('.draggable')
 	if($(event.target).parents(".destination-label").length==0 && !$(event.target).hasClass("destination-label")){
 		$(".connector-graphit").removeClass("selected-connector");
 	}
-	
-   
-});
+  })
+  
+  
 
 ///////////////////////////////////////
 // Tools for loading node data panel //
@@ -972,7 +958,9 @@ $("#activeData #deleteNode").click( function(e){
 // tabbing workflows                 //
 ///////////////////////////////////////
 
-$('#flowTabs li a').click(function(e) {
+//$('#flowTabs li a').click(function(e) {
+$('#flowTabs').on( 'click', 'li a', function(e) {
+	
 	e.preventDefault();
 	$('#flowTabs li').removeClass();
 	$(this).parent('li').addClass('active');
