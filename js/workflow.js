@@ -121,6 +121,13 @@ function addWorkArea(){
 	
 }
 
+function removeWorkArea(workAreaId){
+	$('#workAreaWrapper #'+workAreaId).remove();
+	$('#flowTabs a[data-target="'+workAreaId+'"]').parent("li").remove();
+}
+
+
+
 
 $(".load-template").click(function() { 
 	var url = $(this).attr("data-template");
@@ -149,7 +156,7 @@ $("#load-saved").click(function() {
 
 function clearWorkflow(){
 	// select all elements in every dragArea and remove
-	$(".dragArea .node, .dragArea .connector, .dragArea .connector, .dragArea .connector-graphit, .dragArea .connector-end, .dragArea .destination-label").remove();
+	$(".dragArea .node, .dragArea .connector, .dragArea .connector, .dragArea .connector-graphit, .dragArea .connector-end, .dragArea .destination-label, .dragArea .calc").remove();
 	// reset graph-it by emptying canvas object arrays
 	var i;
 	for(i = 0; i < canvases.length; i++) {
