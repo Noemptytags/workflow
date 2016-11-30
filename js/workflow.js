@@ -11,9 +11,7 @@ function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }	
-	
-	
-	
+		
 // initialise graphit	
 initPageObjects();
 
@@ -70,13 +68,12 @@ function tidyMenu() {
 	$("#controls .ipanel.icat:visible:last").addClass('end');
 }
 
-///temporary  variables to emulate saving to db
-var savedWorkflows,  savedSketch;
+///temporary variables to emulate saving to db
+var savedWorkflows, savedSketches, savedSketch;
 
 if(!savedWorkflows){
- $("#load-saved").hide();
+	$("#load-saved").hide();
 }
-////
 
 
 
@@ -104,9 +101,7 @@ function addWorkArea(){
 	initPageObjects();
 	var thisSketch = $(item).find("canvas.colors_sketch").sketch();
 	
-	$(item).find('.dragArea').on(
-    'drop',
-    function(e){
+	$(item).find('.dragArea').on('drop', function(e){
 		doDrop(e);
 	});
 	
@@ -126,9 +121,6 @@ function removeWorkArea(workAreaId){
 	$('#workAreaWrapper #'+workAreaId).remove();
 	$('#flowTabs a[data-target="'+workAreaId+'"]').parent("li").remove();
 }
-
-
-
 
 $(".load-template").click(function() { 
 	var url = $(this).attr("data-template");
@@ -252,6 +244,7 @@ function loadSketch(sketch){
 	var image = $('.workArea.active .drawArea .saved-image')[0];
 	// load saved sketch into image
 	image.src = sketch;
+	// onload, initialise active canvas and redraw image onto it
 	image.onload = function() {
 		var can = $('.workArea.active canvas.colors_sketch')[0];
 		var ctx = can.getContext('2d');
@@ -284,34 +277,52 @@ function loadWorkflow(workflow, canvasId){
 	}
 }
 
+// Actually save project action
 $(".save-workflow").click(function(e) {
 	
 	e.preventDefault();
 	
 	savedWorkflows=[];
+	savedSketches=[];
 	
 	$(".canvas").each(function(){
 	    var wfId=$(this).attr("id");
 		var wf = extractWorkflow(wfId);
 		var wfObj={"workflow": wf};
 		savedWorkflows.push(wfObj);
-	})
+	});
 
-	console.log(savedWorkflows)
-	
-	
-	
-	//to do save to db or local storage
-	var currentSketch = $('#'+$('.workArea.active').prop('id')+'-sketch')[0];
+	$('canvas.colors_sketch').each(function(){
+		// traverse each drawArea canvas, save as data then add to array
+		savedSketches.push(saveSketch($(this)[0]));
+	});
 
-    savedSketch = currentSketch.toDataURL();
-
-    console.log(savedSketch);
-	
 	// to do add to list of saved workflows
 	$("#load-saved").show();
 	
 });
+
+function saveSketch(canvas){
+	// if no canvas selected, get active canvas
+	var currentCanvas = (typeof canvas !== "undefined") ? canvas : $('#'+$('.workArea.active').prop('id')+'-sketch')[0];
+	// save image data to variable;
+	savedSketch = currentCanvas.toDataURL();
+
+	return savedSketch;
+}
+
+function loadSketch(sketch){
+	// get current workArea sketch image
+	var image = $('.workArea.active .drawArea .saved-image')[0];
+	// load saved sketch into image
+	image.src = sketch;
+	// onload, initialise active canvas and redraw image onto it
+	image.onload = function() {
+		var can = $('.workArea.active canvas.colors_sketch')[0];
+		var ctx = can.getContext('2d');
+		ctx.drawImage(image,0,0);
+	}	
+}
 
 function extractWorkflow(canvasId){
 	
