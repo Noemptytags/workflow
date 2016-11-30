@@ -23,7 +23,7 @@ if (workflow = getParameterByName("workflow")){
 	loadWorkflows(wf);
 }
 
-var nodeCount=0;
+var nodeCount=0; workAreaCount=0;
 	
 ///toggle panels
 
@@ -83,6 +83,38 @@ if(!savedWorkflows){
 $(".new-workflow").click(function() {
 	clearWorkflow();
 })
+
+
+$(".new-workArea").click(function() {
+	addWorkArea();
+})
+
+function addWorkArea(){
+	alert("to do : Add new sheet")
+	var workAreaId="newflow"+ workAreaCount
+	
+	var item = $('<div class="workArea" id="'+workAreaId+'"><div id="'+workAreaId+'-canvas" class="dragArea canvas"></div></div>');
+	var tab=$('<li><a href="#" data-target="'+workAreaId+'">'+workAreaId+'</a></li>')
+	
+	$('#workAreaWrapper').append(item);
+	$('#flowTabs').append(tab);
+	
+	
+	$(tab).find('a').click(function(e) {
+		e.preventDefault();
+		$('#flowTabs li').removeClass();
+		$(this).parent('li').addClass('active');
+		var id=$(this).attr("data-target");
+		$('.workArea').removeClass('active');
+		$('#'+id).addClass('active');
+		switchDrawing();
+	});
+		
+	
+	workAreaCount ++;
+	
+}
+
 
 $(".load-template").click(function() { 
 	var url = $(this).attr("data-template");
@@ -330,11 +362,11 @@ $('.add').click(function(){
 	}
 	
 	if(iType=="graphit-node"){
-		var currentArea = $('.workArea.active').prop('id');
+		
 		var iClass=$(this).attr("data-class");
 		var iCaption=$(this).attr("data-caption");
 		var iTooltip=$(this).attr("data-tooltip");
-		addGraphitNode(iClass, iCaption, iTooltip, initTop, initLeft, currentArea);
+		addGraphitNode(iClass, iCaption, iTooltip, initTop, initLeft);
 	}
 	
 	
@@ -404,6 +436,7 @@ function addNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
 function addGraphitNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId, canvasId){ 
 	nodeCount++;
 	iId =iId || "node"+nodeCount.toString();
+	canvasId = canvasId ||   $('.workArea.active .canvas').prop('id');
 	nodeID=iId;
 	// create node item
 

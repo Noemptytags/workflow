@@ -24,7 +24,8 @@
 	
 	<div class="menu-sm menu-horiz cf">
 		<ul>
-			<li><a href="#colors_sketch" data-clear="true" class="new-workflow" ><b>New</b><br/>workflow</a></li>
+			<li><a href="#colors_sketch" data-clear="true" class="new-workflow" ><b>New</b><br/>project</a></li>
+			<li><a href="#"  class="new-workArea" ><b>Add</b><br/>canvas</a></li>
 			<li><a href="#" class="save-workflow"><b>Save</b><br/>workflow</a></li>
 			<li><a href="#" class="save-workflow-as" data-toggle="modal" data-target="#saveAsModal"><b>Save As...</b></a></li>
 			<li><a href="#"  data-toggle="modal" data-target="#sendModal"><b>Send</b><br/>workflow</a></li>
