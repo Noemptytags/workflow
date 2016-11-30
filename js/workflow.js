@@ -92,8 +92,8 @@ $(".new-workArea").click(function() {
 function addWorkArea(){
 	workAreaCount ++;
 	var workAreaId="newflow"+ workAreaCount
-	
-	var item = $('<div class="workArea" id="'+workAreaId+'"><div id="'+workAreaId+'-canvas" class="dragArea canvas"></div></div>');
+		
+	var item = $('<div class="workArea" id="'+workAreaId+'"><div class="drawArea"><canvas id="'+workAreaId+'-sketch" class="colors_sketch" width="1600" height="1200"></canvas><img class="saved-image" /></div><div id="'+workAreaId+'-canvas" class="dragArea canvas"></div></div>');
 	var tab=$('<li><a href="#" data-target="'+workAreaId+'">'+workAreaId+'</a></li>')
 	
 	$('#workAreaWrapper').append(item);
@@ -102,6 +102,7 @@ function addWorkArea(){
 	makeWorkAreaActive(workAreaId);
 	
 	initPageObjects();
+	var thisSketch = $(item).find("canvas.colors_sketch").sketch();
 	
 	$(item).find('.dragArea').on(
     'drop',
