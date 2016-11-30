@@ -90,7 +90,7 @@ $(".new-workArea").click(function() {
 })
 
 function addWorkArea(){
-	alert("to do : Add new sheet")
+	alert("to do : intialise canvas")
 	var workAreaId="newflow"+ workAreaCount
 	
 	var item = $('<div class="workArea" id="'+workAreaId+'"><div id="'+workAreaId+'-canvas" class="dragArea canvas"></div></div>');
@@ -98,6 +98,21 @@ function addWorkArea(){
 	
 	$('#workAreaWrapper').append(item);
 	$('#flowTabs').append(tab);
+	
+	$(item).find('.dragArea').on(
+    'drop',
+    function(e){
+		doDrop(e);
+});
+$(item).find('.dragArea').on('dragover', function(e) { 
+    e.preventDefault();
+    e.stopPropagation();
+});
+
+$(item).find('.dragArea').on('dragenter', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+});
 	
 	
 	$(tab).find('a').click(function(e) {
@@ -690,6 +705,11 @@ function objToString (obj) {
 $('.dragArea').on(
     'drop',
     function(e){
+		doDrop(e);
+});
+ 
+ 
+ function doDrop(e){
 	
 
 	
@@ -744,8 +764,7 @@ $('.dragArea').on(
 		addCalc(data.iMinwage, data.iMins, y+yoffset, x+xoffset);
 	}
 		
-});
- 
+}
 
  
 //INTERACTjs code for '.draggable' elements - eg nodes
