@@ -112,8 +112,8 @@
 
 	</div>
 	<ul id="flowTabs" class="nav nav-tabs">
-		<li class="active"><a href="#" data-target="flow1">Flow 1</a></li>
-		<li><a href="#" data-target="flow2">Flow 2</a></li>
+		<li class="active"><a href="#" data-target="flow1">Unnamed flow 1</a></li>
+		<li><a href="#" data-target="flow2">Unnamed flow 2</a></li>
 	</ul>
 	
 </div>

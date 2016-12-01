@@ -3,13 +3,11 @@
 	 <span class="ipanel-close glyphicon glyphicon-remove-circle"></span>
 	 
 	 <h4 class="ipanel-toggle">Workflow samples</h4>
-	 
-	
-	 
+
 	 <div class="ipanel-content">
 	 
 		  <div class="ipanel">
-			<h5 class="ipanel-toggle"><span class="glyphicon glyphicon-search"></span> Filter</h5>
+			<h6 class="ipanel-toggle"><span class="glyphicon glyphicon-search"></span> Filter</h6>
 			<div class="ipanel-content">
 				 <form>
 					 <div class="form-group">
@@ -42,5 +40,5 @@
 			</div>
 		</div>
 	</div>
-	<hr/>
+
 </div>
