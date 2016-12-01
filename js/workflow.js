@@ -46,11 +46,13 @@ $(".cat-toggle").click(function(e) {
 ///toggle toolsets based on profile
 $(".load-tools").click(function(e) {
 	e.preventDefault();
-	clearAllWorkflows();
+	
 	$("#controls .icat").hide();
 	var profile=$(this).attr("data-profile");
 	
 	if (profile=="guidedMapping"){
+		clearAllWorkflows();
+		addWorkArea();
 		$("#controls #questions, #controls #pallets").slideDown("fast");
 	}
 	if (profile=="freehandMapping"){
