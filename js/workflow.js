@@ -46,7 +46,7 @@ $(".cat-toggle").click(function(e) {
 ///toggle toolsets based on profile
 $(".load-tools").click(function(e) {
 	e.preventDefault();
-	clearWorkflow();
+	clearAllWorkflows();
 	$("#controls .icat").hide();
 	var profile=$(this).attr("data-profile");
 	
@@ -75,8 +75,8 @@ if(!savedWorkflows){
 	$("#load-saved-workflow, #load-saved-project").hide();
 }
 
-$(".new-workflow").click(function() {
-	clearWorkflow();
+$(".new-project").click(function() {
+	newProject();
 })
 
 
@@ -134,7 +134,8 @@ $(".load-template").click(function() {
 })
 
 
-$("#load-saved").click(function() {
+$("#load-saved-project").click(function() {
+	clearAllWorkflows();
 	if(savedWorkflows.length>0){ 
 		loadWorkflows(savedWorkflows);
 	}
@@ -143,8 +144,11 @@ $("#load-saved").click(function() {
 	}
 });
 
-
-function clearWorkflow(){
+function newProject(){
+	clearAllWorkflows();
+	addWorkArea();
+}
+function clearAllWorkflows(){
 	// select all elements in every dragArea and remove
 	$(".dragArea .node, .dragArea .connector, .dragArea .connector, .dragArea .connector-graphit, .dragArea .connector-end, .dragArea .destination-label, .dragArea .calc").remove();
 	
@@ -160,7 +164,7 @@ function clearWorkflow(){
 		canvases[i].connectors=[];
 	}
 	
-	addWorkArea();
+	
 }
 
 function clearActiveWorkflow(){
@@ -256,8 +260,6 @@ function loadSketch(sketch){
 
 function loadWorkflows(workflows){
 	for(var i=0; i<workflows.length; i++){
-		console.log(i)
-		console.log(workflows[i])
 		var canvasId = addWorkArea()+"-canvas";
 		var workflow=workflows[i].workflow
 		loadWorkflow(workflow, canvasId);
@@ -281,7 +283,7 @@ function loadWorkflow(workflow, canvasId){
 }
 
 // Actually save project action
-$(".save-workflow").click(function(e) {
+$(".save-project").click(function(e) {
 	
 	e.preventDefault();
 	
@@ -301,7 +303,7 @@ $(".save-workflow").click(function(e) {
 	});
 
 	// to do add to list of saved workflows
-	$("#load-saved-workflow").show();
+	$("#load-saved-project").show();
 	
 });
 

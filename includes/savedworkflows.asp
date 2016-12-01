@@ -23,9 +23,10 @@
 			</div>
 		 </div>
 		 
+		<a id="load-saved-project" class="link-btn">Saved Project</a>
 		<a id="load-saved-workflow" class="link-btn">Saved Workflow</a>
 
-		<a id="load-saved-project" class="link-btn">Saved Project</a>
+		
 	</div>
 
 </div>
