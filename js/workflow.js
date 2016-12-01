@@ -273,7 +273,7 @@ function loadWorkflow(workflow, canvasId){
 		var item=workflow[i];
 		if (item.iType=="node"){
 			//addNode(item.iClass, item.iCaption, item.iTooltip, item.iTop, item.iLeft);
-			addGraphitNode(item.iClass, item.iCaption, item.iTooltip, item.iTop, item.iLeft, item.iId+canvasId, canvasId);
+			addGraphitNode(item.iClass, item.iCaption, item.iTooltip, item.iTimerDisplay, item.iTime, item.iTop, item.iLeft, item.iId+canvasId, canvasId);
 		}
 		if (item.iType=="connector"){
 			//addConnector(item.iDirection, item.iWidth, item.iHeight, item.iTop, item.iLeft);
@@ -347,19 +347,17 @@ function extractWorkflow(canvasId){
 		item["iTooltip"]= $(value).find(".tooltip").text();
 		item["iTop"]= top;
 		item["iLeft"]= left;
-		
+		item["iTimerDisplay"]= $(value).find(".time").css('display');
+		item["iTime"]= $(value).find(".time").text();
 		workflow.push(item)
+		console.log(item)
 	})
 	
 	//get connectors from graph-it
 	
-
 	var canvas = findCanvas(canvasId);
 	
-
 	//var canvas = findCanvas($('.workArea.active > .dragArea').prop('id'));
-	
-
 	for (i=0; i<canvas.connectors.length; i++){
 		var item={};
 		var id=canvas.connectors[i].id;
@@ -410,7 +408,7 @@ $('.add').click(function(){
 		var iClass=$(this).attr("data-class");
 		var iCaption=$(this).attr("data-caption");
 		var iTooltip=$(this).attr("data-tooltip");
-		addGraphitNode(iClass, iCaption, iTooltip, initTop, initLeft);
+		addGraphitNode(iClass, iCaption, iTooltip, "", "", initTop, initLeft);
 	}
 	
 	
@@ -432,7 +430,7 @@ $('.add').click(function(){
 			
 		}else{
 			deleteNodeAndConnectors(iId)
-			addGraphitNode( iClass, iCaption, iTooltip, iTop, iLeft, iId);
+			addGraphitNode( iClass, iCaption, iTooltip, "", "", iTop, iLeft, iId);
 			
 			var nodeWidth=100;
 			var nodeHeight=100;
@@ -477,16 +475,18 @@ function addNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
 	item.css( "left", iLeft+"px");
 }
 
-function addGraphitNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId, canvasId){ 
+function addGraphitNode(iClass, iCaption,  iTooltip, iTimerDisplay, iTime, iTop, iLeft, iId, canvasId){ 
 	nodeCount++;
 	iId =iId || "node"+nodeCount.toString();
 	canvasId = canvasId ||   $('.workArea.active .canvas').prop('id');
 	nodeID=iId;
 	// create node item
 
-	var item = $('<div id="'+nodeID+'" class="node block draggable-graphit new '+nodeID+'"><span title="Time required" class="glyphicon glyphicon-time time"></span><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text">' + iCaption + '</p></div>');
+	var item = $('<div id="'+nodeID+'" class="node block draggable-graphit new '+nodeID+'"><span title="Time required" class="glyphicon glyphicon-time time">'+iTime+'</span><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text">' + iCaption + '</p></div>');
 		
 	$(item).find('[data-toggle="tooltip"]').tooltip();
+	console.log(iTimerDisplay)
+	$(item).find('.time').css("display",iTimerDisplay );
 	$('#'+canvasId).append(item);
 	item.css( "top", iTop+"px");
 	item.css( "left", iLeft+"px");
@@ -765,7 +765,7 @@ $('.dragArea').on(
 	if(data.iType=="graphit-node"){ 
 		var xoffset=-50;
 		var yoffset=-50;
-		addGraphitNode(data.iClass, data.iCaption, data.iTooltip, y+yoffset, x+xoffset);
+		addGraphitNode(data.iClass, data.iCaption, data.iTooltip, "", "", y+yoffset, x+xoffset);
 	}
 		
 		
