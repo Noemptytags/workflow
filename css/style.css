@@ -219,7 +219,9 @@
 	height:1200px;
 }
 
-.saved-image, #load-saved-workflow, #load-saved-project {display:none;}
+.saved-image {display:none;}
+
+#load-saved-workflow, #load-saved-project { cursor:pointer; }
 
 #drawControls{ position:absolute; left: 36px; top: 9px; z-index:1004; background-color: #2E9D9D;}
 #drawControls .pencil{font-size: 12;}

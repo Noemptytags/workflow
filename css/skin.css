@@ -253,6 +253,10 @@ h1,  h2,  h3,  h4,  h5, h6 {
 	background-size: 40px auto;
 }
 
+.icon.glyphicon-print:before {
+	background-size: 30px;
+}
+
 .node .icon.flaticon-user:before,
 .node .icon.glyphicon-duplicate:before,
 .node .icon.glyphicon-envelope:before,
@@ -278,6 +282,17 @@ h1,  h2,  h3,  h4,  h5, h6 {
     height: 70px;
     width: 70px;    
     background-size: 115px auto; 
+}
+
+.node .icon.glyphicon-usd:before,
+.node .icon.flaticon-smartphone-1:before,
+.node .icon.glyphicon-picture:before {
+	background-size: 90px auto;
+}
+
+.node .icon.flaticon-print:before,
+.node .icon.glyphicon-print:before {
+	background-size: 70px auto;
 }
 
 .node .icon.flaticon-user,

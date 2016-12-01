@@ -72,7 +72,7 @@ function tidyMenu() {
 var savedWorkflows, savedSketches, savedSketch;
 
 if(!savedWorkflows){
-	$("#load-saved").hide();
+	$("#load-saved-workflow, #load-saved-project").hide();
 }
 
 $(".new-workflow").click(function() {
@@ -175,7 +175,12 @@ function clearActiveWorkflow(){
 }
 
 // delete on keypress
-$('html').keyup(function(e){ if(e.keyCode == 46) { deleteNodeAndConnectors(); $(".active-calc").remove(); } });
+$('html').keyup(function(e){ if(e.keyCode == 46) { 
+	// make sure input field is not being typing into
+	if(!$('input:focus').length)
+		deleteNodeAndConnectors(); $(".active-calc").remove();
+	}
+});
 // delete on main trash button press
 $('.trash').click(function(){ deleteNodeAndConnectors(); $(".active-calc").remove(); });
 
