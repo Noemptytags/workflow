@@ -140,7 +140,7 @@ $("#load-saved-project").click(function() {
 		loadWorkflows(savedWorkflows);
 	}
 	if(!!savedSketch){
-		loadSketch(savedSketch);
+		loadSketches(savedSketches);
 	}
 });
 
@@ -244,15 +244,24 @@ function deleteConnector(id){
 	}
 }
 
+function loadSketches(sketches){
+	for(var i=0; i<sketches.length; i++) {
+		// each existing canvas gets sketch based on index
+		loadSketch(sketches[i], $(".drawArea")[i]);
+	}
 
-function loadSketch(sketch){
+
+}
+
+
+function loadSketch(sketch, drawarea){
 	// get current workArea sketch image
-	var image = $('.workArea.active .drawArea .saved-image')[0];
+	var image = (typeof drawarea !== "undefined") ? $(drawarea).find('.saved-image')[0] : $('.workArea.active .drawArea .saved-image')[0];
 	// load saved sketch into image
 	image.src = sketch;
 	// onload, initialise active canvas and redraw image onto it
 	image.onload = function() {
-		var can = $('.workArea.active canvas.colors_sketch')[0];
+		var can = (typeof drawarea !== "undefined") ? $(drawarea).find('canvas.colors_sketch')[0] : $('.workArea.active canvas.colors_sketch')[0];
 		var ctx = can.getContext('2d');
 		ctx.drawImage(image,0,0);
 	}	
@@ -300,6 +309,7 @@ $(".save-project").click(function(e) {
 	$('canvas.colors_sketch').each(function(){
 		// traverse each drawArea canvas, save as data then add to array
 		savedSketches.push(saveSketch($(this)[0]));
+		console.log(savedSketches);
 	});
 
 	// to do add to list of saved workflows
@@ -314,19 +324,6 @@ function saveSketch(canvas){
 	savedSketch = currentCanvas.toDataURL();
 
 	return savedSketch;
-}
-
-function loadSketch(sketch){
-	// get current workArea sketch image
-	var image = $('.workArea.active .drawArea .saved-image')[0];
-	// load saved sketch into image
-	image.src = sketch;
-	// onload, initialise active canvas and redraw image onto it
-	image.onload = function() {
-		var can = $('.workArea.active canvas.colors_sketch')[0];
-		var ctx = can.getContext('2d');
-		ctx.drawImage(image,0,0);
-	}	
 }
 
 function extractWorkflow(canvasId){
