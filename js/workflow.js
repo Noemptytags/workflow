@@ -120,6 +120,7 @@ function addWorkArea(){
 		e.stopPropagation();
 	});
 	
+	return workAreaId
 }
 
 function removeWorkArea(workAreaId){
@@ -134,19 +135,16 @@ $(".load-template").click(function() {
 	var url = $(this).attr("data-template");
 	$.get("ajax/"+url, function(data) {
 	  var workflow = JSON.parse(data).workflow;
-	  
 		clearActiveWorkflow();
 		// get current work area wrapper for namespacing nodes
 		var canvasId = $('.workArea.active .canvas').prop('id');
-
-		  
 		loadWorkflow(workflow, canvasId )
 	});
 })
 
 
 $("#load-saved").click(function() {
-	if(!!savedWorkflows){
+	if(savedWorkflows.length>0){ 
 		loadWorkflows(savedWorkflows);
 	}
 	if(!!savedSketch){
@@ -260,18 +258,19 @@ function loadSketch(sketch){
 }
 
 function loadWorkflows(workflows){
-	alert("to do : load workflows into sheets")
-	 //loadWorkflow(workflow);
+	for(var i=0; i<workflows.length; i++){
+		console.log(i)
+		console.log(workflows[i])
+		var canvasId = addWorkArea()+"-canvas";
+		var workflow=workflows[i].workflow
+		loadWorkflow(workflow, canvasId);
+	}
 }
 
 function loadWorkflow(workflow, canvasId){
-	// clear current dragArea canvas
-	//clearActiveWorkflow();
-	// get current work area wrapper for namespacing nodes
-	//var currentArea = $('.workArea.active').prop('id');
 	
 	// add nodes and connectors
-	for (i=0; i<workflow.length; i++){
+	for (var i=0; i<workflow.length; i++){
 		var item=workflow[i];
 		if (item.iType=="node"){
 			//addNode(item.iClass, item.iCaption, item.iTooltip, item.iTop, item.iLeft);
