@@ -46,11 +46,13 @@ $(".cat-toggle").click(function(e) {
 ///toggle toolsets based on profile
 $(".load-tools").click(function(e) {
 	e.preventDefault();
-	clearAllWorkflows();
+	
 	$("#controls .icat").hide();
 	var profile=$(this).attr("data-profile");
 	
 	if (profile=="guidedMapping"){
+		clearAllWorkflows();
+		addWorkArea();
 		$("#controls #questions, #controls #pallets").slideDown("fast");
 	}
 	if (profile=="freehandMapping"){
@@ -288,6 +290,10 @@ function loadWorkflow(workflow, canvasId){
 			//addConnector(item.iDirection, item.iWidth, item.iHeight, item.iTop, item.iLeft);
 			addGraphitConnector(item.id1+canvasId, item.id2+canvasId);
 		}
+		
+		if (item.iType=="calculator"){
+			addCalc(item.iMinwage, item.iMins, item.iTop, item.iLeft, item.iSaving)
+		}
 	}
 }
 
@@ -347,8 +353,25 @@ function extractWorkflow(canvasId){
 		item["iTimerDisplay"]= $(value).find(".time").css('display');
 		item["iTime"]= $(value).find(".time").text();
 		workflow.push(item)
-		//console.log(item)
-	})
+	});
+	
+	$("#" + canvasId + " .calc").each(function( index, value ) {
+		var item={}
+		var left=parseInt($(value).attr("data-x"), 10) || 0;
+		var top=parseInt($(value).attr("data-y"), 10) || 0;
+		left +=(parseInt($(value).css('left'), 10) || 0);
+		top +=(parseInt($(value).css('top'), 10) || 0);
+		
+		item["iId"]= $(value).attr("id");
+		item["iType"]="calculator";
+		item["iMinwage"]= $(value).attr("data-minwage");
+		item["iMins"]= $(value).find(".mins").text();
+		item["iSaving"]= $(value).find(".saving").text();
+		item["iTop"]= top;
+		item["iLeft"]= left;	
+		workflow.push(item)
+		console.log(item)
+	});
 	
 	//get connectors from graph-it
 	
@@ -549,12 +572,13 @@ function addGraphitConnector(id1, id2){
 }
 
 
-function addCalc(iMinwage, iMins, iTop, iLeft){ 
+function addCalc(iMinwage, iMins, iTop, iLeft, iSaving){ 
 
 		nodeCount++;
-		iId ="code"+nodeCount.toString();
+		iId ="calc"+nodeCount.toString();
+		iSaving=iSaving || 0;
 		
-		var item = $('<div id="'+iId+'" class="calc draggable" data-minwage="'+ iMinwage +'"><h5> Benefits </h5> <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: $<span class="saving">0</span><p></div>');
+		var item = $('<div id="'+iId+'" class="calc draggable" data-minwage="'+ iMinwage +'"><h5> Benefits </h5> <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: $<span class="saving">'+ iSaving +'</span><p></div>');
 		$('.workArea.active > .dragArea').append(item);
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
