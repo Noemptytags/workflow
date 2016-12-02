@@ -77,7 +77,8 @@ if(!savedWorkflows){
 	$("#load-saved-workflow, #load-saved-project").hide();
 }
 
-$(".new-project").click(function() {
+$(".new-project").click(function(e) {
+	e.preventDefault();
 	newProject();
 })
 
@@ -157,7 +158,7 @@ function clearAllWorkflows(){
 	$(".workArea").each( function(){
 		var workAreaId = $(this).attr("id");
 		removeWorkArea(workAreaId);
-	})
+	});
 	
 	// reset graph-it by emptying canvas object arrays
 	var i;
@@ -251,12 +252,11 @@ function loadSketches(sketches){
 		// each existing canvas gets sketch based on index
 		loadSketch(sketches[i], $(".drawArea")[i]);
 	}
-
-
 }
 
 
 function loadSketch(sketch, drawarea){
+	thisDrawArea = (typeof drawarea !== "undefined") ? drawarea : $('.workArea.active .drawArea');
 	// get current workArea sketch image
 	var image = (typeof drawarea !== "undefined") ? $(drawarea).find('.saved-image')[0] : $('.workArea.active .drawArea .saved-image')[0];
 	// load saved sketch into image
@@ -315,7 +315,7 @@ $(".save-project").click(function(e) {
 	$('canvas.colors_sketch').each(function(){
 		// traverse each drawArea canvas, save as data then add to array
 		savedSketches.push(saveSketch($(this)[0]));
-		console.log(savedSketches);
+		//console.log(savedSketches);
 	});
 
 	// to do add to list of saved workflows
@@ -353,8 +353,7 @@ function extractWorkflow(canvasId){
 		item["iTimerDisplay"]= $(value).find(".time").css('display');
 		item["iTime"]= $(value).find(".time").text();
 		workflow.push(item)
-		
-	})
+	});
 	
 	$("#" + canvasId + " .calc").each(function( index, value ) {
 		var item={}
@@ -369,11 +368,12 @@ function extractWorkflow(canvasId){
 		item["iMins"]= $(value).find(".mins").text();
 		item["iSaving"]= $(value).find(".saving").text();
 		item["iTop"]= top;
-		item["iLeft"]= left;
-		
+		item["iLeft"]= left;	
 		workflow.push(item)
+
 		
 	})
+
 	
 	//get connectors from graph-it
 	
@@ -508,7 +508,7 @@ function addGraphitNode(iClass, iCaption,  iTooltip, iTimerDisplay, iTime, iTop,
 	var item = $('<div id="'+nodeID+'" class="node block draggable-graphit new '+nodeID+'"><span title="Time required" class="glyphicon glyphicon-time time">'+iTime+'</span><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text">' + iCaption + '</p></div>');
 		
 	$(item).find('[data-toggle="tooltip"]').tooltip();
-	console.log(iTimerDisplay)
+	//console.log(iTimerDisplay)
 	$(item).find('.time').css("display",iTimerDisplay );
 	$('#'+canvasId).append(item);
 	item.css( "top", iTop+"px");
@@ -1333,8 +1333,6 @@ function savetopdf() {
 
 	$('.drawArea canvas.colors_sketch').each(function() {
 		var thisSketch = $(this).sketch();
-		//console.log(thisSketch[0].id);
-		//$('.colors_sketch').sketch();
 	});
 
 	$(".drawArea, #drawControls").hide();

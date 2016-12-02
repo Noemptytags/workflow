@@ -29,6 +29,7 @@ var __slice = Array.prototype.slice;
   };
   Sketch = (function() {
     function Sketch(el, opts) {
+
       this.el = el;
       this.canvas = $(el);
       this.context = el.getContext('2d');
@@ -45,12 +46,20 @@ var __slice = Array.prototype.slice;
       this.actions = [];
       this.action = [];
       this.canvas.bind('click mousedown mouseup mousemove mouseleave mouseout touchstart touchmove touchend touchcancel', this.onEvent);
+
       if (this.options.toolLinks) {
-        $('body').delegate("a[href=\"#" + (this.canvas.attr('class')) + "\"]", 'click', function(e) {
+
+        $('body').on('click', "a[href=\"#" + (this.canvas.attr('class')) + "\"]",  function(e) {
+          
+          e.preventDefault();
+
+          console.log($(this));
+
           var $canvas, $this, key, sketch, _i, _len, _ref;
           $this = $(this);
           $canvas = $(el);
           sketch = $canvas.data('sketch');
+          
           _ref = ['color', 'size', 'tool'];
 
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -63,14 +72,15 @@ var __slice = Array.prototype.slice;
           if ($(this).attr('data-download')) {
             sketch.download($(this).attr('data-download'));
           }
-		  if ($(this).attr('data-clear')) {
+    		  if ($(this).attr('data-clear')) {
 
-            sketch.clear();
-		  }
+                sketch.clear();
+    		  }
           return false;
         });
       }
     }
+
     Sketch.prototype.download = function(format) {
       var mime;
       format || (format = "png");
