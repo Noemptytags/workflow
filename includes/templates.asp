@@ -27,16 +27,16 @@
 		 <div class="ipanel">
 			<h5 class="ipanel-toggle">Vertical</h5>
 			<div class="ipanel-content">
-				<a href="#colors_sketch" data-clear="true" class="load-template link-btn" data-template="workflow.html">Finance Processing</a><br/>
-				<a href="#colors_sketch" data-clear="true" class="load-template  link-btn" data-template="workflow2.html">Employee Onboarding</a><br/>
+				<a href="#colors_sketch" data-clear="true" class="load-template link-btn" data-template="workflow.html">Before</a><br/>
+				<a href="#colors_sketch" data-clear="true" class="load-template  link-btn" data-template="workflow2.html">After</a><br/>
 			</div>
 		</div>
 
 		 <div class="ipanel">
 			<h5 class="ipanel-toggle">Horizontal </h5>
 			<div class="ipanel-content">
-				<a href="#colors_sketch" data-clear="true" class="load-template  link-btn" data-template="workflow.html">Student On-boarding</a><br/>
-				<a href="#colors_sketch" data-clear="true" class="load-template  link-btn" data-template="workflow2.html">Contracts Processing</a><br/>
+				<a href="#colors_sketch" data-clear="true" class="load-template  link-btn" data-template="workflow.html">Before</a><br/>
+				<a href="#colors_sketch" data-clear="true" class="load-template  link-btn" data-template="workflow2.html">After</a><br/>
 			</div>
 		</div>
 	</div>

@@ -372,7 +372,7 @@ function extractWorkflow(canvasId){
 		item["iLeft"]= left;
 		
 		workflow.push(item)
-		console.log(item)
+		
 	})
 	
 	//get connectors from graph-it
@@ -391,6 +391,7 @@ function extractWorkflow(canvasId){
 		workflow.push(item);
 	};
 	
+	console.log(JSON.stringify(workflow))
 	return workflow;
 	
 }

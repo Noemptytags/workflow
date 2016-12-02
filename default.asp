@@ -83,37 +83,18 @@
 		
 			<div id="flow1-canvas" class="dragArea canvas">
 
-				<div class="node block draggable-graphit" id="h1_block" style="left: 50px; top:50px;">
-					<span data-toggle="tooltip" data-placement="top" title="" class="icon glyphicon glyphicon-camera" data-original-title="tool tip text"></span>
-					<p class="text"> camera </p>   
-				</div>
+				
 			
 			</div>
 			
 		</div>
 
-		<div class="workArea" id="flow2">
-			
-			<div class="drawArea">
-				<canvas id="flow2-sketch" class="colors_sketch" width="1600" height="1200"></canvas>
-				<img class="saved-image" />
-			</div>	
 		
-			<div id="flow2-canvas" class="dragArea canvas">
-
-				<div class="node block draggable-graphit" id="h2_block" style="left: 100px; top:100px;">
-					<span data-toggle="tooltip" data-placement="top" title="" class="icon glyphicon glyphicon-print" data-original-title="tool tip text"></span>
-					<p class="text">print</p>   
-				</div>
-			
-			</div>
-			
-		</div>
 
 	</div>
 	<ul id="flowTabs" class="nav nav-tabs">
 		<li class="active"><a href="#" data-target="flow1">Unnamed flow 1</a></li>
-		<li><a href="#" data-target="flow2">Unnamed flow 2</a></li>
+		
 	</ul>
 	
 </div>

@@ -223,28 +223,28 @@ h1,  h2,  h3,  h4,  h5, h6 {
 	color:#333;
 }
 
-.icon.flaticon-user:before,
-.icon.glyphicon-duplicate:before,
-.icon.glyphicon-envelope:before,
-.icon.flaticon-smartphone-1:before,
-.icon.glyphicon-download-alt:before,
-.icon.flaticon-database-1:before,
-.icon.glyphicon-camera:before,
-.icon.glyphicon-hdd:before,
-.icon.glyphicon-phone:before,
-.icon.glyphicon-print:before,
-.icon.flaticon-print:before,
-.icon.glyphicon-leaf:before,
-.icon.glyphicon-share:before,
-.icon.glyphicon-usd:before,
-.icon.flaticon-archive:before,
-.icon.glyphicon-picture:before,
-.icon.glyphicon-stats:before,
-.icon.glyphicon-barcode:before,
-.icon.glyphicon-time:before,
-.icon.glyphicon-phone-alt:before,
-#pallets .icon.glyphicon-trash:before,
-.icon.glyphicon-plus:before  { 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.icon.xerox:before,
+#pallets .icon.xerox-trash:before,
+.icon.xerox-plus:before  { 
 	background: url(../icons/xer_male_black.png) center center no-repeat; 
 	content: " "; 
 	height: 40px;
@@ -253,94 +253,106 @@ h1,  h2,  h3,  h4,  h5, h6 {
 	background-size: 40px auto;
 }
 
-.icon.glyphicon-print:before {
+.icon.xerox-print:before {
 	background-size: 30px;
 }
 
-.node .icon.flaticon-user:before,
-.node .icon.glyphicon-duplicate:before,
-.node .icon.glyphicon-envelope:before,
-.node .icon.flaticon-smartphone-1:before,
-.node .icon.glyphicon-download-alt:before,
-.node .icon.flaticon-database-1:before,
-.node .icon.glyphicon-camera:before,
-.node .icon.glyphicon-hdd:before,
-.node .icon.glyphicon-phone:before,
-.node .icon.glyphicon-print:before,
-.node .icon.flaticon-print:before,
-.node .icon.glyphicon-leaf:before,
-.node .icon.glyphicon-share:before,
-.node .icon.glyphicon-usd:before,
-.node .icon.flaticon-archive:before,
-.node .icon.glyphicon-picture:before,
-.node .icon.glyphicon-stats:before,
-.node .icon.glyphicon-barcode:before,
-.node .icon.glyphicon-time:before,
-.node .icon.glyphicon-phone-alt:before,
-.node .icon.glyphicon-trash:before,
-.node .icon.glyphicon-plus:before  { 
+.node .icon.xerox.xerox-user:before,
+.node .icon.xerox-duplicate:before,
+.node .icon.xerox-envelope:before,
+.node .icon.xerox-smartphone-1:before,
+.node .icon.xerox-download-alt:before,
+.node .icon.xerox-database-1:before,
+.node .icon.xerox-camera:before,
+.node .icon.xerox-hdd:before,
+.node .icon.xerox-phone:before,
+.node .icon.xerox-production-printer:before,
+.node .icon.xerox-print:before,
+.node .icon.xerox-leaf:before,
+.node .icon.xerox-share:before,
+.node .icon.xerox-usd:before,
+.node .icon.xerox-archive:before,
+.node .icon.xerox-picture:before,
+.node .icon.xerox-stats:before,
+.node .icon.xerox-barcode:before,
+.node .icon.xerox-time:before,
+.node .icon.xerox-phone-alt:before,
+.node .icon.xerox-trash:before,
+.node .icon.xerox-plus:before,
+.node .icon.xerox-mail:before,
+.node .icon.xerox-email:before
+  { 
     height: 70px;
     width: 70px;    
     background-size: 115px auto; 
 }
 
-.node .icon.glyphicon-usd:before,
-.node .icon.flaticon-smartphone-1:before,
-.node .icon.glyphicon-picture:before {
+.node .icon.xerox-usd:before,
+.node .icon.xerox-smartphone-1:before,
+.node .icon.xerox-picture:before {
 	background-size: 90px auto;
 }
 
-.node .icon.flaticon-print:before,
-.node .icon.glyphicon-print:before {
+.node .icon.xerox-print:before,
+.node .icon.xerox-production-printer:before {
 	background-size: 70px auto;
 }
 
-.node .icon.flaticon-user,
-.node .icon.glyphicon-duplicate,
-.node .icon.glyphicon-envelope,
-.node .icon.flaticon-smartphone-1,
-.node .icon.glyphicon-download-alt,
-.node .icon.flaticon-database-1,
-.node .icon.glyphicon-camera,
-.node .icon.glyphicon-hdd,
-.node .icon.glyphicon-phone,
-.node .icon.glyphicon-print,
-.node .icon.flaticon-print,
-.node .icon.glyphicon-leaf,
-.node .icon.glyphicon-share,
-.node .icon.glyphicon-usd,
-.node .icon.flaticon-archive,
-.node .icon.glyphicon-picture,
-.node .icon.glyphicon-stats,
-.node .icon.glyphicon-barcode,
-.node .icon.glyphicon-time,
-.node .icon.glyphicon-phone-alt,
-.node .icon.glyphicon-trash,
-.node .icon.glyphicon-plus {
+.node .icon.xerox-user,
+.node .icon.xerox-duplicate,
+.node .icon.xerox-envelope,
+.node .icon.xerox-smartphone-1,
+.node .icon.xerox-download-alt,
+.node .icon.xerox-database-1,
+.node .icon.xerox-camera,
+.node .icon.xerox-hdd,
+.node .icon.xerox-phone,
+.node .icon.xerox-print,
+.node .icon.xerox-production-printer,
+.node .icon.xerox-leaf,
+.node .icon.xerox-share,
+.node .icon.xerox-usd,
+.node .icon.xerox-archive,
+.node .icon.xerox-picture,
+.node .icon.xerox-stats,
+.node .icon.xerox-barcode,
+.node .icon.xerox-time,
+.node .icon.xerox-phone-alt,
+.node .icon.xerox-trash,
+.node .icon.xerox-calc,
+.node .icon.xerox-mail,
+.node .icon.xerox-email,
+ {
 	width: 70px;
     height: 70px;
     display: inline-block
 }
 
-.icon.flaticon-user:before { background-image: url(../icons/xer_male_black.png); }
-.icon.glyphicon-duplicate:before { background-image: url(../icons/xer_documents_black.png); }
-.icon.glyphicon-envelope:before { background-image: url(../icons/xer_document_black.png); }
-.icon.flaticon-smartphone-1:before { background-image: url(../icons/xer_smartphone_black.png); }
-.icon.glyphicon-download-alt:before { background-image: url(../icons/xer_document_2pg_black.png); }
-.icon.flaticon-database-1:before { background-image: url(../icons/xer_server_stack_black.png); }
-.icon.glyphicon-camera:before { background-image: url(../icons/xer_camera_black.png); }
-.icon.glyphicon-hdd:before { background-image: url(../icons/xer_laptop_black.png); }
-.icon.glyphicon-phone:before { background-image: url(../icons/xer_tablet_black.png); }
-.icon.glyphicon-print:before { background-image: url(../icons/xer_production_printer_black.png); }
-.icon.flaticon-print:before { background-image: url(../icons/xer_versant_180_black.png); }
-.icon.glyphicon-leaf:before { background-image: url(../icons/xer_download_black.png); }
-.icon.glyphicon-share:before { background-image: url(../icons/xer_decision_black.png); }
-.icon.glyphicon-usd:before { background-image: url(../icons/xer_presentation_black.png); }
-.icon.flaticon-archive:before { background-image: url(../icons/xer_save_black.png); }
-.icon.glyphicon-picture:before { background-image: url(../icons/xer_cross_media_black.png); }
-.icon.glyphicon-stats:before { background-image: url(../icons/xer_data_black.png); }
-.icon.glyphicon-barcode:before { background-image: url(../icons/xer_inventory_black.png); }
-.icon.glyphicon-time:before { background-image: url(../icons/xer_time_black.png); }
-.icon.glyphicon-phone-alt:before { background-image: url(../icons/xer_landline_phone_black.png); }
-.icon.glyphicon-trash:before { background-image: url(../icons/xer_garbage_bin_black.png); }
-.icon.glyphicon-plus:before { background-image: url(../icons/xer_calculator_black.png); }
+.icon.xerox-user:before { background-image: url(../icons/xer_male_black.png); }
+.icon.xerox-duplicate:before { background-image: url(../icons/xer_documents_black.png); }
+.icon.xerox-envelope:before { background-image: url(../icons/xer_document_black.png); }
+.icon.xerox-smartphone-1:before { background-image: url(../icons/xer_smartphone_black.png); }
+.icon.xerox-download-alt:before { background-image: url(../icons/xer_document_2pg_black.png); }
+.icon.xerox-database-1:before { background-image: url(../icons/xer_server_stack_black.png); }
+.icon.xerox-camera:before { background-image: url(../icons/xer_camera_black.png); }
+.icon.xerox-hdd:before { background-image: url(../icons/xer_laptop_black.png); }
+.icon.xerox-phone:before { background-image: url(../icons/xer_tablet_black.png); }
+.icon.xerox-production-printer:before { background-image: url(../icons/xer_production_printer_black.png); }
+.icon.xerox-print:before { background-image: url(../icons/xer_versant_180_black.png); }
+.icon.xerox-leaf:before { background-image: url(../icons/xer_download_black.png); }
+.icon.xerox-share:before { background-image: url(../icons/xer_decision_black.png); }
+.icon.xerox-usd:before { background-image: url(../icons/xer_presentation_black.png); }
+.icon.xerox-archive:before { background-image: url(../icons/xer_save_black.png); }
+.icon.xerox-picture:before { background-image: url(../icons/xer_cross_media_black.png); }
+.icon.xerox-stats:before { background-image: url(../icons/xer_data_black.png); }
+.icon.xerox-barcode:before { background-image: url(../icons/xer_inventory_black.png); }
+.icon.xerox-time:before { background-image: url(../icons/xer_time_black.png); }
+.icon.xerox-phone-alt:before { background-image: url(../icons/xer_landline_phone_black.png); }
+.icon.xerox-trash:before { background-image: url(../icons/xer_garbage_bin_black.png); }
+.icon.xerox-calc:before { background-image: url(../icons/xer_calculator_black.png); }
+
+.icon.xerox-mail:before { background-image: url(../icons/xer_mail_black.png); }
+.icon.xerox-email:before { background-image: url(../icons/xer_email_black.png); }
+
+
+

@@ -7,44 +7,48 @@
 	 	<div class="ipanel">
 			<h5 class="ipanel-toggle">People &amp; Documents</h5>
 			<div class="ipanel-content">
-				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-user" data-caption="user" data-tooltip="programmer" title="programmer"><span class="icon flaticon-user"></span></div>
-				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-envelope" data-caption="post" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-envelope"></span></div>
-				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-download-alt" data-caption="download" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-download-alt"></span></div>
-				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-duplicate" data-caption="duplicate" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-duplicate"></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-user" data-caption="user" data-tooltip="programmer" title="programmer"><span class="icon xerox xerox-user"></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-envelope" data-caption="post" data-tooltip="tool tip text"><span class="icon xerox xerox-envelope"></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-download-alt" data-caption="download" data-tooltip="tool tip text"><span class="icon xerox xerox-download-alt"></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-duplicate" data-caption="duplicate" data-tooltip="tool tip text"><span class="icon xerox xerox-duplicate"></span></div>
 			</div>
 		</div>  
 
 	  	<div class="ipanel">
 		  	<h5 class="ipanel-toggle">Workflow</h5>
-		  	<div class="ipanel-content">		   
-			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-share" data-caption="distribute" data-tooltip="Distribution"><span class="icon glyphicon glyphicon-share" ></span></div>
-			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-leaf" data-caption="eco" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-leaf"></span></div>
-			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-usd" data-caption="cost" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-usd"></span></div>		  
-			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-archive" data-caption="archive" data-tooltip="tool tip text"><span class="icon flaticon-archive"></span></div>
+		  	<div class="ipanel-content">	
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-mail" data-caption="mail" data-tooltip="mail"><span class="icon xerox xerox-mail" ></span></div>
+			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-email" data-caption="email" data-tooltip="email"><span class="icon xerox xerox-email" ></span></div>
+			  	
+				
+			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-share" data-caption="distribute" data-tooltip="Distribution"><span class="icon xerox xerox-share" ></span></div>
+			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-leaf" data-caption="eco" data-tooltip="tool tip text"><span class="icon xerox xerox-leaf"></span></div>
+			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-usd" data-caption="cost" data-tooltip="tool tip text"><span class="icon xerox xerox-usd"></span></div>		  
+			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-archive" data-caption="archive" data-tooltip="tool tip text"><span class="icon xerox xerox-archive"></span></div>
 		  	</div>
 	  	</div> 
 	   
 	  	<div class="ipanel">
 		  	<h5 class="ipanel-toggle">Equipment</h5>
 		  	<div class="ipanel-content">
-			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-print" data-caption="print" data-tooltip="Production printer"><span class="icon glyphicon glyphicon-print" ></span></div>
-			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-print" data-caption="print" data-tooltip="Versant 180"><span class="icon flaticon-print" ></span></div>
-				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-camera" data-caption="camera" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-camera" ></span></div>
-				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-phone" data-caption="phone" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-phone" ></span></div>
-				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-hdd" data-caption="harddrive" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-hdd" ></span></div>
-				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-smartphone-1" data-caption="smart phone" data-tooltip="tool tip text"><span class="icon flaticon-smartphone-1"></span></div>
-				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-phone-alt" data-caption="phone" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-phone-alt" ></span></div>
-				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="flaticon-database-1" data-caption="database" data-tooltip="tool tip text"><span class="icon flaticon-database-1"></span></div>
+			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-production-printer" data-caption="print" data-tooltip="Production printer"><span class="icon xerox xerox-production-printer" ></span></div>
+			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-print" data-caption="print" data-tooltip="Versant 180"><span class="icon xerox xerox-print" ></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-camera" data-caption="camera" data-tooltip="tool tip text"><span class="icon xerox xerox-camera" ></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-phone" data-caption="phone" data-tooltip="tool tip text"><span class="icon xerox xerox-phone" ></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-hdd" data-caption="harddrive" data-tooltip="tool tip text"><span class="icon xerox xerox-hdd" ></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-smartphone-1" data-caption="smart phone" data-tooltip="tool tip text"><span class="icon xerox xerox-smartphone-1"></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-phone-alt" data-caption="phone" data-tooltip="tool tip text"><span class="icon xerox xerox-phone-alt" ></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-database-1" data-caption="database" data-tooltip="tool tip text"><span class="icon xerox xerox-database-1"></span></div>
 		 	</div>
 	  	</div> 
 	  
 	   	<div class="ipanel">
 		  	<h5 class="ipanel-toggle">Advanced</h5>
 		  	<div class="ipanel-content">
-				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-time" data-caption="time" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-time" ></span></div>
-				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-barcode" data-caption="barcode" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-barcode" ></span></div>
-				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-stats" data-caption="stats" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-stats" ></span></div>
-				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="glyphicon glyphicon-picture" data-caption="picture" data-tooltip="tool tip text"><span class="icon glyphicon glyphicon-picture" ></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-time" data-caption="time" data-tooltip="tool tip text"><span class="icon xerox xerox-time" ></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-barcode" data-caption="barcode" data-tooltip="tool tip text"><span class="icon xerox xerox-barcode" ></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-stats" data-caption="stats" data-tooltip="tool tip text"><span class="icon xerox xerox-stats" ></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-picture" data-caption="picture" data-tooltip="tool tip text"><span class="icon xerox xerox-picture" ></span></div>
 		 	</div>
 	  	</div> 
 	  
