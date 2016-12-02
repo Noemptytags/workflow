@@ -3,6 +3,13 @@
 	<span class="ipanel-close glyphicon glyphicon-remove-circle"></span>
 	<h4 class="ipanel-toggle">Pallets</h4>
 	<div class="ipanel-content">
+	
+	<div class="ipanel">
+			<h5 class="ipanel-toggle">Captions &amp; headings</h5>
+			<div class="ipanel-content">
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="caption" data-caption="caption" ><span ><span class="icon glyphicon glyphicon-font"></span></span></div>
+					</div>
+		</div>  
 	 
 	 	<div class="ipanel">
 			<h5 class="ipanel-toggle">People &amp; Documents</h5>
@@ -19,6 +26,7 @@
 		  	<div class="ipanel-content">	
 				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-mail" data-caption="mail" data-tooltip="mail"><span class="icon xerox xerox-mail" ></span></div>
 			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-email" data-caption="email" data-tooltip="email"><span class="icon xerox xerox-email" ></span></div>
+			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-cloud" data-caption="cloud" data-tooltip="cloud"><span class="icon xerox xerox-cloud" ></span></div>
 			  	
 				
 			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-share" data-caption="distribute" data-tooltip="Distribution"><span class="icon xerox xerox-share" ></span></div>

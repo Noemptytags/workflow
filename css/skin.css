@@ -280,7 +280,8 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .node .icon.xerox-trash:before,
 .node .icon.xerox-plus:before,
 .node .icon.xerox-mail:before,
-.node .icon.xerox-email:before
+.node .icon.xerox-email:before,
+.node .icon.xerox-cloud:before
   { 
     height: 70px;
     width: 70px;    
@@ -322,6 +323,7 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .node .icon.xerox-calc,
 .node .icon.xerox-mail,
 .node .icon.xerox-email,
+.node .icon.xerox-cloud
  {
 	width: 70px;
     height: 70px;
@@ -354,5 +356,5 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .icon.xerox-mail:before { background-image: url(../icons/xer_mail_black.png); }
 .icon.xerox-email:before { background-image: url(../icons/xer_email_black.png); }
 
-
+.icon.xerox-cloud:before { background-image: url(../icons/xer_cloud_black.png); }
 
