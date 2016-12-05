@@ -15,6 +15,8 @@ function getParameterByName(name, url) {
 // initialise graphit	
 initPageObjects();
 
+
+
 // increments node ID
 if (workflow = getParameterByName("workflow")){
 	var wf = JSON.parse(workflow);
@@ -22,6 +24,9 @@ if (workflow = getParameterByName("workflow")){
 }
 
 var nodeCount=0; workAreaCount=$('.workArea').length;
+
+// create a blank tab
+addWorkArea();
 	
 ///toggle panels
 
@@ -94,9 +99,9 @@ $(".new-workArea").click(function(e) {
 function addWorkArea(){
 	workAreaCount ++;
 	var workAreaId="flow"+ workAreaCount;
-		
-	var item = $('<div class="workArea" id="'+workAreaId+'"><div class="drawArea"><canvas id="'+workAreaId+'-sketch" class="colors_sketch" width="1600" height="1200"></canvas><img class="saved-image" /></div><div id="'+workAreaId+'-canvas" class="dragArea canvas"></div></div>');
-	var tab=$('<li><a href="#" data-target="'+workAreaId+'">Unnamed flow '+workAreaCount+'</a></li>')
+	var name =	"Unnamed flow "+workAreaCount;
+	var item = $('<div class="workArea" data-name=" '+name+'" data-public="0" id="'+workAreaId+'"><div class="drawArea"><canvas id="'+workAreaId+'-sketch" class="colors_sketch" width="1600" height="1200"></canvas><img class="saved-image" /></div><div id="'+workAreaId+'-canvas" class="dragArea canvas"></div></div>');
+	var tab=$('<li><a href="#" data-target="'+workAreaId+'">'+name+'</a></li>')
 	
 	$('#workAreaWrapper').append(item);
 	$('#flowTabs').append(tab);
@@ -1038,6 +1043,82 @@ $("#activeData #deleteNode").click( function(e){
 	}
 });
 
+
+
+///////////////////////////////////////
+// Tools for loading workflow data panel //
+///////////////////////////////////////
+
+function loadWorkflowMetaData(workAreaId){
+	var workArea=$("#"+workAreaId);
+	$("#workflowData").attr("workAreaId", workAreaId);
+	var name = workArea.attr("data-name");
+	
+	console.log(name);
+	$("#workflowdata #wName").val(name);
+	
+	
+	/*
+	var aTooltip=$(node).find("span.icon")[0].dataset.originalTitle;
+	$("#nodedata p#node-information").html(aTooltip).removeClass('empty');
+
+	var aCaption=$(node).find(".text").text();
+	$("#activeData #aCaption").val(aCaption);
+
+	var aTimer=$(node).find("span.time").is(':visible');
+	if(aTimer) {
+		$("#activeData #aTimer").prop('checked',true);
+		$("#activeData #aTimeHolder").show();
+	}
+	else {
+		$("#activeData #aTimer").prop('checked',false);
+		$("#activeData #aTimeHolder").hide();
+	}
+
+	var aTime=$(node).find("span.time").text();
+	$("#activeData #aTime").val(aTime);
+	
+	*/
+}
+
+function updateNode(nodeId){
+	var node=$(".dragArea #" +nodeId);
+
+	var iCaption=$("#activeData #aCaption").val();
+	$(node).find(".text").text(iCaption);
+
+	$("#controls #aTimer").is(':checked') ? $(node).find("span.time").show() : $(node).find("span.time").hide();
+
+	var iTime=$("#activeData #aTime").val();
+	$(node)[0].dataset.time = iTime;	
+	$(node).find("span.time").text(iTime);
+}
+
+function clearNodeData(){
+    var aClear="";
+	var aId="";
+	$("#controls p#node-information").html("nothing selected").addClass('empty');
+	$("#activeData #aCaption, #activeData #aTime").val(aClear);
+	$("#activeData #aTimer").attr('checked',false);
+	$("#activeData #aTimeHolder").hide();
+	$("#activeData").attr("aId", aId);
+}
+
+$("#activeData input").change(function(){ 
+	var aId=$("#activeData").attr("aId");
+	if (aId!=""){
+		updateNode(aId)
+	}
+});
+
+
+
+
+
+
+
+
+
 ///////////////////////////////////////
 // tabbing workflows                 //
 ///////////////////////////////////////
@@ -1056,6 +1137,7 @@ function makeWorkAreaActive(workAreaId){
 	$('.workArea').removeClass('active');
 	$('#'+workAreaId).addClass('active');
 	switchDrawing();
+	loadWorkflowMetaData(workAreaId)
 	
 }
 

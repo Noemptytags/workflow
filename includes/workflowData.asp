@@ -15,9 +15,6 @@
 				Public
 				</label>
 			</div>
-			
-
-	
 		</form>
 	  
 	</div>	
