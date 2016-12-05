@@ -223,28 +223,7 @@ h1,  h2,  h3,  h4,  h5, h6 {
 	color:#333;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.icon.xerox:before,
-#pallets .icon.xerox-trash:before,
-.icon.xerox-plus:before  { 
+.icon.xerox:before { 
 	background: url(../icons/xer_male_black.png) center center no-repeat; 
 	content: " "; 
 	height: 40px;
@@ -258,31 +237,7 @@ h1,  h2,  h3,  h4,  h5, h6 {
 	background-size: 30px;
 }
 
-.node .icon.xerox.xerox-user:before,
-.node .icon.xerox-documents:before,
-.node .icon.xerox-envelope:before,
-.node .icon.xerox-smartphone:before,
-.node .icon.xerox-document-2pg:before,
-.node .icon.xerox-server-stack:before,
-.node .icon.xerox-camera:before,
-.node .icon.xerox-laptop:before,
-.node .icon.xerox-tablet:before,
-.node .icon.xerox-production-printer:before,
-.node .icon.xerox-print:before,
-.node .icon.xerox-download:before,
-.node .icon.xerox-decision:before,
-.node .icon.xerox-presentation:before,
-.node .icon.xerox-archive:before,
-.node .icon.xerox-picture:before,
-.node .icon.xerox-stats:before,
-.node .icon.xerox-barcode:before,
-.node .icon.xerox-time:before,
-.node .icon.xerox-phone-alt:before,
-.node .icon.xerox-trash:before,
-.node .icon.xerox-plus:before,
-.node .icon.xerox-mail:before,
-.node .icon.xerox-email:before,
-.node .icon.xerox-cloud:before
+.node .icon:before
 { 
     height: 70px;
     width: 70px;    
@@ -300,32 +255,7 @@ h1,  h2,  h3,  h4,  h5, h6 {
 	background-size: 70px auto;
 }
 
-.node .icon.xerox-user,
-.node .icon.xerox-documents,
-.node .icon.xerox-envelope,
-.node .icon.xerox-smartphone,
-.node .icon.xerox-document-2pg,
-.node .icon.xerox-server-stack,
-.node .icon.xerox-camera,
-.node .icon.xerox-laptop,
-.node .icon.xerox-tablet,
-.node .icon.xerox-print,
-.node .icon.xerox-production-printer,
-.node .icon.xerox-download,
-.node .icon.xerox-decision,
-.node .icon.xerox-presentation,
-.node .icon.xerox-archive,
-.node .icon.xerox-picture,
-.node .icon.xerox-stats,
-.node .icon.xerox-barcode,
-.node .icon.xerox-time,
-.node .icon.xerox-phone-alt,
-.node .icon.xerox-trash,
-.node .icon.xerox-calc,
-.node .icon.xerox-mail,
-.node .icon.xerox-email,
-.node .icon.xerox-cloud
-{
+.node .icon {
 	width: 70px;
     height: 70px;
     display: inline-block
@@ -345,17 +275,14 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .icon.xerox-download:before { background-image: url(../icons/xer_download_black.png); }
 .icon.xerox-decision:before { background-image: url(../icons/xer_decision_black.png); }
 .icon.xerox-presentation:before { background-image: url(../icons/xer_presentation_black.png); }
-.icon.xerox-archive:before { background-image: url(../icons/xer_save_black.png); }
-.icon.xerox-picture:before { background-image: url(../icons/xer_cross_media_black.png); }
-.icon.xerox-stats:before { background-image: url(../icons/xer_data_black.png); }
-.icon.xerox-barcode:before { background-image: url(../icons/xer_inventory_black.png); }
+.icon.xerox-save:before { background-image: url(../icons/xer_save_black.png); }
+.icon.xerox-cross-media:before { background-image: url(../icons/xer_cross_media_black.png); }
+.icon.xerox-data:before { background-image: url(../icons/xer_data_black.png); }
+.icon.xerox-inventory:before { background-image: url(../icons/xer_inventory_black.png); }
 .icon.xerox-time:before { background-image: url(../icons/xer_time_black.png); }
-.icon.xerox-phone-alt:before { background-image: url(../icons/xer_landline_phone_black.png); }
+.icon.xerox-landline:before { background-image: url(../icons/xer_landline_phone_black.png); }
 .icon.xerox-trash:before { background-image: url(../icons/xer_garbage_bin_black.png); }
 .icon.xerox-calc:before { background-image: url(../icons/xer_calculator_black.png); }
-
 .icon.xerox-mail:before { background-image: url(../icons/xer_mail_black.png); }
 .icon.xerox-email:before { background-image: url(../icons/xer_email_black.png); }
-
 .icon.xerox-cloud:before { background-image: url(../icons/xer_cloud_black.png); }
-
