@@ -897,7 +897,7 @@ interact('.draggable')
 	  if($(event.target).parents(".node").length==0 && !$(event.target).hasClass("node")  ){
 		 $(".node").removeClass("active-node")
 		  clearNodeData();
-		  console.log($(this))
+		 
 	}
 	
 	
@@ -1049,51 +1049,27 @@ $("#activeData #deleteNode").click( function(e){
 ///////////////////////////////////////
 
 function loadWorkflowMetaData(workAreaId){
+	
 	var workArea=$("#"+workAreaId);
 	$("#workflowData").attr("workAreaId", workAreaId);
-	var name = workArea.attr("data-name");
-	
-	console.log(name);
-	$("#workflowdata #wName").val(name);
-	
-	
-	/*
-	var aTooltip=$(node).find("span.icon")[0].dataset.originalTitle;
-	$("#nodedata p#node-information").html(aTooltip).removeClass('empty');
-
-	var aCaption=$(node).find(".text").text();
-	$("#activeData #aCaption").val(aCaption);
-
-	var aTimer=$(node).find("span.time").is(':visible');
-	if(aTimer) {
-		$("#activeData #aTimer").prop('checked',true);
-		$("#activeData #aTimeHolder").show();
-	}
-	else {
-		$("#activeData #aTimer").prop('checked',false);
-		$("#activeData #aTimeHolder").hide();
-	}
-
-	var aTime=$(node).find("span.time").text();
-	$("#activeData #aTime").val(aTime);
-	
-	*/
+	var wname = workArea.attr("data-name");
+	var wpublic = !!(workArea.attr("data-public"));
+	console.log(wpublic)
+	$("#workflowdata #wName").val(wname);
+	$("#workflowdata #wPublic").prop('checked',wpublic);
 }
 
-function updateNode(nodeId){
-	var node=$(".dragArea #" +nodeId);
-
-	var iCaption=$("#activeData #aCaption").val();
-	$(node).find(".text").text(iCaption);
-
-	$("#controls #aTimer").is(':checked') ? $(node).find("span.time").show() : $(node).find("span.time").hide();
-
-	var iTime=$("#activeData #aTime").val();
-	$(node)[0].dataset.time = iTime;	
-	$(node).find("span.time").text(iTime);
+function updateWorkflowMetaData(workAreaId){
+	
+	var workArea=$("#"+workAreaId);
+	var wname=$("#workflowdata #wName").val();
+	var wpublic=$("#workflowdata #wPublic").prop('checked');
+	$("#"+workAreaId).attr("data-name", wname);
+	$("#"+workAreaId).attr("data-public", wpublic);
+	$("#flowTabs").find('a[data-target="'+workAreaId+'"]').text(wname);
 }
 
-function clearNodeData(){
+function clearWorkflowMetaData(){
     var aClear="";
 	var aId="";
 	$("#controls p#node-information").html("nothing selected").addClass('empty');
@@ -1103,10 +1079,10 @@ function clearNodeData(){
 	$("#activeData").attr("aId", aId);
 }
 
-$("#activeData input").change(function(){ 
-	var aId=$("#activeData").attr("aId");
-	if (aId!=""){
-		updateNode(aId)
+$("#workflowdata input").change(function(){ 
+	var workAreaId=$("#workflowData").attr("workAreaId");
+	if (workAreaId!=""){
+		updateWorkflowMetaData(workAreaId);
 	}
 });
 
