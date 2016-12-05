@@ -74,6 +74,8 @@ function tidyMenu() {
 ///temporary variables to emulate saving to db
 var savedWorkflows, savedSketches, savedSketch;
 
+var sketches = [];
+
 if(!savedWorkflows){
 	$("#load-saved-workflow, #load-saved-project").hide();
 }
@@ -103,6 +105,7 @@ function addWorkArea(){
 	
 	initPageObjects();
 	var thisSketch = $(item).find("canvas.colors_sketch").sketch();
+	sketches.push(thisSketch);
 	
 	$(item).find('.dragArea').on('drop', function(e){
 		doDrop(e);
@@ -122,6 +125,7 @@ function addWorkArea(){
 }
 
 function removeWorkArea(workAreaId){
+	$.removeData($('#workAreaWrapper #'+workAreaId).find('canvas.colors_sketch').get(0));
 	$('#workAreaWrapper #'+workAreaId).remove();
 	$('#flowTabs a[data-target="'+workAreaId+'"]').parent("li").remove();
 }
@@ -152,6 +156,7 @@ function newProject(){
 	clearAllWorkflows();
 	addWorkArea();
 }
+
 function clearAllWorkflows(){
 	// select all elements in every dragArea and remove
 	$(".dragArea .node, .dragArea .connector, .dragArea .connector, .dragArea .connector-graphit, .dragArea .connector-end, .dragArea .destination-label, .dragArea .calc").remove();
@@ -160,6 +165,8 @@ function clearAllWorkflows(){
 		var workAreaId = $(this).attr("id");
 		removeWorkArea(workAreaId);
 	});
+
+	sketches = [];
 	
 	// reset graph-it by emptying canvas object arrays
 	var i;
@@ -167,8 +174,8 @@ function clearAllWorkflows(){
 		canvases[i].blocks=[];
 		canvases[i].connectors=[];
 	}
-	
-	
+
+	//canvases = [];
 }
 
 function clearActiveWorkflow(){
@@ -1347,6 +1354,7 @@ function savetopdf() {
 
 	$('.drawArea canvas.colors_sketch').each(function() {
 		var thisSketch = $(this).sketch();
+		sketches.push(thisSketch);
 	});
 
 	$(".drawArea, #drawControls").hide();

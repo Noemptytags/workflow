@@ -29,7 +29,7 @@ var __slice = Array.prototype.slice;
   };
   Sketch = (function() {
     function Sketch(el, opts) {
-
+      thissketch = this;
       this.el = el;
       this.canvas = $(el);
       this.context = el.getContext('2d');
@@ -45,6 +45,7 @@ var __slice = Array.prototype.slice;
       this.tool = this.options.defaultTool;
       this.actions = [];
       this.action = [];
+
       this.canvas.bind('click mousedown mouseup mousemove mouseleave mouseout touchstart touchmove touchend touchcancel', this.onEvent);
 
       if (this.options.toolLinks) {
@@ -53,12 +54,16 @@ var __slice = Array.prototype.slice;
           
           e.preventDefault();
 
-          console.log($(this));
-
           var $canvas, $this, key, sketch, _i, _len, _ref;
-          $this = $(this);
+
+          $this = $(this); 
           $canvas = $(el);
           sketch = $canvas.data('sketch');
+
+          if(!sketch){
+            thissketch.destroy();
+            return false
+          }
           
           _ref = ['color', 'size', 'tool'];
 
@@ -96,6 +101,11 @@ var __slice = Array.prototype.slice;
       this.actions = [];
       return this.redraw();
 	};
+
+  // to be completed to destroy sketch objects
+  Sketch.prototype.destroy = function() {
+      return this.redraw();
+  };
 	
     Sketch.prototype.set = function(key, value) {
       this[key] = value;
