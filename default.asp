@@ -24,11 +24,24 @@
 	
 	<div class="menu-sm menu-horiz cf">
 		<ul>
-			<li><a href="#" class="new-project" ><b>New</b><br/>project</a></li>
-			<li><a href="#" class="new-workArea" ><b>Add</b><br/>canvas</a></li>
-			<li><a href="#" class="save-project"><b>Save</b><br/>project</a></li>
+			<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b>Project</b></a>
+				<ul class="dropdown-menu">
+					<li><a href="#" class="new-project"><b>New</b><br/>project</a></li>
+					<li><a href="#" class="save-project"><b>Save</b><br/>project</a></li>
+					<li><a href="#" class="load-project"><b>Load</b><br/>project</a></li>
+				</ul>
+			</li>
+			<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b>Workflow</b></a>
+				<ul class="dropdown-menu">
+					<li><a href="#" class="new-workArea"><b>Add</b><br/>workflow</a></li>
+					<li><a href="#" class="remove-workArea"><b>Remove</b><br/>workflow</a></li>
+					<li><a href="#" class="save-workArea"><b>Save</b><br/>workflow</a></li>
+					<li><a href="#" class="load-workArea"><b>Load</b><br/>workflow</a></li>
+					<li><a href="#" data-toggle="modal" data-target="#sendModal"><b>Send</b><br/>workflow</a></li>
+				</ul>
+			</li>
 			<li><a href="#" class="save-workflow-as" data-toggle="modal" data-target="#saveAsModal"><b>Save As...</b></a></li>
-			<li><a href="#" data-toggle="modal" data-target="#sendModal"><b>Send</b><br/>workflow</a></li>
+			
 			<li><a href="#" class="cat-toggle" data-target="savedworkflows"><b>My Saved</b><br/>items</a></li>
 			<li><a href="#" class="cat-toggle" data-target="templates"><b>Workflow</b><br/>samples</a></li>
 			<li><a href="#" class="cat-toggle" data-target="pallets"><b>Icon</b><br/>pallets</a></li>

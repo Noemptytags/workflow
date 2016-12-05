@@ -108,16 +108,28 @@ h1,  h2,  h3,  h4,  h5, h6 {
 	list-style: none; 
 	background: #1f1f1f; 
 	height:48px; 
-	
 	color:#2E9D9D;
+	position:relative;
 }
-.menu-sm li a{ 
+
+.dropdown-menu { z-index:2000; min-width:0; border:none; }
+
+.dropdown-menu > li > a { padding:0 12px; }
+
+.dropdown-menu > li > a:hover, 
+.dropdown-menu > li > a:focus {
+	background:transparent;
+	color:inherit;
+}
+
+.menu-sm li a { 
 	font-family: "Montserrat",sans-serif; 
 	text-decoration:none; 
 	color:#2E9D9D;
 	font-weight: 100;
     font-size: 12px;
 	text-transform:uppercase;
+	line-height:1;
 }
 .menu-sm li  b{ 
 	font-weight: 700;
