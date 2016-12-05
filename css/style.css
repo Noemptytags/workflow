@@ -145,7 +145,7 @@
 
 #controls form .checkbox { text-align:right; }
 #controls form .checkbox label { width:auto; padding:0; }
-#controls form.checkbox input[type="checkbox"] { position:static; margin:0; vertical-align:middle; }
+#controls form .checkbox input[type="checkbox"] { position:static; margin:0; vertical-align:middle; }
 
 #workAreaWrapper{overflow: hidden; position:relative;  height:600px;}
 

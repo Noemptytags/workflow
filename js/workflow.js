@@ -925,15 +925,15 @@ function loadNodeData(node){
 	$("#nodedata p#node-information").html(aTooltip).removeClass('empty');
 
 	var aCaption=$(node).find(".text").text();
-	$("#activeData #aCaption").val(aCaption);
+	$("#activeData #aCaption").val(aCaption).prop('disabled', false);
 
 	var aTimer=$(node).find("span.time").is(':visible');
 	if(aTimer) {
-		$("#activeData #aTimer").prop('checked',true);
+		$("#activeData #aTimer").prop('checked',true).prop('disabled', false);
 		$("#activeData #aTimeHolder").show();
 	}
 	else {
-		$("#activeData #aTimer").prop('checked',false);
+		$("#activeData #aTimer").prop('checked',false).prop('disabled', false);
 		$("#activeData #aTimeHolder").hide();
 	}
 
@@ -959,7 +959,7 @@ function clearNodeData(){
 	var aId="";
 	$("#controls p#node-information").html("nothing selected").addClass('empty');
 	$("#activeData #aCaption, #activeData #aTime").val(aClear);
-	$("#activeData #aTimer").attr('checked',false);
+	$("#activeData #aCaption, #activeData #aTimer").attr('checked',false).prop( "disabled", true );
 	$("#activeData #aTimeHolder").hide();
 	$("#activeData").attr("aId", aId);
 }
