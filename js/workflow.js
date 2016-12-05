@@ -61,6 +61,7 @@ $(".load-tools").click(function(e) {
 	if (profile=="samples"){
 		$("#controls #templates").slideDown("fast");
 	}
+	
 	tidyMenu();
 })
 
@@ -185,11 +186,22 @@ function clearActiveWorkflow(){
 $('html').keyup(function(e){ if(e.keyCode == 46) { 
 	// make sure input field is not being typing into
 	if(!$('input:focus').length)
-		deleteNodeAndConnectors(); $(".active-calc").remove();
+		deleteActiveElements();
 	}
 });
 // delete on main trash button press
-$('.trash').click(function(){ deleteNodeAndConnectors(); $(".active-calc").remove(); });
+$('.trash').click(function(){ deleteActiveElements(); });
+
+function deleteActiveElements(){
+	if ($(".active-node").length>0){
+		deleteNodeAndConnectors();
+		clearNodeData();
+	}
+	if ($(".active-calc").length>0){ 
+		$(".active-calc").remove();
+		clearCalcData();
+	}
+}
 
 function deleteNodeAndConnectors(nodeId) {
 	// if nodeId is already known
@@ -874,6 +886,7 @@ interact('.draggable')
 	  if($(event.target).parents(".node").length==0 && !$(event.target).hasClass("node")  ){
 		 $(".node").removeClass("active-node")
 		  clearNodeData();
+		  console.log($(this))
 	}
 	
 	
@@ -1036,6 +1049,7 @@ function makeWorkAreaActive(workAreaId){
 	$('.workArea').removeClass('active');
 	$('#'+workAreaId).addClass('active');
 	switchDrawing();
+	
 }
 
 function switchDrawing() {

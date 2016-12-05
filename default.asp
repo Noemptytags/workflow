@@ -49,6 +49,8 @@
 		<!-- #Include file="includes/savedworkflows.asp" -->
 		
 		<!-- #Include file="includes/dataCalc.asp" -->	
+		
+		<!-- #Include file="includes/workflowData.asp" -->	
 	</div>
 
 	<div id="workAreaWrapper">

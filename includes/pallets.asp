@@ -41,6 +41,8 @@
 		  	<div class="ipanel-content">
 			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-production-printer" data-caption="print" data-tooltip="Production printer"><span class="icon xerox xerox-production-printer" ></span></div>
 			  	<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-print" data-caption="print" data-tooltip="Versant 180"><span class="icon xerox xerox-print" ></span></div>
+				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-6655" data-caption="print" data-tooltip="6655"><span class="icon xerox xerox-6655" ></span></div>
+				
 				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-camera" data-caption="camera" data-tooltip="tool tip text"><span class="icon xerox xerox-camera" ></span></div>
 				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-phone" data-caption="phone" data-tooltip="tool tip text"><span class="icon xerox xerox-phone" ></span></div>
 				<div class="add dragIn" draggable="true" data-type="graphit-node" data-class="xerox xerox-hdd" data-caption="harddrive" data-tooltip="tool tip text"><span class="icon xerox xerox-hdd" ></span></div>

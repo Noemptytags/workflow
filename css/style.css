@@ -143,9 +143,9 @@
 #activeData label { width:25%; }
 #activeData input[type="text"] { width:73%; display:inline-block; }
 
-#activeData .checkbox { text-align:right; }
-#activeData .checkbox label { width:auto; padding:0; }
-#activeData .checkbox input[type="checkbox"] { position:static; margin:0; vertical-align:middle; }
+#controls form .checkbox { text-align:right; }
+#controls form .checkbox label { width:auto; padding:0; }
+#controls form.checkbox input[type="checkbox"] { position:static; margin:0; vertical-align:middle; }
 
 #workAreaWrapper{overflow: hidden; position:relative;  height:600px;}
 
