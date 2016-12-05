@@ -99,7 +99,7 @@ function addWorkArea(){
 	workAreaCount ++;
 	var workAreaId="flow"+ workAreaCount;
 	var name =	"Unnamed flow "+workAreaCount;
-	var item = $('<div class="workArea" data-name=" '+name+'" data-public="0" id="'+workAreaId+'"><div class="drawArea"><canvas id="'+workAreaId+'-sketch" class="colors_sketch" width="1600" height="1200"></canvas><img class="saved-image" /></div><div id="'+workAreaId+'-canvas" class="dragArea canvas"></div></div>');
+	var item = $('<div class="workArea" data-name=" '+name+'" data-public="false" id="'+workAreaId+'"><div class="drawArea"><canvas id="'+workAreaId+'-sketch" class="colors_sketch" width="1600" height="1200"></canvas><img class="saved-image" /></div><div id="'+workAreaId+'-canvas" class="dragArea canvas"></div></div>');
 	var tab=$('<li><a href="#" data-target="'+workAreaId+'">'+name+'</a></li>')
 	
 	$('#workAreaWrapper').append(item);
@@ -1053,14 +1053,12 @@ function loadWorkflowMetaData(workAreaId){
 	var workArea=$("#"+workAreaId);
 	$("#workflowData").attr("workAreaId", workAreaId);
 	var wname = workArea.attr("data-name");
-	var wpublic = !!(workArea.attr("data-public"));
-	console.log(wpublic)
+	var wpublic = (workArea.attr("data-public") === 'true');
 	$("#workflowdata #wName").val(wname);
 	$("#workflowdata #wPublic").prop('checked',wpublic);
 }
 
 function updateWorkflowMetaData(workAreaId){
-	
 	var workArea=$("#"+workAreaId);
 	var wname=$("#workflowdata #wName").val();
 	var wpublic=$("#workflowdata #wPublic").prop('checked');
