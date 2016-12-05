@@ -25,8 +25,7 @@ if (workflow = getParameterByName("workflow")){
 
 var nodeCount=0; workAreaCount=$('.workArea').length;
 
-// create a blank tab
-addWorkArea();
+
 	
 ///toggle panels
 
@@ -1455,5 +1454,10 @@ function savetopdf() {
 		$(".brush-picker").removeClass("active");
 		$(this).addClass("active");
 	});
+	
+	
+	
+// create a blank tab on load
+addWorkArea();
 
 });
