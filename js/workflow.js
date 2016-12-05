@@ -270,12 +270,12 @@ function loadSketches(sketches){
 function loadSketch(sketch, drawarea){
 	thisDrawArea = (typeof drawarea !== "undefined") ? drawarea : $('.workArea.active .drawArea');
 	// get current workArea sketch image
-	var image = (typeof drawarea !== "undefined") ? $(drawarea).find('.saved-image')[0] : $('.workArea.active .drawArea .saved-image')[0];
+	var image = $(thisDrawArea).find('.saved-image')[0];
 	// load saved sketch into image
 	image.src = sketch;
 	// onload, initialise active canvas and redraw image onto it
 	image.onload = function() {
-		var can = (typeof drawarea !== "undefined") ? $(drawarea).find('canvas.colors_sketch')[0] : $('.workArea.active canvas.colors_sketch')[0];
+		var can = (typeof drawarea !== "undefined") ? $(drawarea).find('canvas.colors_sketch')[0] : $('.drawArea:visible').find('canvas.colors_sketch')[0];
 		var ctx = can.getContext('2d');
 		ctx.drawImage(image,0,0);
 	}	
