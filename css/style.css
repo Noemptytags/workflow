@@ -132,9 +132,9 @@
 #controls .ipanel-close{float:right; color: #333; cursor: pointer; font-size:24px;}
 #controls hr{border-top: 1px solid #333; border-bottom: 1px solid #999; display:none;}
 
-#controls .icat{ display:none; margin-bottom:10px; }
-.ipanel.icat { border-bottom:#999 1px solid; }
-.ipanel.icat.end { border-bottom:none;}
+#controls .icat{ display:none; }
+#controls > .ipanel { border-bottom:#999 1px solid; margin-bottom:10px; }
+#controls .ipanel.end { border-bottom:none;}
 #controls #deleteNode { font-size:14px; cursor:pointer; float:right; margin-top:5px; }
 
 #node-information { font-weight:bold; text-align:center; }

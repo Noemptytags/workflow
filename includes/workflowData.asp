@@ -1,4 +1,4 @@
-<div id="workflowdata" class="ipanel"> 
+<div id="workflowdata" class="ipanel end"> 
 	
 	<h4 class="ipanel-toggle">Workflow details</h4>
 	<div class="ipanel-content">
