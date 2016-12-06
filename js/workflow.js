@@ -234,7 +234,7 @@ $('html').keyup(function(e){ if(e.keyCode == 46) {
 $('.trash').click(function(){ deleteActiveElements(); });
 
 function deleteActiveElements(){
-	if ($(".active-node").length>0){
+	if (($(".active-node").length>0)||($(".selected-connector").length>0)){
 		deleteNodeAndConnectors();
 		clearNodeData();
 	}
@@ -242,7 +242,6 @@ function deleteActiveElements(){
 		$(".active-calc").remove();
 		clearCalcData();
 	}
-	
 	if ($(".active-caption").length>0){ 
 		$(".active-caption").remove();
 	}
