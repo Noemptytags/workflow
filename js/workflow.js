@@ -358,7 +358,8 @@ function saveSketch(canvas){
 
 function extractWorkflow(canvasId){
 	
-	var workflow=[];
+	var workflow={};
+	workflow.data=[];
 	//get nodes from dom
 	$("#" + canvasId + " .node").each(function( index, value ) {
 		var item={}
@@ -376,7 +377,7 @@ function extractWorkflow(canvasId){
 		item["iLeft"]= left;
 		item["iTimerDisplay"]= $(value).find(".time").css('display');
 		item["iTime"]= $(value).find(".time").text();
-		workflow.push(item)
+		workflow.data.push(item)
 	});
 	
 	$("#" + canvasId + " .calc").each(function( index, value ) {
@@ -393,7 +394,7 @@ function extractWorkflow(canvasId){
 		item["iSaving"]= $(value).find(".saving").text();
 		item["iTop"]= top;
 		item["iLeft"]= left;	
-		workflow.push(item)
+		workflow.data.push(item)
 
 		
 	})
@@ -412,9 +413,12 @@ function extractWorkflow(canvasId){
 		item["iType"]="connector";
 		item["id1"]=idArray[1];
 		item["id2"]=idArray[2];
-		workflow.push(item);
+		workflow.data.push(item);
 	};
 	
+	 workflow.name="zzzzzzzzzzzz"
+	 workflow.plublic="true"
+	 
 	console.log(JSON.stringify(workflow))
 	return workflow;
 	
