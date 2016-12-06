@@ -341,11 +341,8 @@ function loadWorkflowsPDF(workflows){
 	var offset=0
 	var workAreaId = "flow1";
 	for(var i=0; i<workflows.length; i++){
-		
 		var canvasId = workAreaId+"-canvas";
-		var workflow=workflows[i].workflow
-		
-		
+		var workflow=workflows[i].workflow;
 		loadWorkflow(workflow.data, canvasId, offset);
 		offset +=getMaxTop(workflow.data) + 100;
 	}
@@ -1526,8 +1523,8 @@ function savetopdf() {
 	handlerURL = pdfhandler + 'evosource=url&evourl=' + pdfsource + '&evodelay=' + pdfdelay + '&evofilename=' + pdffilename + '_DATE_TIME.pdf&evouserid=' + pdfuserid;
 	
 	
-	//window.location.href = handlerURL
-	window.location.href = 'pdf.asp?workflow='+pdfWorkflow;
+	window.location.href = handlerURL
+	//window.location.href = 'pdf.asp?workflow='+pdfWorkflow;
 	
 }
 
