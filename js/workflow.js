@@ -294,10 +294,12 @@ function loadSketch(sketch, drawarea){
 
 function loadWorkflows(workflows){
 	for(var i=0; i<workflows.length; i++){
-		var canvasId = addWorkArea()+"-canvas";
-		var workflow=workflows[i].workflow.data
+		var workAreaId = addWorkArea();
+		var canvasId = workAreaId+"-canvas";
+		var workflow=workflows[i].workflow
 		
-		loadWorkflow(workflow, canvasId);
+		setWorkflowMetaData(workAreaId, workflow.name, workflow.public);
+		loadWorkflow(workflow.data, canvasId);
 	}
 }
 
@@ -416,8 +418,10 @@ function extractWorkflow(canvasId){
 		workflow.data.push(item);
 	};
 	
-	 workflow.name="zzzzzzzzzzzz"
-	 workflow.plublic="true"
+	
+	 var workArea=$("#" + canvasId).parents(".workArea")
+	 workflow.name=$(workArea).attr("data-name")
+	 workflow.public=$(workArea).attr("data-public")
 	 
 	console.log(JSON.stringify(workflow))
 	return workflow;
@@ -1067,12 +1071,14 @@ function updateWorkflowMetaData(workAreaId){
 	var workArea=$("#"+workAreaId);
 	var wname=$("#workflowdata #wName").val();
 	var wpublic=$("#workflowdata #wPublic").prop('checked');
+	setWorkflowMetaData(workAreaId, wname, wpublic);
+}
+
+function setWorkflowMetaData(workAreaId, wname, wpublic){
 	$("#"+workAreaId).attr("data-name", wname);
 	$("#"+workAreaId).attr("data-public", wpublic);
 	$("#flowTabs").find('a[data-target="'+workAreaId+'"]').text(wname);
 }
-
-
 
 
 function clearWorkflowMetaData(){
