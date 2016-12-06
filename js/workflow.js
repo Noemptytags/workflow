@@ -17,10 +17,10 @@ initPageObjects();
 
 
 
-// increments node ID
+// load for pdf
 if (workflow = getParameterByName("workflow")){
 	var wf = JSON.parse(workflow);
-	loadWorkflows(wf);
+	loadWorkflowsPDF(wf);
 }
 
 var nodeCount=0; workAreaCount=$('.workArea').length;
@@ -336,8 +336,23 @@ function loadWorkflows(workflows){
 	}
 }
 
-function loadWorkflow(workflow, canvasId){
+
+function loadWorkflowsPDF(workflows){
 	
+	var workAreaId = "flow1";
+	for(var i=0; i<workflows.length; i++){
+		
+		var canvasId = workAreaId+"-canvas";
+		var workflow=workflows[i].workflow
+		
+		//setWorkflowMetaData(workAreaId, workflow.name, workflow.public);
+		loadWorkflow(workflow.data, canvasId);
+	}
+}
+
+function loadWorkflow(workflow, canvasId){
+	console.log(workflow)
+	console.log(canvasId)
 	// add nodes and connectors
 	for (var i=0; i<workflow.length; i++){
 		var item=workflow[i];
@@ -1491,7 +1506,7 @@ function switchDrawing() {
 // SAVE TO PDF
 function savetopdf() {
 	
-	pdfWorkflow=JSON.stringify(extractWorkflow());
+	pdfWorkflow=JSON.stringify(extractAllWorkflows());
 	
 	var pdfhandler = 'http://192.168.3.26/EvoHtmlToPdfHandler/asehandler.ashx?';
 	var pdfsource = 'http://192.168.3.26/workflow/pdf.asp?workflow='+pdfWorkflow;
@@ -1500,7 +1515,6 @@ function savetopdf() {
 	var pdfuserid = '35499';
 
 	handlerURL = pdfhandler + 'evosource=url&evourl=' + pdfsource + '&evodelay=' + pdfdelay + '&evofilename=' + pdffilename + '_DATE_TIME.pdf&evouserid=' + pdfuserid;
-	
 	
 	
 	//window.location.href = handlerURL
@@ -1540,7 +1554,8 @@ function savetopdf() {
 	
 	
 	
-// create a blank tab on load
-addWorkArea();
-
+	// create a blank tab on load
+	if (!(getParameterByName("workflow"))){
+		addWorkArea();
+	}
 });

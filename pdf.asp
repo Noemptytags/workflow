@@ -25,17 +25,22 @@
 	<div id="workAreaWrapper">
 		
 		
-		<div id="workArea">
-			<div id="drawArea">
-				<canvas id="colors_sketch" width="1600" height="1200"></canvas>
-				<img id="saved-image" />
-			</div>
 		
-			<div id="dragArea" class="canvas">
-			
-			</div>
-
+		
+		<div class="workArea active" data-name="Unnamed flow 1" data-public="false" id="flow1">
+		<div class="drawArea" style="display: none;">
+		<canvas id="flow1-sketch" class="colors_sketch" width="1600" height="1200"></canvas>
+		<img class="saved-image">
 		</div>
+		<div id="flow1-canvas" class="dragArea canvas" style="overflow: auto; position: relative;">
+		<div id="flow1-canvas_innerDiv" style="border: none; padding: 0px; margin: 0px; position: absolute; top: 0px; left: 0px; width: 1598px; height: 1198px;">
+		</div>
+		</div>
+		</div>
+		
+		
+		
+		
 	</div>
 	
 
