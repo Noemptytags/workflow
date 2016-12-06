@@ -141,7 +141,7 @@ $(".load-template").click(function() {
 		clearActiveWorkflow();
 		// get current work area wrapper for namespacing nodes
 		var canvasId = $('.workArea.active .canvas').prop('id');
-		loadWorkflow(workflow, canvasId )
+		loadWorkflow(workflow.data, canvasId )
 	});
 })
 
@@ -295,7 +295,8 @@ function loadSketch(sketch, drawarea){
 function loadWorkflows(workflows){
 	for(var i=0; i<workflows.length; i++){
 		var canvasId = addWorkArea()+"-canvas";
-		var workflow=workflows[i].workflow
+		var workflow=workflows[i].workflow.data
+		
 		loadWorkflow(workflow, canvasId);
 	}
 }
@@ -1066,6 +1067,9 @@ function updateWorkflowMetaData(workAreaId){
 	$("#"+workAreaId).attr("data-public", wpublic);
 	$("#flowTabs").find('a[data-target="'+workAreaId+'"]').text(wname);
 }
+
+
+
 
 function clearWorkflowMetaData(){
     var aClear="";
