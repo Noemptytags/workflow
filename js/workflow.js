@@ -338,39 +338,48 @@ function loadWorkflows(workflows){
 
 
 function loadWorkflowsPDF(workflows){
-	
+	var offset=0
 	var workAreaId = "flow1";
 	for(var i=0; i<workflows.length; i++){
 		
 		var canvasId = workAreaId+"-canvas";
 		var workflow=workflows[i].workflow
 		
-		//setWorkflowMetaData(workAreaId, workflow.name, workflow.public);
-		loadWorkflow(workflow.data, canvasId);
+		
+		loadWorkflow(workflow.data, canvasId, offset);
+		offset +=getMaxTop(workflow.data) + 100;
 	}
 }
 
-function loadWorkflow(workflow, canvasId){
-	console.log(workflow)
-	console.log(canvasId)
+function getMaxTop(workflow){
+	var maxTop=0;
+	for (var i=0; i<workflow.length; i++){
+		var item=workflow[i];
+		if (item.iTop>maxTop){
+			maxTop=item.iTop;
+		}
+	}
+	console.log(maxTop)
+	return maxTop;
+}
+
+
+function loadWorkflow(workflow, canvasId, offset){
+	offset = offset || 0;
 	// add nodes and connectors
 	for (var i=0; i<workflow.length; i++){
 		var item=workflow[i];
 		if (item.iType=="node"){
-			//addNode(item.iClass, item.iCaption, item.iTooltip, item.iTop, item.iLeft);
-			addGraphitNode(item.iClass, item.iCaption, item.iTooltip, item.iTimerDisplay, item.iTime, item.iTop, item.iLeft, item.iId+canvasId, canvasId);
+			addGraphitNode(item.iClass, item.iCaption, item.iTooltip, item.iTimerDisplay, item.iTime, item.iTop + offset, item.iLeft, item.iId+canvasId, canvasId);
 		}
 		if (item.iType=="connector"){
-			//addConnector(item.iDirection, item.iWidth, item.iHeight, item.iTop, item.iLeft);
 			addGraphitConnector(item.id1+canvasId, item.id2+canvasId);
 		}
-		
 		if (item.iType=="calculator"){
-			addCalc(item.iMinwage, item.iMins, item.iTop, item.iLeft, item.iSaving)
+			addCalc(item.iMinwage, item.iMins, item.iTop + offset, item.iLeft, item.iSaving)
 		}
-		
 		if (item.iType=="caption"){
-			addCaption(item.iCaption, item.iTop, item.iLeft )
+			addCaption(item.iCaption, item.iTop + offset, item.iLeft )
 		}
 	}
 }

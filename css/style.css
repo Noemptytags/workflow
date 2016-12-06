@@ -148,7 +148,8 @@
 #controls form .checkbox input[type="checkbox"] { position:static; margin:0; vertical-align:middle; }
 
 #workAreaWrapper{overflow: hidden; position:relative;  height:600px;}
-
+.pdf #workAreaWrapper {overflow: visible; height:auto; }
+.pdf #workAreaWrapper .workArea {position:relative;}
 @media only screen 
  
   and (max-device-width: 1024px) 
