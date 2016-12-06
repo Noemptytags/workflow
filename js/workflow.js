@@ -216,7 +216,7 @@ function clearActiveWorkflow(){
 	// get active dragArea canvas
 	currentWorkflow = $('.workArea.active > .dragArea');
 	// select all elements on dragArea and delete
-	currentWorkflow.find('.node, .connector, .connector-graphit, .connector-end, .destination-label').remove();
+	currentWorkflow.find('.node, .connector, .connector-graphit, .connector-end, .destination-label, .calc, .caption').remove();
 	// get id of current dragArea and empty related object array
 	var canvas = findCanvas($('.workArea.active > .dragArea').prop('id'));
 	canvas.blocks=[];
@@ -434,7 +434,7 @@ function extractWorkflow(canvasId){
 		item["iSaving"]= $(value).find(".saving").text();
 		item["iTop"]= top;
 		item["iLeft"]= left;	
-		workflow.data.push(item)
+		workflow.data.push(item);
 
 		
 	})
