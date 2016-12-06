@@ -28,7 +28,6 @@ var nodeCount=0; workAreaCount=$('.workArea').length;
 
 	
 ///toggle panels
-
 $(".ipanel-toggle").click(function() {
 	$(this).parent(".ipanel").find(".ipanel-content:first").slideToggle("fast");
 })
@@ -40,12 +39,12 @@ $(".ipanel-close").click(function() {
 })
 
 ///toggle categories
-$(".cat-toggle").click(function(e) {
+$(".cat-toggle").on("click", function(e) {
 	e.preventDefault();
 	var id=$(this).attr("data-target");
 	$("#"+id).slideDown("fast");
 	tidyMenu();
-})
+});
 
 ///toggle toolsets based on profile
 $(".load-tools").click(function(e) {
@@ -71,8 +70,8 @@ $(".load-tools").click(function(e) {
 
 // to remove 'end' class on right menu for styling dividers
 function tidyMenu() {
-	$("#controls .ipanel.icat").removeClass('end');
-	$("#controls .ipanel.icat:visible:last").addClass('end');
+	$("#controls .ipanel").removeClass('end');
+	$("#controls .ipanel:visible:last").addClass('end');
 }
 
 ///temporary variables to emulate saving to db
@@ -97,10 +96,10 @@ $(".new-workArea").click(function(e) {
 
 function addWorkArea(){
 	workAreaCount ++;
-	var workAreaId="flow"+ workAreaCount;
+	var workAreaId = "flow"+ workAreaCount;
 	var name =	"Unnamed flow "+workAreaCount;
-	var item = $('<div class="workArea" data-name=" '+name+'" data-public="false" id="'+workAreaId+'"><div class="drawArea"><canvas id="'+workAreaId+'-sketch" class="colors_sketch" width="1600" height="1200"></canvas><img class="saved-image" /></div><div id="'+workAreaId+'-canvas" class="dragArea canvas"></div></div>');
-	var tab=$('<li><a href="#" data-target="'+workAreaId+'">'+name+'</a></li>')
+	var item = $('<div class="workArea" data-name="'+name+'" data-public="false" id="'+workAreaId+'"><div class="drawArea"><canvas id="'+workAreaId+'-sketch" class="colors_sketch" width="1600" height="1200"></canvas><img class="saved-image" /></div><div id="'+workAreaId+'-canvas" class="dragArea canvas"></div></div>');
+	var tab = $('<li><a href="#" data-target="'+workAreaId+'">'+name+'</a></li>');
 	
 	$('#workAreaWrapper').append(item);
 	$('#flowTabs').append(tab);
@@ -125,13 +124,44 @@ function addWorkArea(){
 		e.stopPropagation();
 	});
 	
-	return workAreaId
+	return workAreaId;
 }
 
+$(".remove-workArea").click(function(e) {
+	e.preventDefault();
+	removeWorkArea();
+})
+
 function removeWorkArea(workAreaId){
-	$.removeData($('#workAreaWrapper #'+workAreaId).find('canvas.colors_sketch').get(0));
-	$('#workAreaWrapper #'+workAreaId).remove();
-	$('#flowTabs a[data-target="'+workAreaId+'"]').parent("li").remove();
+	// check if workAreaId has been specified and get active otherwise
+	thisWorkAreaId = (typeof workAreaId !== "undefined") ? workAreaId : $('.workArea.active').prop('id');
+	// get specified workarea dom element
+	thisWorkArea = $('#workAreaWrapper').find('#'+thisWorkAreaId);
+	// get associated tab
+	thisTab = $('#flowTabs a[data-target="'+thisWorkAreaId+'"]').parent("li");
+
+	// make sure not only workarea 
+	if($('#workAreaWrapper > .workArea').length > 1) {
+		// if first tab, then make next tab active else, previous tab
+		var nextActive = (typeof thisTab.prev()[0] !== "undefined") ? thisWorkArea.prev()[0].id : thisWorkArea.next()[0].id;
+		makeWorkAreaActive(nextActive);
+	}
+
+	// remove specified workarea and tab
+	$('#workAreaWrapper').find('#'+thisWorkAreaId).remove();
+	thisTab.remove();
+
+	// removed specified workarea's canvas and sketch
+	for(i = 0; i < canvases.length; i++) {
+		if(canvases[i].id == thisWorkAreaId+'-canvas') {
+			canvases.splice(i, 1);
+			sketches.splice(i, 1);
+		}
+	}
+
+	// add new workarea if completely empty
+	if($('#workAreaWrapper > .workArea').length == 0)
+		addWorkArea();
 }
 
 $(".load-template").click(function() { 
@@ -141,7 +171,7 @@ $(".load-template").click(function() {
 		clearActiveWorkflow();
 		// get current work area wrapper for namespacing nodes
 		var canvasId = $('.workArea.active .canvas').prop('id');
-		loadWorkflow(workflow, canvasId )
+		loadWorkflow(workflow, canvasId );
 	});
 })
 
