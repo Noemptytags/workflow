@@ -54,8 +54,6 @@ var __slice = Array.prototype.slice;
           
           e.preventDefault();
 
-          console.log(el);
-
           var $canvas, $this, key, sketch, _i, _len, _ref;
 
           $this = $(this); 

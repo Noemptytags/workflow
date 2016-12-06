@@ -542,12 +542,12 @@ $('.add').click(function(){
 		
 		
 		// if this node exists just swap the data else create it
-		//$("#dragArea ." +iId).remove();
+		thisNode = $(".workArea.active > .dragArea ." +iId);
 		
-		if ($("#dragArea ." +iId).length>0){
-			swapNode(iClass, iCaption,  iTooltip, iId)
-			
-		}else{
+		if (thisNode.length>0) {
+			swapNode(iClass, iCaption,  iTooltip, thisNode)	
+		}
+		else {
 			deleteNodeAndConnectors(iId)
 			addGraphitNode( iClass, iCaption, iTooltip, "", "", iTop, iLeft, iId);
 			
@@ -582,10 +582,9 @@ $('.add').click(function(){
 })
 
 //swap node
-function swapNode(iClass, iCaption,  iTooltip, iId){ 
-	var existingNode=$("#dragArea ." +iId)[0];
-	$(existingNode).find(".icon").attr("class", "icon " + iClass)
-	$(existingNode).find(".text").text( iCaption)
+function swapNode(iClass, iCaption, iTooltip, node){ 
+	$(node).find(".icon").attr("class", "icon " + iClass);
+	$(node).find(".text").text( iCaption);
 } 
 
 //add node
