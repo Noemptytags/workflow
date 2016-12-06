@@ -171,7 +171,7 @@ $(".load-template").click(function() {
 		clearActiveWorkflow();
 		// get current work area wrapper for namespacing nodes
 		var canvasId = $('.workArea.active .canvas').prop('id');
-		loadWorkflow(workflow, canvasId );
+		loadWorkflow(workflow.data, canvasId )
 	});
 })
 
@@ -193,7 +193,7 @@ function newProject(){
 
 function clearAllWorkflows(){
 	// select all elements in every dragArea and remove
-	$(".dragArea .node, .dragArea .connector, .dragArea .connector, .dragArea .connector-graphit, .dragArea .connector-end, .dragArea .destination-label, .dragArea .calc").remove();
+	$(".dragArea .node, .dragArea .connector, .dragArea .connector, .dragArea .connector-graphit, .dragArea .connector-end, .dragArea .destination-label, .dragArea .calc, .dragArea .caption").remove();
 	
 	$(".workArea").each( function(){
 		var workAreaId = $(this).attr("id");
@@ -241,6 +241,10 @@ function deleteActiveElements(){
 	if ($(".active-calc").length>0){ 
 		$(".active-calc").remove();
 		clearCalcData();
+	}
+	
+	if ($(".active-caption").length>0){ 
+		$(".active-caption").remove();
 	}
 }
 
@@ -324,9 +328,12 @@ function loadSketch(sketch, drawarea){
 
 function loadWorkflows(workflows){
 	for(var i=0; i<workflows.length; i++){
-		var canvasId = addWorkArea()+"-canvas";
+		var workAreaId = addWorkArea();
+		var canvasId = workAreaId+"-canvas";
 		var workflow=workflows[i].workflow
-		loadWorkflow(workflow, canvasId);
+		
+		setWorkflowMetaData(workAreaId, workflow.name, workflow.public);
+		loadWorkflow(workflow.data, canvasId);
 	}
 }
 
@@ -346,6 +353,10 @@ function loadWorkflow(workflow, canvasId){
 		
 		if (item.iType=="calculator"){
 			addCalc(item.iMinwage, item.iMins, item.iTop, item.iLeft, item.iSaving)
+		}
+		
+		if (item.iType=="caption"){
+			addCaption(item.iCaption, item.iTop, item.iLeft )
 		}
 	}
 }
@@ -387,7 +398,8 @@ function saveSketch(canvas){
 
 function extractWorkflow(canvasId){
 	
-	var workflow=[];
+	var workflow={};
+	workflow.data=[];
 	//get nodes from dom
 	$("#" + canvasId + " .node").each(function( index, value ) {
 		var item={}
@@ -405,7 +417,7 @@ function extractWorkflow(canvasId){
 		item["iLeft"]= left;
 		item["iTimerDisplay"]= $(value).find(".time").css('display');
 		item["iTime"]= $(value).find(".time").text();
-		workflow.push(item)
+		workflow.data.push(item)
 	});
 	
 	$("#" + canvasId + " .calc").each(function( index, value ) {
@@ -422,7 +434,24 @@ function extractWorkflow(canvasId){
 		item["iSaving"]= $(value).find(".saving").text();
 		item["iTop"]= top;
 		item["iLeft"]= left;	
-		workflow.push(item)
+		workflow.data.push(item)
+
+		
+	})
+	
+	$("#" + canvasId + " .caption").each(function( index, value ) {
+		var item={}
+		var left=parseInt($(value).attr("data-x"), 10) || 0;
+		var top=parseInt($(value).attr("data-y"), 10) || 0;
+		left +=(parseInt($(value).css('left'), 10) || 0);
+		top +=(parseInt($(value).css('top'), 10) || 0);
+		
+		item["iId"]= $(value).attr("id");
+		item["iType"]="caption";
+		item["iCaption"]= $(value).find(".text").text();
+		item["iTop"]= top;
+		item["iLeft"]= left;	
+		workflow.data.push(item);
 
 		
 	})
@@ -441,9 +470,14 @@ function extractWorkflow(canvasId){
 		item["iType"]="connector";
 		item["id1"]=idArray[1];
 		item["id2"]=idArray[2];
-		workflow.push(item);
+		workflow.data.push(item);
 	};
 	
+	
+	 var workArea=$("#" + canvasId).parents(".workArea")
+	 workflow.name=$(workArea).attr("data-name")
+	 workflow.public=$(workArea).attr("data-public")
+	 
 	console.log(JSON.stringify(workflow))
 	return workflow;
 	
@@ -529,6 +563,11 @@ $('.add').click(function(){
 		var iMinWage=$(this).attr("data-minwage"); 
 		var iMins=$(this).attr("data-mins");
 		addCalc(iMinWage, iMins, 50, 0);
+	}
+	
+	if(iType=="caption"){
+		var iCaption=$(this).attr("data-caption");
+		addCaption(iCaption, 50, 0);
 	}
 	
 })
@@ -641,6 +680,19 @@ function addCalc(iMinwage, iMins, iTop, iLeft, iSaving){
 		
 }
 
+
+function addCaption(iCaption,  iTop, iLeft){ 
+
+		nodeCount++;
+		iId ="cap"+nodeCount.toString();
+		
+		
+		var item = $('<div id="'+iId+'" class="caption draggable" ><h5 class="text">'+ iCaption +'</h5> </div>');
+		$('.workArea.active > .dragArea').append(item);
+		item.css( "top", iTop+"px");
+		item.css( "left", iLeft+"px");
+		
+}
 
 // graphit connector utilities
 
@@ -778,6 +830,12 @@ $('.dragIn').on('dragstart', function(e) {
 			data.iMinwage=$(el).attr("data-minwage");
 			data.iMins=$(el).attr("data-mins");
 		}
+		
+		if (iType=="caption"){
+			data.iType=iType;
+			data.iCaption=$(el).attr("data-caption");
+		}
+		
 		e.originalEvent.dataTransfer.setData("text", JSON.stringify(data));
 		//e.dataTransfer.setData("data", JSON.stringify(data));
     }
@@ -868,6 +926,12 @@ $('.dragArea').on(
 		var xoffset=-50;
 		var yoffset=-50;
 		addCalc(data.iMinwage, data.iMins, y+yoffset, x+xoffset);
+	}
+	
+	if(data.iType=="caption"){ 
+		var xoffset=-50;
+		var yoffset=-50;
+		addCaption(data.iCaption, y+yoffset, x+xoffset);
 	}
 		
 }
@@ -1092,10 +1156,15 @@ function updateWorkflowMetaData(workAreaId){
 	var workArea=$("#"+workAreaId);
 	var wname=$("#workflowdata #wName").val();
 	var wpublic=$("#workflowdata #wPublic").prop('checked');
+	setWorkflowMetaData(workAreaId, wname, wpublic);
+}
+
+function setWorkflowMetaData(workAreaId, wname, wpublic){
 	$("#"+workAreaId).attr("data-name", wname);
 	$("#"+workAreaId).attr("data-public", wpublic);
 	$("#flowTabs").find('a[data-target="'+workAreaId+'"]').text(wname);
 }
+
 
 function clearWorkflowMetaData(){
     var aClear="";
