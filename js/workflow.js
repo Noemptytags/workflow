@@ -365,7 +365,7 @@ $(".save-project").click(function(e) {
 	
 	e.preventDefault();
 	
-	savedWorkflows=[];
+	savedWorkflows=extractAllWorkflows();
 	savedSketches=[];
 	
 	$(".canvas").each(function(){
@@ -395,6 +395,16 @@ function saveSketch(canvas){
 	return savedSketch;
 }
 
+function extractAllWorkflows(){
+	var workflows=[]
+	$(".canvas").each(function(){
+	    var wfId=$(this).attr("id");
+		var wf = extractWorkflow(wfId);
+		var wfObj={"workflow": wf};
+		workflows.push(wfObj);
+	});
+	return workflows;
+}
 function extractWorkflow(canvasId){
 	
 	var workflow={};
@@ -1492,8 +1502,8 @@ function savetopdf() {
 	
 	
 	
-	window.location.href = handlerURL
-	//window.location.href = pdfsource
+	//window.location.href = handlerURL
+	window.location.href = 'pdf.asp?workflow='+pdfWorkflow;
 	
 }
 
