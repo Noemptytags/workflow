@@ -548,7 +548,7 @@ $('.add').click(function(){
 			swapNode(iClass, iCaption,  iTooltip, thisNode)	
 		}
 		else {
-			deleteNodeAndConnectors(iId)
+			deleteNodeAndConnectors(iId);
 			addGraphitNode( iClass, iCaption, iTooltip, "", "", iTop, iLeft, iId);
 			
 			var nodeWidth=100;
@@ -565,6 +565,8 @@ $('.add').click(function(){
 				addGraphitConnector(ids[0], ids[1]);
 				
 			}
+
+			$(this).closest('.ipanel').next().show();
 		}
 	}
 	
