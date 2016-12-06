@@ -372,7 +372,14 @@
 
 .calc h5{margin-bottom:10px;}
 
-
+.caption{
+  position:absolute;
+  color: black;
+  border-radius: 0.75em;
+  padding: 10px;
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+}
 /* pdf styles*/
 .pdf .dragArea{background-image:none;}
 
