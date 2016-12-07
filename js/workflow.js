@@ -20,16 +20,26 @@ $(document).ready(function() {
 	    return decodeURIComponent(results[2].replace(/\+/g, " "));
 	}	
 			
-	// initialise graphit	
-	initPageObjects();
-
 	// load for pdf
 	if (workflow = getParameterByName("workflow")){
 		var wf = JSON.parse(workflow);
 		loadWorkflowsPDF(wf);
 	}
 
+///////////////////////////////////////////
+// Panel functions                       //
+///////////////////////////////////////////
 
+	// redundant?
+	function objToString(obj){
+	    var str = '';
+	    for (var p in obj) {
+	        if (obj.hasOwnProperty(p)) {
+	            str += p + '::' + obj[p] + '\n';
+	        }
+	    }
+	    return str;
+	}
 
 	// to remove 'end' class on right menu for styling dividers
 	function tidyMenu() {
@@ -37,7 +47,11 @@ $(document).ready(function() {
 		$("#controls .ipanel:visible:last").addClass('end');
 	}
 
+///////////////////////////////////////////
+// Menus & workArea tools                //
+///////////////////////////////////////////
 
+	// add workArea to app with drag and draw areas
 	function addWorkArea(){
 		workAreaCount ++;
 		var workAreaId = "flow"+ workAreaCount;
@@ -71,7 +85,7 @@ $(document).ready(function() {
 		return workAreaId;
 	}
 
-
+	// remove workArea and associated sketches
 	function removeWorkArea(workAreaId){
 		// check if workAreaId has been specified and get active otherwise
 		thisWorkAreaId = (typeof workAreaId !== "undefined") ? workAreaId : $('.workArea.active').prop('id');
@@ -100,11 +114,7 @@ $(document).ready(function() {
 		}
 	}
 
-	function newProject(){
-		clearAllWorkflows();
-		addWorkArea();
-	}
-
+	// to reset the application and all arrays
 	function clearAllWorkflows(){
 		// select all elements in every dragArea and remove
 		$(".dragArea .node, .dragArea .connector, .dragArea .connector, .dragArea .connector-graphit, .dragArea .connector-end, .dragArea .destination-label, .dragArea .calc, .dragArea .caption").remove();
@@ -124,6 +134,13 @@ $(document).ready(function() {
 		});
 	}
 
+	// reset application and add an empty workflow
+	function newProject(){
+		clearAllWorkflows();
+		addWorkArea();
+	}
+
+	// take all elements from current workflow but do not remove workArea
 	function clearActiveWorkflow(){
 		// get active dragArea canvas
 		currentWorkflow = $('.workArea.active > .dragArea');
@@ -135,76 +152,11 @@ $(document).ready(function() {
 		canvas.connectors=[];
 	}
 
-	function deleteActiveElements(){
-		if (($(".active-node").length>0)||($(".selected-connector").length>0)){
-			deleteNodeAndConnectors();
-			clearNodeData();
-		}
-		if ($(".active-calc").length>0){ 
-			$(".active-calc").remove();
-			clearCalcData();
-		}
-		if ($(".active-caption").length>0){ 
-			$(".active-caption").remove();
-		}
-	}
+///////////////////////////////////////////
+// Tools for loading/saving sketches     //
+///////////////////////////////////////////
 
-	function deleteNodeAndConnectors(nodeId) {
-		// if nodeId is already known
-		nodeId = (typeof nodeId === 'undefined') ? $(".active-node").attr("id") : nodeId;
-
-		// previously: if(nodeId = $(".active-node").attr("id")) {
-		// if is node rather than connector
-		if(nodeId) {
-			
-			$("."+nodeId).each(function( index ) {
-				var connectorId = $(this).attr("class");
-				deleteConnector(connectorId);
-			})
-			  
-			deleteNode(nodeId);
-			//deleteNodeAndConnectors(nodeId);
-		}
-		// if is only connector
-		else if($(".selected-connector").length) {
-			//if at least one selected connector then find classes belonging to it
-			var connectorId = $(".selected-connector").attr("class");
-			//only need classes relating to node names block_1 etc
-			var splitted = connectorId.split(' ');		
-			
-			elsToDelete = '.' + splitted[1] + '.' + splitted[2];
-
-			$(elsToDelete).each(function( index ) {
-				$(this).removeClass("selected-connector");
-				deleteConnector($(this).attr("class"));
-			});
-		}
-	}
-
-	function deleteNode(id){
-		$("#"+id).remove();
-		var canvas = findCanvas($('.workArea.active > .dragArea').prop('id'));
-		for(i=0; i<canvas.blocks.length; i++){
-			if (canvas.blocks[i].id==id){
-				canvas.blocks.splice(i,1);
-			}
-		}
-	}
-
-	function deleteConnector(id){
-		var cssSelector=id.replace(/\s+/g, '.');
-		
-		$("."+cssSelector).remove();
-		var canvas = findCanvas($('.workArea.active > .dragArea').prop('id'));
-
-		for(i=0; i<canvas.connectors.length; i++){
-			
-			if (canvas.connectors[i].id==id){
-				canvas.connectors.splice(i,1);
-			}
-		}
-	}
-
+	// used when loading projects
 	function loadSketches(sketches){
 		for(var i=0; i<sketches.length; i++) {
 			// each existing canvas gets sketch based on index
@@ -212,7 +164,7 @@ $(document).ready(function() {
 		}
 	}
 
-
+	// loads sketch into image of specified drawArea
 	function loadSketch(sketch, drawarea){
 		thisDrawArea = (typeof drawarea !== "undefined") ? drawarea : $('.workArea.active .drawArea');
 		// get current workArea sketch image
@@ -227,6 +179,21 @@ $(document).ready(function() {
 		}	
 	}
 
+	// used when saving projects
+	function saveSketch(canvas){
+		// if no canvas selected, get active canvas
+		var currentCanvas = (typeof canvas !== "undefined") ? canvas : $('#'+$('.workArea.active').prop('id')+'-sketch')[0];
+		// save image data to variable;
+		savedSketch = currentCanvas.toDataURL();
+
+		return savedSketch;
+	}
+
+///////////////////////////////////////////
+// Tools for loading/saving workflows    //
+///////////////////////////////////////////
+
+	// adds workflows and populates them when lading project
 	function loadWorkflows(workflows){
 		for(var i=0; i<workflows.length; i++){
 			var workAreaId = addWorkArea();
@@ -238,31 +205,7 @@ $(document).ready(function() {
 		}
 	}
 
-
-	function loadWorkflowsPDF(workflows){
-		var offset=0
-		var workAreaId = "flow1";
-		for(var i=0; i<workflows.length; i++){
-			var canvasId = workAreaId+"-canvas";
-			var workflow=workflows[i].workflow;
-			loadWorkflow(workflow.data, canvasId, offset);
-			offset +=getMaxTop(workflow.data) + 100;
-		}
-	}
-
-	function getMaxTop(workflow){
-		var maxTop=0;
-		for (var i=0; i<workflow.length; i++){
-			var item=workflow[i];
-			if (item.iTop>maxTop){
-				maxTop=item.iTop;
-			}
-		}
-		console.log(maxTop)
-		return maxTop;
-	}
-
-
+	// loads workflow onto existing workArea
 	function loadWorkflow(workflow, canvasId, offset){
 		offset = offset || 0;
 		// add nodes and connectors
@@ -283,15 +226,7 @@ $(document).ready(function() {
 		}
 	}
 
-	function saveSketch(canvas){
-		// if no canvas selected, get active canvas
-		var currentCanvas = (typeof canvas !== "undefined") ? canvas : $('#'+$('.workArea.active').prop('id')+'-sketch')[0];
-		// save image data to variable;
-		savedSketch = currentCanvas.toDataURL();
-
-		return savedSketch;
-	}
-
+	// saves all open workAreas into saved project
 	function extractAllWorkflows(){
 		var workflows=[]
 		$(".canvas").each(function(){
@@ -303,6 +238,7 @@ $(document).ready(function() {
 		return workflows;
 	}
 
+	// saves a workArea's contents into JSON object
 	function extractWorkflow(canvasId){
 		
 		var workflow={};
@@ -341,10 +277,8 @@ $(document).ready(function() {
 			item["iSaving"]= $(value).find(".saving").text();
 			item["iTop"]= top;
 			item["iLeft"]= left;	
-			workflow.data.push(item);
-
-			
-		})
+			workflow.data.push(item);	
+		});
 		
 		$("#" + canvasId + " .caption").each(function( index, value ) {
 			var item={}
@@ -358,14 +292,10 @@ $(document).ready(function() {
 			item["iCaption"]= $(value).find(".text").text();
 			item["iTop"]= top;
 			item["iLeft"]= left;	
-			workflow.data.push(item);
+			workflow.data.push(item);	
+		});
 
-			
-		})
-
-		
 		//get connectors from graph-it
-		
 		var canvas = findCanvas(canvasId);
 		
 		//var canvas = findCanvas($('.workArea.active > .dragArea').prop('id'));
@@ -380,32 +310,19 @@ $(document).ready(function() {
 			workflow.data.push(item);
 		};
 		
-		
-		 var workArea=$("#" + canvasId).parents(".workArea")
-		 workflow.name=$(workArea).attr("data-name")
-		 workflow.public=$(workArea).attr("data-public")
+		var workArea=$("#" + canvasId).parents(".workArea");
+		workflow.name=$(workArea).attr("data-name");
+		workflow.public=$(workArea).attr("data-public");
 		 
 		console.log(JSON.stringify(workflow))
 		return workflow;	
 	}
 
-	//swap node
-	function swapNode(iClass, iCaption, iTooltip, node){ 
-		$(node).find(".icon").attr("class", "icon " + iClass);
-		$(node).find(".text").text( iCaption);
-	} 
+///////////////////////////////////////////
+// Tools for adding elements to dragArea //
+///////////////////////////////////////////
 
-	//add node
-	function addNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
-		iId=iId || "";
-		var item = $('<div  class="node draggable '+iId+'"><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text"> '+ iCaption +' </p>   </div>');
-		
-		 $(item).find('[data-toggle="tooltip"]').tooltip();
-		$('#dragArea').append(item);
-		item.css( "top", iTop+"px");
-		item.css( "left", iLeft+"px");
-	}
-
+	// add graphit nodes to dragArea
 	function addGraphitNode(iClass, iCaption,  iTooltip, iTimerDisplay, iTime, iTop, iLeft, iId, canvasId){ 
 		nodeCount++;
 		iId =iId || "node"+nodeCount.toString();
@@ -436,6 +353,7 @@ $(document).ready(function() {
 		});	
 	}
 
+	// add connector to two graphit nodes
 	function addGraphitConnector(id1, id2){
 																																																							
 		if ($('.connector-graphit.'+id1+'.'+ id2).length==0) {
@@ -479,34 +397,114 @@ $(document).ready(function() {
 		return false;
 	}
 
-
+	// add timesaving calculator
 	function addCalc(iMinwage, iMins, iTop, iLeft, iSaving){ 
-
-			nodeCount++;
-			iId ="calc"+nodeCount.toString();
-			iSaving=iSaving || 0;
-			
-			var item = $('<div id="'+iId+'" class="calc draggable" data-minwage="'+ iMinwage +'"><h5> Benefits </h5> <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: $<span class="saving">'+ iSaving +'</span><p></div>');
-			$('.workArea.active > .dragArea').append(item);
-			item.css( "top", iTop+"px");
-			item.css( "left", iLeft+"px");
-			
+		nodeCount++;
+		iId ="calc"+nodeCount.toString();
+		iSaving=iSaving || 0;
+		
+		var item = $('<div id="'+iId+'" class="calc draggable" data-minwage="'+ iMinwage +'"><h5> Benefits </h5> <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: $<span class="saving">'+ iSaving +'</span><p></div>');
+		$('.workArea.active > .dragArea').append(item);
+		item.css( "top", iTop+"px");
+		item.css( "left", iLeft+"px");		
 	}
 
-
+	// add workflow caption
 	function addCaption(iCaption,  iTop, iLeft){ 
-
-			nodeCount++;
-			iId ="cap"+nodeCount.toString();
-			
-			
-			var item = $('<div id="'+iId+'" class="caption draggable" ><h5 class="text">'+ iCaption +'</h5> </div>');
-			$('.workArea.active > .dragArea').append(item);
-			item.css( "top", iTop+"px");
-			item.css( "left", iLeft+"px");
-			
+		nodeCount++;
+		iId ="cap"+nodeCount.toString();
+		
+		var item = $('<div id="'+iId+'" class="caption draggable"><h5 class="text">'+ iCaption +'</h5> </div>');
+		$('.workArea.active > .dragArea').append(item);
+		item.css( "top", iTop+"px");
+		item.css( "left", iLeft+"px");		
 	}
 
+///////////////////////////////////////////
+// Tools for manipulating elements       //
+///////////////////////////////////////////
+
+	// if active elements sends to correct delete function
+	function deleteActiveElements(){
+		if (($(".active-node").length>0)||($(".selected-connector").length>0)){
+			deleteNodeAndConnectors();
+			clearNodeData();
+		}
+		if ($(".active-calc").length>0){ 
+			$(".active-calc").remove();
+			clearCalcData();
+		}
+		if ($(".active-caption").length>0){ 
+			$(".active-caption").remove();
+		}
+	}
+
+	// for deleting nodes and connectors
+	function deleteNodeAndConnectors(nodeId) {
+		// if nodeId is already known
+		nodeId = (typeof nodeId === 'undefined') ? $(".active-node").attr("id") : nodeId;
+
+		// previously: if(nodeId = $(".active-node").attr("id")) {
+		// if is node rather than connector
+		if(nodeId) {
+			
+			$("."+nodeId).each(function( index ) {
+				var connectorId = $(this).attr("class");
+				deleteConnector(connectorId);
+			})
+			  
+			deleteNode(nodeId);
+			//deleteNodeAndConnectors(nodeId);
+		}
+		// if is only connector
+		else if($(".selected-connector").length) {
+			//if at least one selected connector then find classes belonging to it
+			var connectorId = $(".selected-connector").attr("class");
+			//only need classes relating to node names block_1 etc
+			var splitted = connectorId.split(' ');		
+			
+			elsToDelete = '.' + splitted[1] + '.' + splitted[2];
+
+			$(elsToDelete).each(function( index ) {
+				$(this).removeClass("selected-connector");
+				deleteConnector($(this).attr("class"));
+			});
+		}
+	}
+
+	// for deleting node only
+	function deleteNode(id){
+		$("#"+id).remove();
+		var canvas = findCanvas($('.workArea.active > .dragArea').prop('id'));
+		for(i=0; i<canvas.blocks.length; i++){
+			if (canvas.blocks[i].id==id){
+				canvas.blocks.splice(i,1);
+			}
+		}
+	}
+
+	// for deleting connector only
+	function deleteConnector(id){
+		var cssSelector=id.replace(/\s+/g, '.');
+		
+		$("."+cssSelector).remove();
+		var canvas = findCanvas($('.workArea.active > .dragArea').prop('id'));
+
+		for(i=0; i<canvas.connectors.length; i++){
+			
+			if (canvas.connectors[i].id==id){
+				canvas.connectors.splice(i,1);
+			}
+		}
+	}
+
+	// swapping out the contents of a node
+	function swapNode(iClass, iCaption, iTooltip, node){ 
+		$(node).find(".icon").attr("class", "icon " + iClass);
+		$(node).find(".text").text( iCaption);
+	} 
+
+	// makes selected node active
 	function makeActive(elem){ 
 		node = $(elem).hasClass("node") ? $(elem) : $(event.target).parents(".node");
 
@@ -523,6 +521,7 @@ $(document).ready(function() {
 		}
 	}
 
+	// detects if more than one node active and connects them
 	function connectToActiveNode(elem){
 		// gets node from direct click or child click
 		node = $(elem).hasClass("node") ? $(elem) : $(event.target).parents(".node");
@@ -553,112 +552,12 @@ $(document).ready(function() {
 		}		
 	}
 
-	//add node
-	function addConnectedNode(iClass, iCaption,  iTooltip, iTop, iLeft, iId){
-		iId=iId || "";
-		var item = $('<div  class="node draggable '+iId+'"><span  data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text"> '+ iCaption +' </p></div>');
-		
-		var upcon=$('<div data-direction="up" class="connector resize-nodrag up" style="width: 30px; height: 30px; bottom: 90px; left: 35px;"></div>');
-		var downcon=$('<div data-direction="down" class="connector resize-nodrag down" style="width: 30px; height: 30px; top: 90px; left: 35px;"></div>');
-		var rightcon=$('<div data-direction="right" class="connector resize-nodrag right" style="width: 30px; height: 30px; top: 35px; left: 90px;"></div>');
-		var leftcon=$('<div data-direction="left" class="connector resize-nodrag left" style="width: 30px; height: 30px; top: 35px; right: 90px;"></div>');
-		$(item).append(upcon);
-		$(item).append(downcon);
-		$(item).append(rightcon);
-		$(item).append(leftcon);
-		$(item).find('[data-toggle="tooltip"]').tooltip();
-		
-		$('.workArea.active > .dragArea').append(item);
-		item.css( "top", iTop+"px");
-		item.css( "left", iLeft+"px");
-	}
 
-	//add connector
-	function addConnector(iDirection, iWidth, iHeight, iTop, iLeft, iId){
-		iId=iId || "";
-		var item = $('<div data-direction="'+iDirection+'" class="connector resize-drag '+iDirection+' '+iId+'"></div>');
-		$('.workArea.active > .dragArea').append(item);
-		item.css( "width", iWidth+"px");
-		item.css( "height", iHeight+"px");
-		item.css( "top", iTop+"px");
-		item.css( "left", iLeft+"px");
-	}
-
-	function objToString (obj) {
-	    var str = '';
-	    for (var p in obj) {
-	        if (obj.hasOwnProperty(p)) {
-	            str += p + '::' + obj[p] + '\n';
-	        }
-	    }
-	    return str;
-	}
-
-	function doDrop(e){
-		
-		var offset=$(".workArea.active > .dragArea").offset()
-		var x, y;
-		if(!!e.pageX){
-		//mouse
-			x=e.pageX - offset.left
-			y=e.pageY - offset.top
-		}else{
-		//touch
-			x=e.offsetX - offset.left + $(document).scrollLeft();
-			y=e.offsetY - offset.top + $(document).scrollTop();
-		}
-						
-		var data = JSON.parse(e.originalEvent.dataTransfer.getData("text"));
-
-		if(data.iType=="node"){
-			var xoffset=-50;
-			var yoffset=-50;
-			addNode(data.iClass, data.iCaption, data.iTooltip, y+yoffset, x+xoffset);
-		}
-		
-		if(data.iType=="graphit-node"){ 
-			var xoffset=-50;
-			var yoffset=-50;
-			addGraphitNode(data.iClass, data.iCaption, data.iTooltip, "", "", y+yoffset, x+xoffset);
-		}
-			
-			
-		if(data.iType=="connector"){
-			var xoffset=0;
-			var yoffset=0;
-			var iDirection= data.iDirection
-			if(iDirection=="up"){xoffset=-15;yoffset=-30;}
-			if(iDirection=="down"){xoffset=-15}
-			if(iDirection=="left"){yoffset=-15; xoffset=-30}
-			if(iDirection=="right"){yoffset=-15}
-			addConnector( iDirection, 30, 30, y+yoffset, x+xoffset); 
-		}
-
-		if(data.iType=="connected-node"){
-			var xoffset=-50;
-			var yoffset=-50;
-			addConnectedNode(data.iClass, data.iCaption, data.iTooltip, y+yoffset, x+xoffset);
-		}
-		
-		
-		if(data.iType=="calc"){ 
-			var xoffset=-50;
-			var yoffset=-50;
-			addCalc(data.iMinwage, data.iMins, y+yoffset, x+xoffset);
-		}
-		
-		if(data.iType=="caption"){ 
-			var xoffset=-50;
-			var yoffset=-50;
-			addCaption(data.iCaption, y+yoffset, x+xoffset);
-		}
-			
-	}
-  
 ///////////////////////////////////////
 // Tools for loading node data panel //
 ///////////////////////////////////////
 
+	// when node is selected
 	function loadNodeData(node){
 		var aId=$(node).attr("id");
 		$("#activeData").attr("aId", aId);
@@ -683,6 +582,7 @@ $(document).ready(function() {
 		$("#activeData #aTime").val(aTime);
 	}
 
+	// when inputs are changed in nodeData panel
 	function updateNode(nodeId){
 		var node=$(".dragArea #" +nodeId);
 
@@ -696,6 +596,7 @@ $(document).ready(function() {
 		$(node).find("span.time").text(iTime);
 	}
 
+	// when node is deselected or deleted
 	function clearNodeData(){
 	    var aClear="";
 		var aId="";
@@ -710,6 +611,7 @@ $(document).ready(function() {
 // Tools for loading CS Calculator   //
 ///////////////////////////////////////
 
+	// when calcultor is selected
 	function loadCalcData(calc){
 		// var aMinwage=parseFloat($(calc).find(".minwage").text());
 		var aMinwage=parseFloat($(calc).attr("data-minwage"));
@@ -722,6 +624,7 @@ $(document).ready(function() {
 		$("#calcData input").removeAttr('disabled');
 	}
 
+	// when input in calculator panel are changed
 	function updateCalc(calcId){
 		var calc=$(".dragArea #" +calcId);
 		var iMinwage=parseFloat($("#calcData #aMinwage").val());
@@ -733,6 +636,7 @@ $(document).ready(function() {
 		$(calc).find(".saving").text(iSaving.toFixed(2));
 	}
 	 
+	// when calculator is deselected or deleted
 	function clearCalcData(){
 		  var aMinwage="";
 		  var aMins="";
@@ -780,7 +684,7 @@ $(document).ready(function() {
 	}
 
 ///////////////////////////////////////
-// tabbing workflows                 //
+// selecting workflows               //
 ///////////////////////////////////////
 
 	function makeWorkAreaActive(workAreaId){
@@ -790,8 +694,7 @@ $(document).ready(function() {
 		$('.workArea').removeClass('active');
 		$('#'+workAreaId).addClass('active');
 		switchDrawing();
-		loadWorkflowMetaData(workAreaId)
-		
+		loadWorkflowMetaData(workAreaId);
 	}
 
 	function switchDrawing() {
@@ -804,6 +707,29 @@ $(document).ready(function() {
 ///////////////////////////////////////////
 // PDF functions                         //
 ///////////////////////////////////////////
+
+	function loadWorkflowsPDF(workflows){
+		var offset=0
+		var workAreaId = "flow1";
+		for(var i=0; i<workflows.length; i++){
+			var canvasId = workAreaId+"-canvas";
+			var workflow=workflows[i].workflow;
+			loadWorkflow(workflow.data, canvasId, offset);
+			offset +=getMaxTop(workflow.data) + 100;
+		}
+	}
+
+	function getMaxTop(workflow){
+		var maxTop=0;
+		for (var i=0; i<workflow.length; i++){
+			var item=workflow[i];
+			if (item.iTop>maxTop){
+				maxTop=item.iTop;
+			}
+		}
+		console.log(maxTop)
+		return maxTop;
+	}
 
 	function savetopdf() {
 		
@@ -826,6 +752,41 @@ $(document).ready(function() {
 // everything to do with drag & drop //
 ///////////////////////////////////////
 
+	// for dropping all elements into dragArea
+	function doDrop(e){
+		
+		var offset=$(".workArea.active > .dragArea").offset()
+		var x, y;
+		if(!!e.pageX){
+		//mouse
+			x=e.pageX - offset.left
+			y=e.pageY - offset.top
+		}else{
+		//touch
+			x=e.offsetX - offset.left + $(document).scrollLeft();
+			y=e.offsetY - offset.top + $(document).scrollTop();
+		}
+						
+		var data = JSON.parse(e.originalEvent.dataTransfer.getData("text"));
+
+		if(data.iType=="graphit-node"){ 
+			var xoffset=-50;
+			var yoffset=-50;
+			addGraphitNode(data.iClass, data.iCaption, data.iTooltip, "", "", y+yoffset, x+xoffset);
+		}
+		if(data.iType=="calc"){ 
+			var xoffset=-50;
+			var yoffset=-50;
+			addCalc(data.iMinwage, data.iMins, y+yoffset, x+xoffset);
+		}	
+		if(data.iType=="caption"){ 
+			var xoffset=-50;
+			var yoffset=-50;
+			addCaption(data.iCaption, y+yoffset, x+xoffset);
+		}		
+	}
+
+	// for moving calculator and caption
 	function dragMoveListener (event) {
 		var target = event.target,
 		    // keep the dragged position in the data-x/data-y attributes
@@ -845,10 +806,11 @@ $(document).ready(function() {
 	// this is used later in the resizing and gesture demos
 	window.dragMoveListener = dragMoveListener;
  
+	// dialog for changing caption
 	interact('.draggable .text').on('tap', function (event) {
 		event.preventDefault();
 		var txt=$(event.target).text();
-	
+
 		bootbox.prompt({
 	  		title: "Edit text",
 	  		value: txt,
@@ -860,8 +822,8 @@ $(document).ready(function() {
 		}); 
 	});
 
-  //INTERACTjs code for '.draggable' elements - eg nodes
-interact('.draggable')
+  	// for moving calculator and caption 
+	interact('.draggable')
 	.draggable({
 		snap: {
     		targets: [interact.createSnapGrid({ x: 20, y: 20 })],
@@ -904,217 +866,6 @@ interact('.draggable')
 		loadCalcData(calc);	
 	});
   
-// INTERACTjs code for trash can
-	interact('.dropzone').dropzone({
-	  // only accept elements matching this CSS selector
-	  accept: ' .resize-drag, .node',
-	  // Require a 75% element overlap for a drop to be possible
-	  overlap: 0.1,
-
-	  // listen for drop related events:
-
-	  ondropactivate: function (event) {
-	    // add active dropzone feedback
-	    event.target.classList.add('drop-active');
-	  },
-	  ondragenter: function (event) {
-	    var draggableElement = event.relatedTarget,
-	        dropzoneElement = event.target;
-
-	    // feedback the possibility of a drop
-	    dropzoneElement.classList.add('drop-target');
-	    draggableElement.classList.add('can-drop');
-	    //draggableElement.textContent = 'Dragged in';
-	  },
-	  ondragleave: function (event) {
-	    // remove the drop feedback style
-	    event.target.classList.remove('drop-target');
-	    event.relatedTarget.classList.remove('can-drop');
-	    //event.relatedTarget.textContent = 'Dragged out';
-	  },
-	  ondrop: function (event) {
-	    //event.relatedTarget.textContent = 'Dropped';
-		 $(event.relatedTarget).remove();
-	  },
-	  ondropdeactivate: function (event) {
-	    // remove active dropzone feedback
-	    event.target.classList.remove('drop-active');
-	    event.target.classList.remove('drop-target');
-	  }
-	});
-
-
-// INTERACTjs code for resizable draggable elements e.g. connectors
-
-	//resizable only vertically
-
-    interact('.resize-nodrag.up, .resize-nodrag.down')
-		.draggable({
-
-		// enable autoScroll
-		autoScroll: true,
-		onmove: window.dragMoveListener
-		})
-		.resizable({
-		preserveAspectRatio: false,
-		edges: { left: false, right: false, bottom: true, top: true }
-		})
-		.on('resizemove', function (event) {
-		var target = event.target,
-
-		    x = (parseFloat(target.getAttribute('data-x')) || 0),
-		    y = (parseFloat(target.getAttribute('data-y')) || 0);
-		// update the element's style
-		var min =parseInt($(target).css("min-height"))
-		if(event.rect.height>min){
-			$(target).addClass("active-connector");
-		}else{
-			$(target).removeClass("active-connector");
-		}
-
-		target.style.width  = event.rect.width + 'px';
-		target.style.height = event.rect.height + 'px';
-		// translate when resizing from top or left edges
-		x += event.deltaRect.left;
-		y += event.deltaRect.top;
-		//target.style.webkitTransform = target.style.transform =
-		//    'translate(' + x + 'px,' + y + 'px)';
-		// target.setAttribute('data-x', x);
-		// target.setAttribute('data-y', y);
-	});
-  
-
-	//resizable only horizontally
-    interact('.resize-nodrag.left, .resize-nodrag.right')
-		.draggable({
-
-
-		// enable autoScroll
-		autoScroll: true,
-		onmove: window.dragMoveListener
-		})
-		.resizable({
-		preserveAspectRatio: false,
-		edges: { left: true, right: true, bottom: false, top: false }
-		})
-		.on('resizemove', function (event) {
-		var target = event.target,
-		    x = (parseFloat(target.getAttribute('data-x')) || 0),
-		    y = (parseFloat(target.getAttribute('data-y')) || 0);
-		// update the element's style
-		var min =parseInt($(target).css("min-width"))
-		if(event.rect.width>min){
-			$(target).addClass("active-connector");
-		}else{
-			$(target).removeClass("active-connector");
-		}
-
-
-		target.style.width  = event.rect.width + 'px';
-		target.style.height = event.rect.height + 'px';
-		// translate when resizing from top or left edges
-		x += event.deltaRect.left;
-		y += event.deltaRect.top;
-
-
-		//target.style.webkitTransform = target.style.transform =
-		//    'translate(' + x + 'px,' + y + 'px)';
-		// target.setAttribute('data-x', x);
-		// target.setAttribute('data-y', y);
-  	});
-  
-  
-  
-  
-	//resizable and move vertically
-	interact('.resize-drag.up, .resize-drag.down')
-		.draggable({
-		snap: {
-		  targets: [
-		    interact.createSnapGrid({ x: 20, y: 20 })
-		  ],
-		  range: Infinity,
-		  relativePoints: [ { x: 0, y: 0 } ]
-		},
-		// enable inertial throwing
-		inertia: true,
-		// keep the element within the area of it's parent
-		restrict: {
-		  restriction: "parent",
-		  endOnly: true,
-		  elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-		},
-		// enable autoScroll
-		autoScroll: true,
-
-		onmove: window.dragMoveListener
-		})
-		.resizable({
-		preserveAspectRatio: false,
-		edges: { left: false, right: false, bottom: true, top: true }
-		})
-		.on('resizemove', function (event) {
-		var target = event.target,
-		    x = (parseFloat(target.getAttribute('data-x')) || 0),
-		    y = (parseFloat(target.getAttribute('data-y')) || 0);
-		// update the element's style
-
-
-		target.style.width  = event.rect.width + 'px';
-		target.style.height = event.rect.height + 'px';
-		// translate when resizing from top or left edges
-		x += event.deltaRect.left;
-		y += event.deltaRect.top;
-		target.style.webkitTransform = target.style.transform =
-		    'translate(' + x + 'px,' + y + 'px)';
-		target.setAttribute('data-x', x);
-		target.setAttribute('data-y', y);
-	});
-  
-	//resizable and move horizontally
-	interact('.resize-drag.left, .resize-drag.right')
-		.draggable({
-			snap: {
-			  targets: [
-			    interact.createSnapGrid({ x: 20, y: 20 })
-			  ],
-			  range: Infinity,
-			  relativePoints: [ { x: 0, y: 0 } ]
-			},
-			// enable inertial throwing
-			inertia: true,
-			// keep the element within the area of it's parent
-			restrict: {
-			  restriction: "parent",
-			  endOnly: true,
-			  elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-			},
-			// enable autoScroll
-			autoScroll: true,
-			onmove: window.dragMoveListener
-		})
-
-		.resizable({
-		    preserveAspectRatio: false,
-			edges: { left: true, right: true, bottom: false, top: false }
-		})
-
-		.on('resizemove', function (event) {
-		    var target = event.target,
-		        x = (parseFloat(target.getAttribute('data-x')) || 0),
-		        y = (parseFloat(target.getAttribute('data-y')) || 0);
-		    // update the element's style
-		    target.style.width  = event.rect.width + 'px';
-		    target.style.height = event.rect.height + 'px';
-		    // translate when resizing from top or left edges
-		    x += event.deltaRect.left;
-		    y += event.deltaRect.top;
-		    target.style.webkitTransform = target.style.transform =
-		        'translate(' + x + 'px,' + y + 'px)';
-		    target.setAttribute('data-x', x);
-		    target.setAttribute('data-y', y);
-	});
-
 	// code for '.draggin' elements - eg menu items
 	$('.dragIn').on('dragstart', function(e) { 
 		
@@ -1124,41 +875,22 @@ interact('.draggable')
 		//var el=e.originalEvent.target
 		var el=this;
 		var iType=$(el).attr("data-type")
-		if (iType=="node"){
-			data.iType=iType;
-			data.iClass=$(el).attr("data-class");
-			data.iCaption=$(el).attr("data-caption");
-			data.iTooltip=$(el).attr("data-tooltip");
-		}
+
 		if (iType=="graphit-node"){
 			data.iType=iType;
 			data.iClass=$(el).attr("data-class");
 			data.iCaption=$(el).attr("data-caption");
 			data.iTooltip=$(el).attr("data-tooltip");
-		}
-		if (iType=="connector"){
-			data.iType=iType;
-			data.iDirection=$(el).attr("data-direction");
-		}
-		if (iType=="connected-node"){
-			data.iType=iType;
-			data.iClass=$(el).attr("data-class");
-			data.iCaption=$(el).attr("data-caption");
-			data.iTooltip=$(el).attr("data-tooltip");
-		}
-		//e.originalEvent.dataTransfer.setData("text", e.target.id);
-		
+		}		
 		if (iType=="calc"){
 			data.iType=iType;
 			data.iMinwage=$(el).attr("data-minwage");
 			data.iMins=$(el).attr("data-mins");
-		}
-		
+		}		
 		if (iType=="caption"){
 			data.iType=iType;
 			data.iCaption=$(el).attr("data-caption");
-		}
-		
+		}	
 		e.originalEvent.dataTransfer.setData("text", JSON.stringify(data));
 		//e.dataTransfer.setData("data", JSON.stringify(data));
 	});
@@ -1173,25 +905,30 @@ interact('.draggable')
 	    e.stopPropagation();
 	});
 
+/*-----------------------------------*/
 ///////////////////////////////////////
 // set events                        //
 ///////////////////////////////////////
+/*-----------------------------------*/
 
-	$("#workAreaWrapper").on("click", ".workArea", function(event){
-		if($(event.target).parents(".node").length==0 && !$(event.target).hasClass("node")){
+	// clicking workArea will deselect any active elements
+	$("#workAreaWrapper").on("click", ".workArea", function(e){
+		if($(e.target).parents(".node").length == 0 && !$(e.target).hasClass("node")){
 			$(".node").removeClass("active-node")
 			clearNodeData();
 		}
-
-		if($(event.target).parents(".calc").length==0 && !$(event.target).hasClass("calc")){
+		if($(e.target).parents(".calc").length == 0 && !$(e.target).hasClass("calc")){
 			$(".calc").removeClass("active-calc")
 			clearCalcData();
 		}
-
-		if($(event.target).parents(".destination-label").length==0 && !$(event.target).hasClass("destination-label")){
+		if($(e.target).parents(".destination-label").length == 0 && !$(e.target).hasClass("destination-label")){
 			$(".connector-graphit").removeClass("selected-connector");
 		}
 	});
+
+///////////////////////////////////////
+// panels and menu item events       //
+///////////////////////////////////////	
 
 	// toggle side panels
 	$(".ipanel-toggle").click(function() {
@@ -1234,13 +971,36 @@ interact('.draggable')
 		tidyMenu();
 	});
 
+	// saved items panel - project
+	$("#load-saved-project").click(function() {
+		clearAllWorkflows();
+		if(savedWorkflows.length>0){ 
+			loadWorkflows(savedWorkflows);
+		}
+		if(!!savedSketch){
+			loadSketches(savedSketches);
+		}
+	});
+
+	// samples panel - load workflow
+	$(".load-template").click(function() { 
+		var url = $(this).attr("data-template");
+		$.get("ajax/"+url, function(data) {
+		  var workflow = JSON.parse(data).workflow;
+			clearActiveWorkflow();
+			// get current work area wrapper for namespacing nodes
+			var canvasId = $('.workArea.active .canvas').prop('id');
+			loadWorkflow(workflow.data, canvasId )
+		});
+	});
+
 	// new project button
 	$(".new-project").click(function(e) {
 		e.preventDefault();
 		newProject();
 	});
 
-	// Actually save project action
+	// save project action
 	$(".save-project").click(function(e) {
 		e.preventDefault();
 		
@@ -1256,27 +1016,6 @@ interact('.draggable')
 		$("#load-saved-project").show();
 	});
 
-	$("#load-saved-project").click(function() {
-		clearAllWorkflows();
-		if(savedWorkflows.length>0){ 
-			loadWorkflows(savedWorkflows);
-		}
-		if(!!savedSketch){
-			loadSketches(savedSketches);
-		}
-	});
-
-	$(".load-template").click(function() { 
-		var url = $(this).attr("data-template");
-		$.get("ajax/"+url, function(data) {
-		  var workflow = JSON.parse(data).workflow;
-			clearActiveWorkflow();
-			// get current work area wrapper for namespacing nodes
-			var canvasId = $('.workArea.active .canvas').prop('id');
-			loadWorkflow(workflow.data, canvasId )
-		});
-	});
-
 	// new workArea button
 	$(".new-workArea").click(function(e) {
 		e.preventDefault();
@@ -1290,12 +1029,21 @@ interact('.draggable')
 	});
 
 	// save to pdf button
-	$('#savetopdf').click(function() {	
+	$('#savetopdf').click(function(e) {
+		e.preventDefault();
 		savetopdf();
-		return false;
 	});
 
-	 //add a node or connector to top of canvas on click
+///////////////////////////////////////
+// node manipulation                 //
+///////////////////////////////////////	
+
+	// drop elements onto dragArea
+	$('.dragArea').on('drop', function(e){
+		doDrop(e);
+	});
+
+	 // add a node or connector to top of canvas on click
 	$('.add').click(function(){
 
 		var offSet = 10;
@@ -1305,48 +1053,27 @@ interact('.draggable')
 		initTop = 30 + numNewElements*offSet;
 
 		var iType=$(this).attr("data-type");
-		if(iType=="node"){
-			var iClass=$(this).attr("data-class");
-			var iCaption=$(this).attr("data-caption");
-			var iTooltip=$(this).attr("data-tooltip");
-			addNode( iClass, iCaption, iTooltip, 30, 30);
-		}
-		if(iType=="connector"){
-			var direction = $(this).attr("data-direction");
-			addConnector( direction, 30, 30, 50, 50); 
-		}
 		
-		if(iType=="connected-node"){
-			var iClass=$(this).attr("data-class");
-			var iCaption=$(this).attr("data-caption");
-			var iTooltip=$(this).attr("data-tooltip");
-			addConnectedNode( iClass, iCaption, iTooltip, 30, 30);
-		}
-		
-		if(iType=="graphit-node"){
-			
+		if(iType=="graphit-node"){	
 			var iClass=$(this).attr("data-class");
 			var iCaption=$(this).attr("data-caption");
 			var iTooltip=$(this).attr("data-tooltip");
 			addGraphitNode(iClass, iCaption, iTooltip, "", "", initTop, initLeft);
 		}
 		
-		
-		if(iType=="guided-node"){
-			
+		if(iType=="guided-node"){	
 			var iId=$(this).attr("data-id");
 			var iClass=$(this).attr("data-class"); 
 			var iCaption=$(this).attr("data-caption");
 			var iTooltip=$(this).attr("data-tooltip");
 			var iTop=$(this).attr("data-top");
-			var iLeft=$(this).attr("data-left");
-			
+			var iLeft=$(this).attr("data-left");	
 			
 			// if this node exists just swap the data else create it
 			thisNode = $(".workArea.active > .dragArea ." +iId);
 			
 			if (thisNode.length>0) {
-				swapNode(iClass, iCaption,  iTooltip, thisNode)	
+				swapNode(iClass, iCaption, iTooltip, thisNode);
 			}
 			else {
 				deleteNodeAndConnectors(iId);
@@ -1358,8 +1085,6 @@ interact('.draggable')
 				var conWidth=15;
 				
 				var connector = $(this).attr("data-connector");
-				
-			
 				
 				if (connector!="none"){
 					ids=connector.split(" ");
@@ -1384,7 +1109,13 @@ interact('.draggable')
 		
 	});
 
-	// graphit connector utilities
+	// node - make active (and connect)
+	$(".node").on('click touchstart',function() {	
+		makeActive(event.target);
+		connectToActiveNode(event.target);
+	});
+
+	// node connector make active
 	$(".destination-label").on('click touchstart', function() {
 		classes = this.dataset.parent
 		
@@ -1396,13 +1127,7 @@ interact('.draggable')
 		);
 	});
 
-	// graphit node utility
-	$(".node ").on('click touchstart',function() {	
-		makeActive(event.target);
-		connectToActiveNode(event.target);
-	});
-
-	// delete nodes on keypress
+	// delete elements on keypress
 	$('html').keyup(function(e){ if(e.keyCode == 46) { 
 		// make sure input field is not being typing into
 		if(!$('input:focus').length)
@@ -1410,27 +1135,10 @@ interact('.draggable')
 		}
 	});
 
-	// delete nodes on main trash button press
+	// delete elements via on main trash button
 	$('.trash').click(function(){ deleteActiveElements(); });
 
-	// switch workflow view via tabs
-	$('#flowTabs').on( 'click', 'li a', function(e) {
-		e.preventDefault();
-		var id=$(this).attr("data-target");
-		makeWorkAreaActive(id)
-	});
-
-	$('.dragArea').on('drop',function(e){
-		doDrop(e);
-	});
-
-	$("#activeData input").change(function(){ 
-		var aId=$("#activeData").attr("aId");
-		if (aId!=""){
-			updateNode(aId)
-		}
-	});
-
+	// delete node via nodeData panel
 	$("#controls #deleteNode").click(function(e){
 		e.preventDefault();
 		var aId=$("#activeData").attr("aId");
@@ -1440,36 +1148,48 @@ interact('.draggable')
 		}
 	});
 
-	$("#controls #aTimer").change(function() {
-		if ($(this).is(':checked')) {
-			$("#aTimeHolder").show();
-		}
-		else {
-			$("#aTimeHolder").hide();
+	// node
+	$("#activeData input").change(function(){ 
+		var aId=$("#activeData").attr("aId");
+		if (aId!=""){
+			updateNode(aId);
 		}
 	});
-	 
+
+	// update calculator info
 	$("#calcData input").change(function(){ 
 		var aId=$("#calcData").attr("aId")
 		if (aId!=""){
 			updateCalc(aId);
 		}
 	});
-	 
-	$("#activeData #deleteNode").click(function(e){
-		e.preventDefault();
-		var aId=$("#activeData").attr("aId")
-		if (aId!=""){
-			deleteNodeAndConnectors(aId);
-			clearNodeData();
-		}
+
+///////////////////////////////////////
+// nodeData panel                    //
+///////////////////////////////////////
+
+	// show or hide input for time required by icon
+	$("#controls #aTimer").change(function() {
+		timeShown = $(this).is(':checked') ? $("#aTimeHolder").show() : $("#aTimeHolder").hide();
 	});
 
+///////////////////////////////////////
+// workflow tools                    //
+///////////////////////////////////////	
+
+	// change workflow name
 	$("#workflowdata input").change(function(){ 
 		var workAreaId=$("#workflowData").attr("workAreaId");
 		if (workAreaId!=""){
 			updateWorkflowMetaData(workAreaId);
 		}
+	});
+
+	// switch workflow view via tabs
+	$('#flowTabs').on( 'click', 'li a', function(e) {
+		e.preventDefault();
+		var id=$(this).attr("data-target");
+		makeWorkAreaActive(id)
 	});
 
 ///////////////////////////////////////
@@ -1490,9 +1210,14 @@ interact('.draggable')
 		$(this).addClass("active");
 	});
 
+/*-----------------------------------*/
 ///////////////////////////////////////
 // initialisation                    //
-///////////////////////////////////////	
+///////////////////////////////////////
+/*-----------------------------------*/	
+
+	// initialise graphit	
+	initPageObjects();
 
 	// add any existing sketches to app array - redundant if not starting with workflows
 	$('.drawArea canvas.colors_sketch').each(function() {
