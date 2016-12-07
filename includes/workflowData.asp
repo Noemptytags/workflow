@@ -8,7 +8,14 @@
 				<label for="">Name</label>
 				<input type="text" class="form-control" id="wName" placeholder="">
 			</div>
-
+			
+			<div class="checkbox">
+				<label for="wPublic">
+				<input type="checkbox" id="wPublic">
+				Template
+				</label>
+			</div>
+			
 			<div class="checkbox">
 				<label for="wPublic">
 				<input type="checkbox" id="wPublic">

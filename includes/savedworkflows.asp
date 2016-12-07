@@ -23,7 +23,9 @@
 			</div>
 		 </div>
 		 
+		 <h5>Saved projects</h5>
 		<a id="load-saved-project" class="link-btn">Saved Project</a>
+		 <h5>Saved workflow templates</h5>
 		<a id="load-saved-workflow" class="link-btn">Saved Workflow</a>
 
 		
