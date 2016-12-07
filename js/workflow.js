@@ -800,7 +800,11 @@ $(document).ready(function() {
 			$(".workArea.active > .drawArea").show();
 	}
   
-		// SAVE TO PDF
+
+///////////////////////////////////////////
+// PDF functions                         //
+///////////////////////////////////////////
+
 	function savetopdf() {
 		
 		pdfWorkflow=JSON.stringify(extractAllWorkflows());
@@ -1017,7 +1021,7 @@ interact('.draggable')
 		//    'translate(' + x + 'px,' + y + 'px)';
 		// target.setAttribute('data-x', x);
 		// target.setAttribute('data-y', y);
-  });
+  	});
   
   
   
@@ -1468,15 +1472,9 @@ interact('.draggable')
 		}
 	});
 
-	// CODE FOR SKETCH PAD
-	//var sketch
-
-	$('.drawArea canvas.colors_sketch').each(function() {
-		var thisSketch = $(this).sketch();
-		sketches.push(thisSketch);
-	});
-
-	$(".drawArea, #drawControls").hide();
+///////////////////////////////////////
+// sketch.js & tools controls        //
+///////////////////////////////////////	
 	 
 	$("#toggle-draw").click(function(){
 		$(".workArea.active > .drawArea, #drawControls").toggle();
@@ -1496,6 +1494,17 @@ interact('.draggable')
 // initialisation                    //
 ///////////////////////////////////////	
 
+	// add any existing sketches to app array - redundant if not starting with workflows
+	$('.drawArea canvas.colors_sketch').each(function() {
+		var thisSketch = $(this).sketch();
+		sketches.push(thisSketch);
+		console.log(sketches);
+	});
+
+	// hide sketch tools and any drawareas
+	$(".drawArea, #drawControls").hide();
+
+	// hide saved-projects buttons
 	if(!savedWorkflows){
 		$("#load-saved-workflow, #load-saved-project").hide();
 	}	
