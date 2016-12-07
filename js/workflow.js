@@ -158,10 +158,6 @@ function removeWorkArea(workAreaId){
 			sketches.splice(i, 1);
 		}
 	}
-
-	// add new workarea if completely empty
-	if($('#workAreaWrapper > .workArea').length == 0)
-		addWorkArea();
 }
 
 $(".load-template").click(function() { 
@@ -174,7 +170,6 @@ $(".load-template").click(function() {
 		loadWorkflow(workflow.data, canvasId )
 	});
 })
-
 
 $("#load-saved-project").click(function() {
 	clearAllWorkflows();
@@ -194,22 +189,20 @@ function newProject(){
 function clearAllWorkflows(){
 	// select all elements in every dragArea and remove
 	$(".dragArea .node, .dragArea .connector, .dragArea .connector, .dragArea .connector-graphit, .dragArea .connector-end, .dragArea .destination-label, .dragArea .calc, .dragArea .caption").remove();
-	
-	$(".workArea").each( function(){
-		var workAreaId = $(this).attr("id");
-		removeWorkArea(workAreaId);
-	});
-
-	sketches = [];
-	
+		
 	// reset graph-it by emptying canvas object arrays
 	var i;
 	for(i = 0; i < canvases.length; i++) {
 		canvases[i].blocks=[];
 		canvases[i].connectors=[];
 	}
+	canvases = [];
+	sketches = [];
 
-	//canvases = [];
+	$(".workArea").each( function(){
+		var workAreaId = $(this).attr("id");
+		removeWorkArea(workAreaId);
+	});
 }
 
 function clearActiveWorkflow(){
@@ -389,13 +382,6 @@ $(".save-project").click(function(e) {
 	savedWorkflows=extractAllWorkflows();
 	savedSketches=[];
 	
-	$(".canvas").each(function(){
-	    var wfId=$(this).attr("id");
-		var wf = extractWorkflow(wfId);
-		var wfObj={"workflow": wf};
-		savedWorkflows.push(wfObj);
-	});
-
 	$('canvas.colors_sketch').each(function(){
 		// traverse each drawArea canvas, save as data then add to array
 		savedSketches.push(saveSketch($(this)[0]));
