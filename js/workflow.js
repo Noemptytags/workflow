@@ -398,16 +398,24 @@ $(document).ready(function() {
 		return false;
 	}
 
-	// add timesaving calculator
+	// add cost saving calculator
 	function addCalc(iMinwage, iMins, iTop, iLeft, iSaving){ 
 		nodeCount++;
 		iId ="calc"+nodeCount.toString();
 		iSaving=iSaving || 0;
 		
-		var item = $('<div id="'+iId+'" class="calc draggable" data-minwage="'+ iMinwage +'"><h5> Benefits </h5> <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: $<span class="saving">'+ iSaving +'</span><p></div>');
+		var item = $('<div id="'+iId+'" class="calc draggable-graphit" data-minwage="'+ iMinwage +'"><h5> Benefits </h5> <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: $<span class="saving">'+ iSaving +'</span><p></div>');
 		$('.workArea.active > .dragArea').append(item);
 		item.css( "top", iTop+"px");
-		item.css( "left", iLeft+"px");		
+		item.css( "left", iLeft+"px");
+
+		// calc - make active
+		$('#'+iId).on('click touchstart', function() {	
+			makeActive(this);
+		
+			$("#calc").slideDown();
+			loadCalcData(this);	
+		});	
 	}
 
 	// add workflow caption
@@ -506,19 +514,28 @@ $(document).ready(function() {
 	} 
 
 	// makes selected node active
-	function makeActive(elem){ 
-		node = $(elem).hasClass("node") ? $(elem) : $(event.target).parents(".node");
+	function makeActive(elem){
+		var thisClass;
+		if($(elem).hasClass("node")){
+			thisClass = 'node';
+		}
+		else if($(elem).hasClass("calc")){
+			thisClass = 'calc';
+		}
 
-		if ($(node).hasClass("dragged")){		
-			$(node).removeClass("dragged");
-			$(node).removeClass("active-node");
+		if ($(elem).hasClass("dragged")){	
+			$(elem).removeClass("dragged");
+			$(elem).removeClass("active-"+thisClass);
 			clearNodeData();
 		}
-		else {		
-			$(node).addClass("active-node");
-			$("#nodedata").slideDown();
-			tidyMenu();
-			loadNodeData(node);		
+		else {	
+			$(elem).addClass("active-"+thisClass);
+			
+			if(thisClass == 'node') {
+				$("#nodedata").slideDown();
+				tidyMenu();
+				loadNodeData(elem);	
+			}	
 		}
 	}
 
@@ -1129,7 +1146,8 @@ $(document).ready(function() {
 	});
 
 	// node - make active (and connect)
-	$(".node").on('click touchstart',function() {	
+	$(".node").on('click touchstart', function() {	
+		console.log('here');
 		makeActive(event.target);
 		connectToActiveNode(event.target);
 	});
