@@ -13,10 +13,7 @@
 			</select>
 		</form>
 	
-		<div id="questionset">
-			
-			
-		</div>	
+		<div id="questionset"></div>	
 	</div>
 
 </div>
