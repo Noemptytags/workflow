@@ -10,8 +10,8 @@
 			</div>
 			
 			<div class="checkbox">
-				<label for="wPublic">
-				<input type="checkbox" id="wPublic">
+				<label for="wTemplate">
+				<input type="checkbox" id="wTemplate">
 				Template
 				</label>
 			</div>
