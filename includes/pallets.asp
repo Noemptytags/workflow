@@ -4,11 +4,11 @@
 	<h4 class="ipanel-toggle">Pallets</h4>
 	<div class="ipanel-content">
 	
-	<div class="ipanel">
+		<div class="ipanel">
 			<h5 class="ipanel-toggle">Captions &amp; headings</h5>
 			<div class="ipanel-content">
 				<div class="add dragIn" draggable="true" data-type="caption" data-class="caption" data-caption="caption" ><span ><span class="icon glyphicon glyphicon-font"></span></span></div>
-					</div>
+			</div>
 		</div>  
 	 
 	 	<div class="ipanel">

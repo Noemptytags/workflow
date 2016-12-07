@@ -740,7 +740,7 @@ $(document).ready(function() {
 		
 		pdfWorkflow=JSON.stringify(extractAllWorkflows());
 		
-		var pdfhandler = 'http://192.168.3.26/EvoHtmlToPdfHandler/asehandler.ashx?';
+		var pdfhandler = 'http://192.168.3.26/EvoHtmlToPdfHandler/workflowhandler.ashx?';
 		var pdfsource = 'http://192.168.3.26/workflow/pdf.asp?workflow='+pdfWorkflow;
 		var pdfdelay = '3';
 		var pdffilename = 'workflow';

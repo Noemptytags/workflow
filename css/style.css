@@ -383,7 +383,7 @@
 }
 /* pdf styles*/
 .pdf .dragArea{background-image:none;}
-
+.pdf  .workArea {overflow: visible;}
 
 /* tabbing workflows */
 .nav-tabs {
