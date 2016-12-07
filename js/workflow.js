@@ -56,7 +56,7 @@ $(document).ready(function() {
 		workAreaCount ++;
 		var workAreaId = "flow"+ workAreaCount;
 		var name =	"Unnamed flow "+workAreaCount;
-		var item = $('<div class="workArea" data-name="'+name+'" data-public="false" id="'+workAreaId+'"><div class="drawArea"><canvas id="'+workAreaId+'-sketch" class="colors_sketch" width="1600" height="1200"></canvas><img class="saved-image" /></div><div id="'+workAreaId+'-canvas" class="dragArea canvas"></div></div>');
+		var item = $('<div class="workArea" data-name="'+name+'" data-public="false" data-template="false" id="'+workAreaId+'"><div class="drawArea"><canvas id="'+workAreaId+'-sketch" class="colors_sketch" width="1600" height="1200"></canvas><img class="saved-image" /></div><div id="'+workAreaId+'-canvas" class="dragArea canvas"></div></div>');
 		var tab = $('<li><a href="#" data-target="'+workAreaId+'">'+name+'</a></li>');
 		
 		$('#workAreaWrapper').append(item);
@@ -200,7 +200,7 @@ $(document).ready(function() {
 			var canvasId = workAreaId+"-canvas";
 			var workflow=workflows[i].workflow
 			
-			setWorkflowMetaData(workAreaId, workflow.name, workflow.public);
+			setWorkflowMetaData(workAreaId, workflow.name, workflow.public, workflow.template);
 			loadWorkflow(workflow.data, canvasId);
 		}
 	}
@@ -310,9 +310,10 @@ $(document).ready(function() {
 			workflow.data.push(item);
 		};
 		
-		var workArea=$("#" + canvasId).parents(".workArea");
-		workflow.name=$(workArea).attr("data-name");
-		workflow.public=$(workArea).attr("data-public");
+		var workArea=$("#" + canvasId).parents(".workArea")
+		workflow.name=$(workArea).attr("data-name")
+		workflow.public=$(workArea).attr("data-public")
+		workflow.template=$(workArea).attr("data-template")
 		 
 		console.log(JSON.stringify(workflow))
 		return workflow;	
@@ -656,20 +657,24 @@ $(document).ready(function() {
 		$("#workflowData").attr("workAreaId", workAreaId);
 		var wname = workArea.attr("data-name");
 		var wpublic = (workArea.attr("data-public") === 'true');
+		var wtemplate = (workArea.attr("data-template") === 'true');
 		$("#workflowdata #wName").val(wname);
 		$("#workflowdata #wPublic").prop('checked',wpublic);
+		$("#workflowdata #wTemplate").prop('checked',wtemplate);
 	}
 
 	function updateWorkflowMetaData(workAreaId){
 		var workArea=$("#"+workAreaId);
 		var wname=$("#workflowdata #wName").val();
 		var wpublic=$("#workflowdata #wPublic").prop('checked');
-		setWorkflowMetaData(workAreaId, wname, wpublic);
+		var wtemplate=$("#workflowdata #wTemplate").prop('checked');
+		setWorkflowMetaData(workAreaId, wname, wpublic, wtemplate);
 	}
 
-	function setWorkflowMetaData(workAreaId, wname, wpublic){
+	function setWorkflowMetaData(workAreaId, wname, wpublic, wtemplate){
 		$("#"+workAreaId).attr("data-name", wname);
 		$("#"+workAreaId).attr("data-public", wpublic);
+		$("#"+workAreaId).attr("data-template", wtemplate);
 		$("#flowTabs").find('a[data-target="'+workAreaId+'"]').text(wname);
 	}
 
@@ -931,12 +936,12 @@ $(document).ready(function() {
 ///////////////////////////////////////	
 
 	// toggle side panels
-	$(".ipanel-toggle").click(function() {
+	$("#controls").on("click", ".ipanel-toggle", function() { 
 		$(this).parent(".ipanel").find(".ipanel-content:first").slideToggle("fast");
 	});
 
 	// close side panels
-	$(".ipanel-close").click(function() {
+	$(".ipanel-close").on("click",function() {
 		$(this).parent(".ipanel").slideUp("fast", function() {
 			tidyMenu();
 		});
@@ -1033,7 +1038,20 @@ $(document).ready(function() {
 		e.preventDefault();
 		savetopdf();
 	});
-
+	
+	// load guided workflow settings
+	$('#selectQuestionset').change(function() {	
+		var url = "questions.asp?qid="  + $(this).val();
+		
+		$.get("ajax/"+url, function(data) {
+			
+			clearAllWorkflows();
+			addWorkArea();
+			
+		  $("#questionset").html(data);
+		});
+	});
+	
 ///////////////////////////////////////
 // node manipulation                 //
 ///////////////////////////////////////	
@@ -1043,8 +1061,9 @@ $(document).ready(function() {
 		doDrop(e);
 	});
 
-	 // add a node or connector to top of canvas on click
-	$('.add').click(function(){
+	 //add a node or connector to top of canvas on click
+	$("#controls").on("click", ".add", function() { 
+	//$('.add').click(function(){
 
 		var offSet = 10;
 		var numNewElements = $('.node.new').length;
