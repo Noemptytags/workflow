@@ -376,7 +376,6 @@ function loadWorkflow(workflow, canvasId, offset){
 
 // Actually save project action
 $(".save-project").click(function(e) {
-	
 	e.preventDefault();
 	
 	savedWorkflows=extractAllWorkflows();
@@ -385,12 +384,10 @@ $(".save-project").click(function(e) {
 	$('canvas.colors_sketch').each(function(){
 		// traverse each drawArea canvas, save as data then add to array
 		savedSketches.push(saveSketch($(this)[0]));
-		//console.log(savedSketches);
 	});
 
 	// to do add to list of saved workflows
 	$("#load-saved-project").show();
-	
 });
 
 function saveSketch(canvas){
