@@ -147,7 +147,7 @@
 #controls form .checkbox label { width:auto; padding:0; }
 #controls form .checkbox input[type="checkbox"] { position:static; margin:0; vertical-align:middle; }
 
-#workAreaWrapper{overflow: hidden; position:relative;  height:600px;}
+#workAreaWrapper{overflow: hidden; position:relative;  height:500px;}
 .pdf #workAreaWrapper {overflow: visible; height:auto; }
 .pdf #workAreaWrapper .workArea {position:relative;}
 @media only screen 
@@ -384,6 +384,8 @@
 /* pdf styles*/
 .pdf .dragArea{background-image:none;}
 .pdf  .workArea {overflow: visible;}
+.pdf .content {margin: 50px; max-width:none;}
+body.pdf{background-color:#fff;}
 
 /* tabbing workflows */
 .nav-tabs {
