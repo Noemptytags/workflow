@@ -8,6 +8,9 @@
 	<link rel="stylesheet" href="css/skin.css" media="screen">
 	<link rel="stylesheet" href="css/js-graph-it.css" media="screen">
 	
+	<script>
+		var pdfWorkflow='<%=request("workflow")%>';
+	</script>
 	<script src="js/ios-drag-drop.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.js"></script>
@@ -24,7 +27,7 @@
 	
 	<div id="workAreaWrapper">
 		
-		
+		<%=request("workflow")%>
 		
 		
 		<div class="workArea active" data-name="Unnamed flow 1" data-public="false" id="flow1">

@@ -21,10 +21,16 @@ $(document).ready(function() {
 	}	
 			
 	// load for pdf
-	if (workflow = getParameterByName("workflow")){
-		var wf = JSON.parse(workflow);
+	
+	//pdfWorkflow = getParameterByName("workflow")
+	
+	
+	if (pdfWorkflow){
+		var wf = JSON.parse(pdfWorkflow);
 		loadWorkflowsPDF(wf);
 	}
+	
+	
 
 ///////////////////////////////////////////
 // Panel functions                       //
@@ -1207,7 +1213,7 @@ $(document).ready(function() {
 	}	
 	
 	// create a blank tab on load
-	if(!(getParameterByName("workflow"))){
+	if(!(pdfWorkflow)){
 		addWorkArea();
 	}
 });
