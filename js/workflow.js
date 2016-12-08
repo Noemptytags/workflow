@@ -354,7 +354,7 @@ $(document).ready(function() {
 		newBlock.initBlock();
 		canvas.blocks.push(newBlock);
 					
-		$('#'+nodeID).on('click touchstart', function(){
+		$('#'+nodeID).on('click touchend', function(){
 			makeActive(this);
 			connectToActiveNode(this);
 		});	
@@ -415,7 +415,7 @@ $(document).ready(function() {
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
 
-		$('#'+iId).on('click touchstart', function() {	
+		$('#'+iId).on('click touchend', function() {	
 			makeActive(this);
 		});	
 	}
@@ -430,7 +430,7 @@ $(document).ready(function() {
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");	
 
-		$('#'+iId).on('click touchstart', function() {	
+		$('#'+iId).on('click touchend', function() {	
 			makeActive(this);
 		});		
 	}
