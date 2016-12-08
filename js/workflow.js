@@ -430,7 +430,7 @@ $(document).ready(function() {
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");	
 
-		$('#'+iId).on('click touchstart', function() {	
+		$('#'+iId).on('click touchstart touchend', function() {	
 			makeActive(this);
 		});		
 	}
@@ -544,6 +544,7 @@ $(document).ready(function() {
 				loadNodeData(elem);	
 			}	
 			if(thisClass == 'calc') {
+				$("#calc").slideDown();
 				loadCalcData(elem);	
 			}
 			if($(elem).hasClass("caption")){
@@ -1087,13 +1088,12 @@ $(document).ready(function() {
 		
 	});
 
-	// node - make active (and connect)
+	/* redundant functions if not having nodes placed on page load
 	$(".node").on('click touchstart', function() {
 		makeActive(event.target);
 		connectToActiveNode(event.target);
 	});
 
-	// node connector make active
 	$(".destination-label").on('click touchstart', function() {
 		classes = this.dataset.parent
 		
@@ -1104,6 +1104,7 @@ $(document).ready(function() {
 			}
 		);
 	});
+	*/
 
 	// delete elements on keypress
 	$('html').keyup(function(e){ if(e.keyCode == 46) { 
