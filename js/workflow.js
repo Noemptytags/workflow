@@ -414,7 +414,7 @@ $(document).ready(function() {
 			makeActive(this);
 		
 			$("#calc").slideDown();
-			loadCalcData(this);	
+
 		});	
 	}
 
@@ -527,6 +527,7 @@ $(document).ready(function() {
 			$(elem).removeClass("dragged");
 			$(elem).removeClass("active-"+thisClass);
 			clearNodeData();
+			clearCalcData();
 		}
 		else {	
 			$(elem).addClass("active-"+thisClass);
@@ -536,6 +537,9 @@ $(document).ready(function() {
 				tidyMenu();
 				loadNodeData(elem);	
 			}	
+			if(thisClass == 'calc') {
+				loadCalcData(elem);	
+			}
 		}
 	}
 
@@ -936,11 +940,11 @@ $(document).ready(function() {
 	// clicking workArea will deselect any active elements
 	$("#workAreaWrapper").on("click", ".workArea", function(e){
 		if($(e.target).parents(".node").length == 0 && !$(e.target).hasClass("node")){
-			$(".node").removeClass("active-node")
+			$(".node").removeClass("active-node");
 			clearNodeData();
 		}
 		if($(e.target).parents(".calc").length == 0 && !$(e.target).hasClass("calc")){
-			$(".calc").removeClass("active-calc")
+			$(".calc").removeClass("active-calc");
 			clearCalcData();
 		}
 		if($(e.target).parents(".destination-label").length == 0 && !$(e.target).hasClass("destination-label")){
