@@ -409,12 +409,8 @@ $(document).ready(function() {
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
 
-		// calc - make active
 		$('#'+iId).on('click touchstart', function() {	
 			makeActive(this);
-		
-			$("#calc").slideDown();
-
 		});	
 	}
 
@@ -423,10 +419,14 @@ $(document).ready(function() {
 		nodeCount++;
 		iId ="cap"+nodeCount.toString();
 		
-		var item = $('<div id="'+iId+'" class="caption draggable"><h5 class="text">'+ iCaption +'</h5> </div>');
+		var item = $('<div id="'+iId+'" class="caption draggable-graphit"><h5 class="text">'+ iCaption +'</h5> </div>');
 		$('.workArea.active > .dragArea').append(item);
 		item.css( "top", iTop+"px");
-		item.css( "left", iLeft+"px");		
+		item.css( "left", iLeft+"px");	
+
+		$('#'+iId).on('click touchstart', function() {	
+			makeActive(this);
+		});		
 	}
 
 ///////////////////////////////////////////
@@ -539,6 +539,18 @@ $(document).ready(function() {
 			}	
 			if(thisClass == 'calc') {
 				loadCalcData(elem);	
+			}
+			if($(elem).hasClass("caption")){
+				var txt=$(elem).text();
+				bootbox.prompt({
+			  		title: "Edit text",
+			  		value: txt,
+			  		callback: function(result) {
+				  		if(result !=null){
+					  		$(elem).find('.text').text(result);
+					  	}
+				  	}
+				});
 			}
 		}
 	}
@@ -812,86 +824,6 @@ $(document).ready(function() {
 		}		
 	}
 
-	// for moving calculator and caption
-	function dragMoveListener (event) {
-		var target = event.target,
-		    // keep the dragged position in the data-x/data-y attributes
-		    x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-		    y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
-		// translate the element
-		target.style.webkitTransform =
-		target.style.transform =
-		  'translate(' + x + 'px, ' + y + 'px)';
-
-		// update the posiion attributes
-		target.setAttribute('data-x', x);
-		target.setAttribute('data-y', y);
-	}
-
-	// this is used later in the resizing and gesture demos
-	window.dragMoveListener = dragMoveListener;
- 
-	// dialog for changing caption
-	interact('.draggable .text').on('tap', function (event) {
-		event.preventDefault();
-		var txt=$(event.target).text();
-
-		bootbox.prompt({
-	  		title: "Edit text",
-	  		value: txt,
-	  		callback: function(result) {
-		  		if(result !=null){
-			  		$(event.target).text(result);
-			  	}
-		  	}	
-		}); 
-	});
-
-  	// for moving calculator and caption 
-	interact('.draggable')
-	.draggable({
-		snap: {
-    		targets: [interact.createSnapGrid({ x: 20, y: 20 })],
-      		range: Infinity,
-      		relativePoints: [ { x: 0, y: 0 } ]
-    	},
-    	// enable inertial throwing
-    	inertia: true,
-    	// keep the element within the area of it's parent
-    	restrict: {
-      		restriction: "parent",
-      		endOnly: true,
-      		elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-    	},
-    	// enable autoScroll
-    	autoScroll: true,
-
-    	// call this function on every dragmove event
-    	onmove: dragMoveListener,
-    	// call this function on every dragend event
-    	onend: function (event) {
-      		var textEl = event.target.querySelector('p');
-    	}	
-	})
-  	.on('tap', function (event) {
-	// event.preventDefault();
-	// event.stopPropagation();
-		var calc
-		if ($(event.target).hasClass("calc")){
-			calc = $(event.target);
-			$(event.target).addClass("active-calc")
-			
-		}
-		else {
-			calc = $(event.target).parents(".calc");	
-		}
-	
-		$("#calc").slideDown();
-		$(calc).addClass("active-calc");
-		loadCalcData(calc);	
-	});
-  
 	// code for '.draggin' elements - eg menu items
 	$('.dragIn').on('dragstart', function(e) { 
 		
@@ -900,7 +832,7 @@ $(document).ready(function() {
 		var data={};
 		//var el=e.originalEvent.target
 		var el=this;
-		var iType=$(el).attr("data-type")
+		var iType=$(el).attr("data-type");
 
 		if (iType=="graphit-node"){
 			data.iType=iType;
@@ -1150,8 +1082,7 @@ $(document).ready(function() {
 	});
 
 	// node - make active (and connect)
-	$(".node").on('click touchstart', function() {	
-		console.log('here');
+	$(".node").on('click touchstart', function() {
 		makeActive(event.target);
 		connectToActiveNode(event.target);
 	});

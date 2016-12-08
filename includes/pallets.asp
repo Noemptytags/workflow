@@ -5,9 +5,10 @@
 	<div class="ipanel-content">
 	
 		<div class="ipanel">
-			<h5 class="ipanel-toggle">Captions &amp; headings</h5>
+			<h5 class="ipanel-toggle">Captions &amp; Cost savings</h5>
 			<div class="ipanel-content">
-				<div class="add dragIn" draggable="true" data-type="caption" data-class="caption" data-caption="caption" ><span ><span class="icon glyphicon glyphicon-font"></span></span></div>
+				<div class="add dragIn" draggable="true" data-type="caption" data-class="caption" data-caption="caption"><span class="icon glyphicon glyphicon-font"></span></div>
+				<div class="add dragIn" draggable="true" data-type="calc" data-minwage="7.00" data-mins="0" title="Add calculator to workflow"><span class="icon xerox xerox-calc"></span></div>
 			</div>
 		</div>  
 	 
