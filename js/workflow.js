@@ -410,7 +410,7 @@ $(document).ready(function() {
 		iId ="calc"+nodeCount.toString();
 		iSaving=iSaving || 0;
 		
-		var item = $('<div id="'+iId+'" class="calc draggable-graphit" data-minwage="'+ iMinwage +'"><h5> Benefits </h5> <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: $<span class="saving">'+ iSaving +'</span><p></div>');
+		var item = $('<div id="'+iId+'" class="calc draggable-graphit" data-minwage="'+ iMinwage +'" data-calcname="Calculator '+($('.workArea.active .dragArea .calc').length+1)+'"><h5> Benefits </h5> <p>mins saved: <span class="mins">'+ iMins+'</span><p> <p>annual saving: $<span class="saving">'+ iSaving +'</span><p></div>');
 		$('.workArea.active > .dragArea').append(item);
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");
@@ -532,19 +532,17 @@ $(document).ready(function() {
 		if ($(elem).hasClass("dragged")){	
 			$(elem).removeClass("dragged");
 			$(elem).removeClass("active-"+thisClass);
-			clearNodeData();
-			clearCalcData();
 		}
-		else {	
-			$(elem).addClass("active-"+thisClass);
-			
+		else {				
 			if(thisClass == 'node') {
 				$("#nodedata").slideDown();
 				tidyMenu();
 				loadNodeData(elem);	
 			}	
 			if(thisClass == 'calc') {
-				$("#calc").slideDown();
+				$('.calc').removeClass("active-"+thisClass);
+				$("#nodedata").slideDown();
+				tidyMenu();
 				loadCalcData(elem);	
 			}
 			if($(elem).hasClass("caption")){
@@ -559,6 +557,7 @@ $(document).ready(function() {
 				  	}
 				});
 			}
+			$(elem).addClass("active-"+thisClass);
 		}
 	}
 
@@ -600,6 +599,9 @@ $(document).ready(function() {
 
 	// when node is selected
 	function loadNodeData(node){
+		$('#activeData').show();
+		$('#activeData').siblings('form').hide();
+
 		var aId=$(node).attr("id");
 		$("#activeData").attr("aId", aId);
 
@@ -641,7 +643,6 @@ $(document).ready(function() {
 	function clearNodeData(){
 	    var aClear="";
 		var aId="";
-		$("#controls p#node-information").html("nothing selected").addClass('empty');
 		$("#activeData #aCaption, #activeData #aTime").val(aClear);
 		$("#activeData #aCaption, #activeData #aTimer").attr('checked',false).prop( "disabled", true );
 		$("#activeData #aTimeHolder").hide();
@@ -654,7 +655,12 @@ $(document).ready(function() {
 
 	// when calcultor is selected
 	function loadCalcData(calc){
-		// var aMinwage=parseFloat($(calc).find(".minwage").text());
+		$('#calcData').show();
+		$('#calcData').siblings('form').hide();
+		
+		var calcName=$(calc)[0].dataset.calcname;
+		$("#controls p#node-information").html(calcName).removeClass('empty');
+
 		var aMinwage=parseFloat($(calc).attr("data-minwage"));
 
 		var aMins=parseFloat($(calc).find(".mins").text());
@@ -888,6 +894,8 @@ $(document).ready(function() {
 		if($(e.target).parents(".destination-label").length == 0 && !$(e.target).hasClass("destination-label")){
 			$(".connector-graphit").removeClass("selected-connector");
 		}
+		if($(e.target).parents(".node").length == 0 && !$(e.target).hasClass("node") && $(e.target).parents(".calc").length == 0 && !$(e.target).hasClass("calc"))
+			$("#nodedata p#node-information").html('nothing selected').addClass('empty');
 	});
 
 ///////////////////////////////////////

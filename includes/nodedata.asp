@@ -22,6 +22,20 @@
 			</div>
 						
 		</form>
+
+		<form id="calcData">
+
+			<div class="form-group">
+				<label for="">Minimum wage</label>
+				<input type="text" class="form-control" id="aMinwage" placeholder="" disabled="disabled" >
+			</div>
+
+			<div class="form-group">
+				<label for="">Minutes saved</label>
+				<input type="text" class="form-control" id="aMins" placeholder="" disabled="disabled" >
+			</div>
+			 
+		</form>
 	  
 	</div>	
 </div>
