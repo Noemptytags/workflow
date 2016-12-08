@@ -430,7 +430,7 @@ $(document).ready(function() {
 		item.css( "top", iTop+"px");
 		item.css( "left", iLeft+"px");	
 
-		$('#'+iId).on('click touchstart touchend', function() {	
+		$('#'+iId).on('click touchstart', function() {	
 			makeActive(this);
 		});		
 	}
@@ -832,8 +832,7 @@ $(document).ready(function() {
 	}
 
 	// code for '.draggin' elements - eg menu items
-	$('.dragIn').on('dragstart', function(e) { 
-		
+	$('.dragIn').on('dragstart', function(e) { 		
 		//test=e.originalEvent.offsetX
 		//test=e.targetTouches[0]
 		var data={};
