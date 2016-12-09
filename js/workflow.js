@@ -534,6 +534,8 @@ $(document).ready(function() {
 		if ($(elem).hasClass("dragged")){	
 			$(elem).removeClass("dragged");
 			$(elem).removeClass("active-"+thisClass);
+			clearNodeData();
+			clearCalcData();
 		}
 		else {				
 			if(thisClass == 'node') {
@@ -1156,10 +1158,10 @@ function postAndRedirect(url, postData)
 	});
 
 	// delete elements via on main trash button
-	$('.trash').click(function(){ deleteActiveElements(); });
+	$('.trash, #controls #deleteNode').click(function(){ deleteActiveElements(); });
 
 	// delete node via nodeData panel
-	$("#controls #deleteNode").click(function(e){
+	$("#controls #deleteNode999").click(function(e){
 		e.preventDefault();
 		var aId=$("#activeData").attr("aId");
 		if (aId!=""){
