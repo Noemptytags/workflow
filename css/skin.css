@@ -114,7 +114,7 @@ h1,  h2,  h3,  h4,  h5, h6 {
 
 .dropdown-menu { z-index:2000; min-width:0; border:none; }
 
-.dropdown-menu > li > a { padding:0 12px; }
+.dropdown-menu > li > a { margin-right:32px; padding:0; }
 
 .dropdown-menu > li > a:hover, 
 .dropdown-menu > li > a:focus {
@@ -235,6 +235,11 @@ h1,  h2,  h3,  h4,  h5, h6 {
 	color:#333;
 }
 
+#controls .glyphicon-font {
+	top:5px;
+	font-size:20px;
+}
+
 .icon.xerox:before { 
 	background: url(../icons/xer_male_black.png) center center no-repeat; 
 	content: " "; 
@@ -251,8 +256,7 @@ h1,  h2,  h3,  h4,  h5, h6 {
 
 
 .node .icon:before
-{ 
-
+{
     height: 70px;
     width: 70px;    
     background-size: 115px auto; 
@@ -269,10 +273,7 @@ h1,  h2,  h3,  h4,  h5, h6 {
 	background-size: 70px auto;
 }
 
-
-
 .node .icon {
-
 	width: 70px;
     height: 70px;
     display: inline-block
@@ -308,3 +309,11 @@ h1,  h2,  h3,  h4,  h5, h6 {
 .icon.xerox-6655:before { background-image: url(../icons/Xerox6655_black.png); }
 
 
+/* arbitrary colouring of panels */
+
+#nodedata { background:#5c5c5c; }
+#questions { background:#555555; }
+#pallets { background:#777777; }
+#templates { background:#737373; }
+#savedworkflows { background:#696969; }
+#workflowdata { background:#606060; }

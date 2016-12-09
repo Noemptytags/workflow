@@ -449,6 +449,8 @@ $(document).ready(function() {
 		}
 		if ($(".active-calc").length>0){ 
 			$(".active-calc").remove();
+			$("#controls p#node-information").html("nothing selected").addClass('empty');
+			$("#controls #deleteNode").addClass('empty');
 			clearCalcData();
 		}
 		if ($(".active-caption").length>0){ 
@@ -498,6 +500,8 @@ $(document).ready(function() {
 				canvas.blocks.splice(i,1);
 			}
 		}
+		$("#controls p#node-information").html("nothing selected").addClass('empty');
+		$("#controls #deleteNode").addClass('empty');
 	}
 
 	// for deleting connector only
@@ -536,6 +540,8 @@ $(document).ready(function() {
 			$(elem).removeClass("active-"+thisClass);
 			clearNodeData();
 			clearCalcData();
+			$("#controls p#node-information").html("nothing selected").addClass('empty');
+			$("#controls #deleteNode").addClass('empty');
 		}
 		else {				
 			if(thisClass == 'node') {
@@ -611,6 +617,7 @@ $(document).ready(function() {
 
 		var aTooltip=$(node).find("span.icon")[0].dataset.originalTitle;
 		$("#nodedata p#node-information").html(aTooltip).removeClass('empty');
+		$("#controls #deleteNode").removeClass('empty');
 
 		var aCaption=$(node).find(".text").text();
 		$("#activeData #aCaption").val(aCaption).prop('disabled', false);
@@ -664,6 +671,7 @@ $(document).ready(function() {
 		
 		var calcName=$(calc)[0].dataset.calcname;
 		$("#controls p#node-information").html(calcName).removeClass('empty');
+		$("#controls #deleteNode").removeClass('empty');
 
 		var aMinwage=parseFloat($(calc).attr("data-minwage"));
 
@@ -732,6 +740,7 @@ $(document).ready(function() {
 	    var aClear="";
 		var aId="";
 		$("#controls p#node-information").html("nothing selected").addClass('empty');
+		$("#controls #deleteNode").addClass('empty');
 		$("#activeData #aCaption, #activeData #aTime").val(aClear);
 		$("#activeData #aTimer").attr('checked',false);
 		$("#activeData #aTimeHolder").hide();
@@ -941,8 +950,10 @@ function postAndRedirect(url, postData)
 		if($(e.target).parents(".destination-label").length == 0 && !$(e.target).hasClass("destination-label")){
 			$(".connector-graphit").removeClass("selected-connector");
 		}
-		if($(e.target).parents(".node").length == 0 && !$(e.target).hasClass("node") && $(e.target).parents(".calc").length == 0 && !$(e.target).hasClass("calc"))
+		if($(e.target).parents(".node").length == 0 && !$(e.target).hasClass("node") && $(e.target).parents(".calc").length == 0 && !$(e.target).hasClass("calc")){
 			$("#nodedata p#node-information").html('nothing selected').addClass('empty');
+			$("#controls #deleteNode").addClass('empty');
+		}
 	});
 
 ///////////////////////////////////////
@@ -1170,16 +1181,6 @@ function postAndRedirect(url, postData)
 
 	// delete elements via on main trash button
 	$('.trash, #controls #deleteNode').click(function(){ deleteActiveElements(); });
-
-	// delete node via nodeData panel
-	$("#controls #deleteNode999").click(function(e){
-		e.preventDefault();
-		var aId=$("#activeData").attr("aId");
-		if (aId!=""){
-			deleteNodeAndConnectors(aId);
-			clearNodeData();
-		}
-	});
 
 	// node
 	$("#activeData input").change(function(){ 

@@ -1,8 +1,8 @@
 <div id="nodedata" class="ipanel icat"> 
+	<h4 class="ipanel-toggle">Item details</h4>
 	<a id="deleteNode" title="Delete selected item"><span class="icon glyphicon glyphicon-trash"></span></a>
-	<h4 class="ipanel-toggle">Selected item details</h4>
+	<p id="node-information" class="ipanel-toggle"></p>
 	<div class="ipanel-content">
-		<p id="node-information"></p>
 
 		<form id="activeData">
 

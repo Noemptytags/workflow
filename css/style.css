@@ -100,7 +100,7 @@
   content: "#" attr(id);
   font-weight: bold;
 }
-#controls{float:right;  background: #666; width: 275px;  padding: 20px 20px 0; color:#fff;}
+#controls{float:right; width: 275px; color:#fff;}
 #controls .icat{width: 100% !important;}
 
 /* make menu horzontal - above grid*/
@@ -125,7 +125,7 @@
 
 
 #controls h1,  #controls h2, #controls h3,  #controls h4 ,  #controls h5, #controls h6{color:#fff;}
-#controls .ipanel-toggle{margin:0 0 10px; cursor:pointer; display:inline-block;}
+#controls .ipanel-toggle{margin:0 0 10px; cursor:pointer; }
 #controls h6.ipanel-toggle{cursor:pointer; display:block; text-align:right;}
 #controls .ipanel{ margin-bottom:0px; }
 #controls .ipanel-content{display:none;}
@@ -133,11 +133,12 @@
 #controls hr{border-top: 1px solid #333; border-bottom: 1px solid #999; display:none;}
 
 #controls .icat{ display:none; }
-#controls > .ipanel { border-bottom:#999 1px solid; margin-bottom:10px; }
+#controls > .ipanel { padding: 20px 20px 10px; }
 #controls .ipanel.end { border-bottom:none;}
-#controls #deleteNode { font-size:14px; cursor:pointer; float:right; margin-top:5px; }
+#controls #deleteNode { font-size:14px; cursor:pointer; float:right; }
+#controls #deleteNode.empty { display:none; }
 
-#node-information { font-weight:bold; text-align:center; }
+#node-information { font-weight:bold; }
 #node-information.empty { font-weight:normal; color:#333; text-shadow:-1px 1px 0 #777; }
 
 #activeData label { width:25%; }
