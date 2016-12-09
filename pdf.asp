@@ -10,6 +10,7 @@
 	
 	<script>
 		var pdfWorkflow='<%=request("workflow")%>';
+		var pdfSketches='<%=request("sketches")%>';
 	</script>
 	<script src="js/ios-drag-drop.js"></script>
 	<script src="js/jquery.min.js"></script>
@@ -27,7 +28,7 @@
 	
 	<div id="workAreaWrapper">
 		
-		
+		<%=request("sketches")%> ...
 		
 		<div class="workArea active" data-name="Unnamed flow 1" data-public="false" id="flow1">
 		<div class="drawArea" style="display: none;">

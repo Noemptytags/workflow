@@ -810,6 +810,16 @@ function postAndRedirect(url, postData)
 		
 		pdfWorkflow=JSON.stringify(extractAllWorkflows());
 		
+		
+		var sketches=[];
+		
+		$('canvas.colors_sketch').each(function(){
+			// traverse each drawArea canvas, save as data then add to array
+			sketches.push(saveSketch($(this)[0]));
+		});
+		
+		pdfSketches=JSON.stringify(sketches);
+		
 		var pdfhandler = 'http://192.168.3.26/EvoHtmlToPdfHandler/workflowhandler.ashx';
 		//pdfhandler="pdf.asp";
 		var pdfsource = 'http://192.168.3.26/workflow/pdf.asp';
@@ -823,6 +833,7 @@ function postAndRedirect(url, postData)
 		
 		var postData={ 
 				workflow: pdfWorkflow, 
+				sketches: pdfSketches,
 				evosource: "url",
 				evourl:  pdfsource,
 				evodelay: pdfdelay,
@@ -1264,6 +1275,13 @@ function postAndRedirect(url, postData)
 		
 		var wf = JSON.parse(pdfWorkflow);
 		loadWorkflowsPDF(wf);
+		
+		var psk = JSON.parse(pdfSketches);
+		for(var i=0; i<sketches.length; i++) {
+			// each existing canvas gets sketch based on index
+			loadSketch(psk[i], $(".drawArea")[0]);
+		}
+		
 	}
 	
 });
