@@ -20,15 +20,10 @@ $(document).ready(function() {
 	    return decodeURIComponent(results[2].replace(/\+/g, " "));
 	}	
 			
-	// load for pdf
-	
-	//pdfWorkflow = getParameterByName("workflow")
 	
 	
-	if (pdfWorkflow){
-		var wf = JSON.parse(pdfWorkflow);
-		loadWorkflowsPDF(wf);
-	}
+	
+	
 	
 	
 
@@ -213,10 +208,15 @@ $(document).ready(function() {
 
 	// loads workflow onto existing workArea
 	function loadWorkflow(workflow, canvasId, offset){
+		
 		offset = offset || 0;
 		// add nodes and connectors
 		for (var i=0; i<workflow.length; i++){
+			
+			
 			var item=workflow[i];
+			
+			
 			if (item.iType=="node"){
 				addGraphitNode(item.iClass, item.iCaption, item.iTooltip, item.iTimerDisplay, item.iTime, item.iTop + offset, item.iLeft, item.iId+canvasId, canvasId);
 			}
@@ -335,6 +335,8 @@ $(document).ready(function() {
 		iId =iId || "node"+nodeCount.toString();
 		canvasId = canvasId ||   $('.workArea.active .canvas').prop('id');
 		nodeID=iId;
+		
+		
 		// create node item
 
 		var item = $('<div id="'+nodeID+'" class="node block draggable-graphit new '+nodeID+'"><span title="Time required" class="glyphicon glyphicon-time time">'+iTime+'</span><span data-toggle="tooltip" data-placement="top"  title="'+ iTooltip +'" class="icon '+iClass+'"></span><p class="text">' + iCaption + '</p></div>');
@@ -781,21 +783,53 @@ $(document).ready(function() {
 		console.log(maxTop)
 		return maxTop;
 	}
+	
+function postAndRedirect(url, postData)
+	{
+		var postFormStr = "<form method='POST' action='" + url + "'>\n";
 
+		for (var key in postData)
+		{
+			if (postData.hasOwnProperty(key))
+			{
+				postFormStr += "<input type='hidden' name='" + key + "' value='" + postData[key] + "'></input>";
+			}
+		}
+
+		postFormStr += "</form>";
+
+		var formElement = $(postFormStr);
+
+		$('body').append(formElement);
+		$(formElement).submit();
+	}
+	
 	function savetopdf() {
 		
 		pdfWorkflow=JSON.stringify(extractAllWorkflows());
 		
-		var pdfhandler = 'http://192.168.3.26/EvoHtmlToPdfHandler/workflowhandler.ashx?';
-		var pdfsource = 'http://192.168.3.26/workflow/pdf.asp?workflow='+pdfWorkflow;
+		var pdfhandler = 'http://192.168.3.26/EvoHtmlToPdfHandler/workflowhandler.ashx';
+		//pdfhandler="pdf.asp";
+		var pdfsource = 'http://192.168.3.26/workflow/pdf.asp';
 		var pdfdelay = '3';
 		var pdffilename = 'workflow';
 		var pdfuserid = '35499';
 
-		handlerURL = pdfhandler + 'evosource=url&evourl=' + pdfsource + '&evodelay=' + pdfdelay + '&evofilename=' + pdffilename + '_DATE_TIME.pdf&evouserid=' + pdfuserid;
+		handlerURL = pdfhandler +  '?workflow=' + pdfWorkflow + '&evosource=url&evourl=' + pdfsource + '&evodelay=' + pdfdelay + '&evofilename=' + pdffilename + '_DATE_TIME.pdf&evouserid=' + pdfuserid;
 			
-		window.location.href = handlerURL;
-		//window.location.href = 'pdf.asp?workflow='+pdfWorkflow;	
+		//window.location.href = handlerURL;
+		
+		var postData={ 
+				workflow: pdfWorkflow, 
+				evosource: "url",
+				evourl:  pdfsource,
+				evodelay: pdfdelay,
+				evofilename: pdffilename + '_DATE_TIME.pdf',
+				evouserid:pdfuserid
+		};
+		postAndRedirect(pdfhandler, postData);
+		
+		
 	}
 
 
@@ -1224,4 +1258,10 @@ $(document).ready(function() {
 	if(!(pdfWorkflow)){
 		addWorkArea();
 	}
+	else{
+		
+		var wf = JSON.parse(pdfWorkflow);
+		loadWorkflowsPDF(wf);
+	}
+	
 });

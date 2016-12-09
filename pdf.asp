@@ -27,7 +27,6 @@
 	
 	<div id="workAreaWrapper">
 		
-		<%=request("workflow")%>
 		
 		
 		<div class="workArea active" data-name="Unnamed flow 1" data-public="false" id="flow1">
